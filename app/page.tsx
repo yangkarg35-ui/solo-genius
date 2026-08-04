@@ -92,38 +92,42 @@ export default function HomePage() {
       minHeight: "100vh",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       scrollBehavior: "smooth",
-      overflowX: "hidden"
+      overflowX: "hidden",
+      width: "100%"
     }}>
-      {/* Navigation Bar */}
+      {/* Luxury Navigation Bar */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "25px 60px",
+        flexWrap: "wrap",
+        gap: "12px",
+        padding: "18px 24px",
         width: "100%",
-        backgroundColor: "rgba(3, 7, 18, 0.9)",
-        backdropFilter: "blur(12px)",
+        backgroundColor: "rgba(3, 7, 18, 0.92)",
+        backdropFilter: "blur(16px)",
         position: "fixed",
         top: 0,
         zIndex: 100,
-        borderBottom: "1px solid rgba(255, 255, 255, 0.08)"
+        borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
+        boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.5)" }}
+            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
           />
-          <span style={{ fontSize: "16px", fontWeight: "700", color: "#ffffff", letterSpacing: "2px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "35px", fontSize: "13px", fontWeight: "500", letterSpacing: "1px", color: "#d1d5db" }}>
-          <a href="/" style={{ color: "#D4AF37", textDecoration: "none" }}>Home</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>About</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>Explore</a>
-          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none" }}>Manifesto</a>
+        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
+          <a href="/" style={{ color: "#D4AF37", textDecoration: "none" }}>HOME</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none" }}>MANIFESTO</a>
         </div>
 
         <div>
@@ -134,34 +138,35 @@ export default function HomePage() {
               setIsModalOpen(true);
             }}
             style={{
-              background: "transparent",
-              border: "1px solid rgba(212, 175, 55, 0.6)",
-              padding: "10px 22px",
-              borderRadius: "4px",
-              fontSize: "12px",
-              fontWeight: "600",
-              letterSpacing: "1.5px",
+              background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212, 175, 55, 0.5)",
+              padding: "8px 16px",
+              borderRadius: "2px",
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "2px",
               color: "#D4AF37",
               cursor: "pointer",
               transition: "all 0.3s ease"
             }}
           >
-            PRIVATE ACCESS
+            VIP ACCESS
           </button>
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Cinematic Hero Section */}
       <section style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "120px 20px 40px",
+        padding: "130px 20px 60px",
         position: "relative",
-        overflow: "hidden"
+        overflow: "hidden",
+        boxSizing: "border-box"
       }}>
         <div style={{
           position: "absolute",
@@ -174,7 +179,7 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: 1,
-          filter: "brightness(1.15) contrast(1.15) saturate(1.1)"
+          filter: "brightness(1.1) contrast(1.1) saturate(1.05)"
         }} />
 
         <div style={{
@@ -183,44 +188,47 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          background: "linear-gradient(180deg, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.75) 100%)",
+          background: "linear-gradient(180deg, rgba(3,7,18,0.35) 0%, rgba(3,7,18,0.88) 100%)",
           zIndex: 1
         }} />
 
-        <div style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "15px" }}>
-          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "12px", letterSpacing: "3px", fontWeight: "700" }}>
+        <div style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
+          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
             The Architecture of Mastery behind creative musicians
           </span>
-          <h1 style={{ fontSize: "48px", fontWeight: "800", letterSpacing: "-1px", color: "#ffffff", margin: 0, lineHeight: "1.2" }}>
+          <h1 style={{ fontSize: "clamp(28px, 6.5vw, 48px)", fontWeight: "800", letterSpacing: "-0.5px", color: "#ffffff", margin: 0, lineHeight: "1.2" }}>
             Become The Creator<br />
             <span style={{ color: "#D4AF37" }}>You Were Designed To Be</span>
           </h1>
-          <p style={{ color: "#e5e7eb", fontSize: "16px", lineHeight: "1.6", letterSpacing: "0.5px", margin: "10px 0 30px 0" }}>
+          <p style={{ color: "#d1d5db", fontSize: "14px", lineHeight: "1.6", letterSpacing: "0.5px", margin: "8px 0 24px 0", padding: "0 10px" }}>
             We believe originality is more valuable than imitation.
           </p>
-          <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap", width: "100%" }}>
             <a href="/explore" style={{
               backgroundColor: "#ffffff",
               color: "#030712",
-              padding: "14px 32px",
-              borderRadius: "4px",
-              fontSize: "13px",
+              padding: "12px 28px",
+              borderRadius: "2px",
+              fontSize: "11px",
               fontWeight: "700",
-              letterSpacing: "1px",
-              textDecoration: "none"
+              letterSpacing: "1.5px",
+              textDecoration: "none",
+              textAlign: "center",
+              boxShadow: "0 4px 20px rgba(255,255,255,0.15)"
             }}>
               EXPLORE SYSTEMS
             </a>
             <a href="#manifesto" style={{
               backgroundColor: "transparent",
               color: "#ffffff",
-              border: "1px solid rgba(255,255,255,0.4)",
-              padding: "14px 32px",
-              borderRadius: "4px",
-              fontSize: "13px",
+              border: "1px solid rgba(255,255,255,0.3)",
+              padding: "12px 28px",
+              borderRadius: "2px",
+              fontSize: "11px",
               fontWeight: "700",
-              letterSpacing: "1px",
-              textDecoration: "none"
+              letterSpacing: "1.5px",
+              textDecoration: "none",
+              textAlign: "center"
             }}>
               OUR MANIFESTO
             </a>
@@ -228,39 +236,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Manifesto Section (Grid / Card OS Style) */}
-      <section id="manifesto" style={{ maxWidth: "1200px", margin: "0 auto", padding: "140px 40px" }}>
-        <div style={{ textAlign: "center", marginBottom: "80px" }}>
-          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "12px", letterSpacing: "3px", fontWeight: "700" }}>
+      {/* Manifesto Section */}
+      <section id="manifesto" style={{ maxWidth: "1200px", margin: "0 auto", padding: "90px 20px", boxSizing: "border-box" }}>
+        <div style={{ textAlign: "center", marginBottom: "50px" }}>
+          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
             Core Philosophy
           </span>
-          <h2 style={{ fontSize: "42px", fontWeight: "800", letterSpacing: "-1px", margin: "15px 0 20px 0", color: "#ffffff" }}>
+          <h2 style={{ fontSize: "clamp(26px, 4.5vw, 40px)", fontWeight: "800", letterSpacing: "-0.5px", margin: "10px 0 15px 0", color: "#ffffff" }}>
             Our Manifesto
           </h2>
-          <p style={{ color: "#9ca3af", fontSize: "16px", maxWidth: "700px", margin: "0 auto", lineHeight: "1.6" }}>
+          <p style={{ color: "#9ca3af", fontSize: "14px", maxWidth: "650px", margin: "0 auto", lineHeight: "1.6", padding: "0 10px" }}>
             We exist to build creators who think deeply, create intentionally, and pursue excellence without compromise.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "30px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px" }}>
           {manifestoItems.map((item, idx) => (
             <div key={idx} style={{ 
-              backgroundColor: "rgba(17, 24, 39, 0.6)", 
+              backgroundColor: "rgba(11, 15, 25, 0.75)", 
               border: "1px solid rgba(212, 175, 55, 0.2)", 
-              borderRadius: "8px", 
-              padding: "35px",
+              borderRadius: "4px", 
+              padding: "24px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
+              boxSizing: "border-box",
+              backdropFilter: "blur(8px)"
             }}>
               <div>
-                <span style={{ color: "#D4AF37", fontSize: "12px", fontWeight: "700", letterSpacing: "2px" }}>
+                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>
                   {item.num} — PRINCIPLE
                 </span>
-                <h3 style={{ fontSize: "20px", fontWeight: "700", color: "#ffffff", margin: "12px 0 15px 0", letterSpacing: "-0.5px" }}>
+                <h3 style={{ fontSize: "17px", fontWeight: "700", color: "#ffffff", margin: "10px 0 10px 0", letterSpacing: "-0.3px" }}>
                   {item.title}
                 </h3>
-                <p style={{ color: "#9ca3af", fontSize: "14px", lineHeight: "1.7", margin: 0 }}>
+                <p style={{ color: "#9ca3af", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
                   {item.desc}
                 </p>
               </div>
@@ -269,7 +279,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Private Access / KPay Payment Modal */}
+      {/* VIP Access / Payment Modal */}
       {isModalOpen && (
         <div style={{
           position: "fixed",
@@ -277,35 +287,40 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(3, 7, 18, 0.85)",
-          backdropFilter: "blur(8px)",
+          backgroundColor: "rgba(3, 7, 18, 0.9)",
+          backdropFilter: "blur(12px)",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           zIndex: 1000,
-          padding: "20px"
+          padding: "15px",
+          boxSizing: "border-box"
         }}>
           <div style={{
-            backgroundColor: "#111827",
+            backgroundColor: "#0b0f19",
             border: "1px solid rgba(212, 175, 55, 0.4)",
-            borderRadius: "12px",
-            padding: "40px",
+            borderRadius: "6px",
+            padding: "24px 20px",
             width: "100%",
-            maxWidth: "500px",
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
-            position: "relative"
+            maxWidth: "480px",
+            maxHeight: "90vh",
+            overflowY: "auto",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+            position: "relative",
+            boxSizing: "border-box"
           }}>
             <button 
               onClick={() => setIsModalOpen(false)}
               style={{
                 position: "absolute",
-                top: "20px",
-                right: "20px",
+                top: "16px",
+                right: "16px",
                 background: "transparent",
                 border: "none",
                 color: "#9ca3af",
-                fontSize: "18px",
-                cursor: "pointer"
+                fontSize: "16px",
+                cursor: "pointer",
+                padding: "4px"
               }}
             >
               ✕
@@ -313,44 +328,44 @@ export default function HomePage() {
 
             {!isConfirmed ? (
               <div>
-                <span style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase" }}>
+                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase" }}>
                   SECURE ELITE ENROLLMENT
                 </span>
-                <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#ffffff", margin: "10px 0 6px 0" }}>
+                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", margin: "8px 0 6px 0" }}>
                   Solo Genius Private Admission
                 </h2>
-                <p style={{ color: "#9ca3af", fontSize: "13px", marginBottom: "20px" }}>
+                <p style={{ color: "#9ca3af", fontSize: "12px", marginBottom: "16px", lineHeight: "1.5" }}>
                   Complete your tuition fee transfer via KBZ Pay to secure your exclusive access.
                 </p>
 
                 {/* Investment Breakdown Box */}
-                <div style={{ backgroundColor: "rgba(3, 7, 18, 0.7)", border: "1px solid rgba(212, 175, 55, 0.3)", borderRadius: "8px", padding: "20px", marginBottom: "20px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "10px" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "13px" }}>Tuition Investment:</span>
-                    <span style={{ color: "#D4AF37", fontSize: "16px", fontWeight: "800" }}>USD 500</span>
+                <div style={{ backgroundColor: "rgba(3, 7, 18, 0.8)", border: "1px solid rgba(212, 175, 55, 0.3)", borderRadius: "4px", padding: "14px", marginBottom: "14px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Tuition Investment:</span>
+                    <span style={{ color: "#D4AF37", fontSize: "13px", fontWeight: "800" }}>USD 500</span>
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: "10px" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "13px" }}>Exchange Rate:</span>
-                    <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: "600" }}>1 USD = 4,400 MMK</span>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Exchange Rate:</span>
+                    <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "600" }}>1 USD = 4,400 MMK</span>
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "13px" }}>Total Payable Amount:</span>
-                    <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "800" }}>2,200,000 MMK</span>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Total Payable Amount:</span>
+                    <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: "800" }}>2,200,000 MMK</span>
                   </div>
                 </div>
 
                 {/* KPay Transfer Details Box */}
-                <div style={{ backgroundColor: "rgba(17, 24, 39, 0.8)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "8px", padding: "18px", marginBottom: "25px" }}>
-                  <p style={{ color: "#9ca3af", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "10px", fontWeight: "700" }}>
+                <div style={{ backgroundColor: "rgba(17, 24, 39, 0.9)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "4px", padding: "14px", marginBottom: "18px" }}>
+                  <p style={{ color: "#9ca3af", fontSize: "10px", textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: "6px", fontWeight: "700" }}>
                     KBZ Pay Official Transfer Details
                   </p>
-                  <p style={{ color: "#d1d5db", fontSize: "13px", margin: "0 0 6px 0" }}>Account Name: <strong style={{ color: "#ffffff" }}>Yan Kha</strong></p>
-                  <p style={{ color: "#d1d5db", fontSize: "13px", margin: 0 }}>KPay Number: <strong style={{ color: "#D4AF37", fontSize: "16px", letterSpacing: "1px" }}>09971097886</strong></p>
+                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: "0 0 4px 0" }}>Account Name: <strong style={{ color: "#ffffff" }}>Yan Kha</strong></p>
+                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: 0 }}>KPay Number: <strong style={{ color: "#D4AF37", fontSize: "15px", letterSpacing: "1px" }}>09971097886</strong></p>
                 </div>
 
-                <form onSubmit={handleConfirmPayment} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                <form onSubmit={handleConfirmPayment} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                   <div>
-                    <label style={{ display: "block", color: "#d1d5db", fontSize: "13px", marginBottom: "8px", fontWeight: "500" }}>
+                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "6px", fontWeight: "500" }}>
                       Upload Payment Transfer Receipt
                     </label>
                     <input 
@@ -361,17 +376,18 @@ export default function HomePage() {
                       style={{
                         width: "100%",
                         color: "#9ca3af",
-                        fontSize: "13px",
-                        padding: "10px",
-                        backgroundColor: "rgba(3, 7, 18, 0.4)",
+                        fontSize: "11px",
+                        padding: "8px",
+                        backgroundColor: "rgba(3, 7, 18, 0.5)",
                         border: "1px dashed rgba(212, 175, 55, 0.4)",
-                        borderRadius: "6px"
+                        borderRadius: "4px",
+                        boxSizing: "border-box"
                       }}
                     />
                   </div>
 
                   {screenshot && (
-                    <div style={{ maxHeight: "150px", overflow: "hidden", borderRadius: "6px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div style={{ maxHeight: "120px", overflow: "hidden", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.1)" }}>
                       <img src={screenshot} alt="Preview" style={{ width: "100%", objectFit: "cover" }} />
                     </div>
                   )}
@@ -383,14 +399,15 @@ export default function HomePage() {
                       backgroundColor: "#D4AF37",
                       color: "#030712",
                       border: "none",
-                      padding: "14px",
-                      borderRadius: "6px",
+                      padding: "12px",
+                      borderRadius: "2px",
                       fontWeight: "700",
-                      fontSize: "14px",
-                      letterSpacing: "1px",
+                      fontSize: "12px",
+                      letterSpacing: "1.5px",
                       cursor: isLoading ? "not-allowed" : "pointer",
                       opacity: isLoading ? 0.7 : 1,
-                      marginTop: "5px"
+                      marginTop: "4px",
+                      width: "100%"
                     }}
                   >
                     {isLoading ? "TRANSMITTING TO BOSS..." : "SUBMIT PROOF FOR VERIFICATION"}
@@ -398,12 +415,12 @@ export default function HomePage() {
                 </form>
               </div>
             ) : (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <div style={{ fontSize: "48px", marginBottom: "15px" }}>✨</div>
-                <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#ffffff", marginBottom: "10px" }}>
+              <div style={{ textAlign: "center", padding: "15px 0" }}>
+                <div style={{ fontSize: "38px", marginBottom: "12px" }}>✨</div>
+                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", marginBottom: "8px" }}>
                   Admission Proof Received
                 </h2>
-                <p style={{ color: "#9ca3af", fontSize: "14px", lineHeight: "1.6", marginBottom: "25px" }}>
+                <p style={{ color: "#9ca3af", fontSize: "12px", lineHeight: "1.5", marginBottom: "20px" }}>
                   Your receipt has been dispatched securely to Boss&apos;s Telegram channel. Verification will be processed promptly.
                 </p>
                 <button 
@@ -412,10 +429,11 @@ export default function HomePage() {
                     backgroundColor: "transparent",
                     color: "#D4AF37",
                     border: "1px solid rgba(212, 175, 55, 0.6)",
-                    padding: "10px 24px",
-                    borderRadius: "6px",
+                    padding: "10px 20px",
+                    borderRadius: "2px",
                     fontWeight: "600",
-                    fontSize: "13px",
+                    fontSize: "11px",
+                    letterSpacing: "1px",
                     cursor: "pointer"
                   }}
                 >
@@ -427,10 +445,23 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer style={{ padding: "60px", borderTop: "1px solid rgba(255, 255, 255, 0.08)", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#6b7280", fontSize: "12px", letterSpacing: "1px" }}>
+      {/* Luxury Footer */}
+      <footer style={{ 
+        padding: "40px 20px", 
+        borderTop: "1px solid rgba(255, 255, 255, 0.06)", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        flexWrap: "wrap", 
+        gap: "15px",
+        color: "#6b7280", 
+        fontSize: "10px", 
+        letterSpacing: "1.5px",
+        boxSizing: "border-box",
+        textAlign: "center"
+      }}>
         <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
-        <div style={{ display: "flex", gap: "30px" }}>
+        <div style={{ display: "flex", gap: "20px" }}>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
         </div>
