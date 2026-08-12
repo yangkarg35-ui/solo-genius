@@ -1,83 +1,62 @@
 'use client';
 import { useState } from 'react';
 
-const credentials: any = {
-  'SG-2026-0001': { name: 'Kyaw Zin', cert: 'Advanced Guitar & Musical Thinking', date: '13 August 2026', image: '/0001.jpg' },
-  'SG-2026-0002': { name: 'Aung Hein', cert: 'Advanced Guitar & Musical Thinking', date: '13 August 2026', image: '/0002.jpg' },
+// စာရင်းထဲမှာ ID ရှိရင် ပေါ်လာမယ်
+const registry: any = {
+  'SG-2026-0001': { name: 'Kyaw Zin', cert: 'Advanced Guitar & Musical Thinking', date: '13 August 2026' },
+  'SG-2026-0002': { name: 'Aung Hein', cert: 'Creativity and Critical Thinking', date: '13 August 2026' },
 };
 
 export default function VerifyPage() {
-  const [id, setId] = useState('');
-  const [state, setState] = useState<'idle' | 'verifying' | 'valid' | 'invalid'>('idle');
+  const [val, setVal] = useState('');
   const [result, setResult] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const verify = () => {
-    setState('verifying');
+  const handleVerify = () => {
+    setLoading(true);
+    setResult(null);
     setTimeout(() => {
-      if (credentials[id]) {
-        setResult({ id, ...credentials[id] });
-        setState('valid');
-      } else {
-        setState('invalid');
-      }
-    }, 1200);
+      setResult(registry[val] || 'NOT_FOUND');
+      setLoading(false);
+    }, 1000);
   };
 
   return (
-    <div style={{ backgroundColor: '#050505', color: '#fff', minHeight: '100vh', fontFamily: "'Inter', sans-serif", padding: '80px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      
-      {/* Brand Header */}
-      <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-        <h1 style={{ fontSize: '16px', letterSpacing: '8px', fontWeight: '300' }}>SOLO GENIUS</h1>
-        <p style={{ fontSize: '10px', letterSpacing: '3px', color: '#666', marginTop: '10px', textTransform: 'uppercase' }}>Official Credential Registry</p>
-      </div>
+    <div style={{ padding: '40px', backgroundColor: '#050505', minHeight: '100vh', color: '#fff', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: '600px' }}>
+        <h1 style={{ fontSize: '12px', letterSpacing: '6px', textAlign: 'center', marginBottom: '40px', opacity: 0.5 }}>SOLO GENIUS</h1>
+        
+        {/* Input Section */}
+        <div style={{ border: '1px solid #222', padding: '30px', backgroundColor: '#0a0a0a' }}>
+          <p style={{ fontSize: '10px', letterSpacing: '2px', marginBottom: '20px' }}>STUDENT CREDENTIAL VERIFICATION</p>
+          <input 
+            value={val} onChange={(e) => setVal(e.target.value)}
+            style={{ width: '100%', background: 'transparent', border: '1px solid #333', padding: '15px', color: '#fff', fontSize: '14px', boxSizing: 'border-box' }}
+          />
+          <button onClick={handleVerify} style={{ width: '100%', marginTop: '20px', padding: '15px', background: '#D4AF37', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}>
+            {loading ? 'VERIFYING...' : 'VERIFY CREDENTIAL'}
+          </button>
+        </div>
 
-      <div style={{ width: '100%', maxWidth: '500px' }}>
-        {state === 'idle' || state === 'invalid' ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <input 
-              value={id} onChange={(e) => setId(e.target.value)}
-              placeholder="ENTER CREDENTIAL ID"
-              style={{ background: 'transparent', border: '1px solid #222', padding: '20px', color: '#fff', textAlign: 'center', fontSize: '14px', letterSpacing: '3px', outline: 'none' }}
-            />
-            {state === 'invalid' && <p style={{ fontSize: '10px', color: '#888', textAlign: 'center' }}>CREDENTIAL NOT FOUND. CHECK THE ID AND TRY AGAIN.</p>}
-            <button onClick={verify} style={{ background: '#fff', color: '#000', padding: '16px', border: 'none', cursor: 'pointer', fontWeight: '600', letterSpacing: '2px', fontSize: '11px' }}>VERIFY</button>
-          </div>
-        ) : state === 'verifying' ? (
-          <div style={{ textAlign: 'center', color: '#444', letterSpacing: '4px', fontSize: '12px' }}>VERIFYING...</div>
-        ) : (
-          <div style={{ animation: 'fadeIn 0.8s ease' }}>
-            {/* The Credential Card */}
-            <div style={{ background: '#0a0a0a', border: '1px solid #1a1a1a', padding: '40px', position: 'relative' }}>
-              <div style={{ marginBottom: '40px' }}>
-                <p style={{ fontSize: '9px', letterSpacing: '3px', color: '#D4AF37', marginBottom: '10px' }}>OFFICIAL CREDENTIAL</p>
-                <h2 style={{ fontSize: '18px', fontWeight: '300', lineHeight: '1.4' }}>CERTIFICATE OF COMPLETION</h2>
-              </div>
-              
-              <div style={{ marginBottom: '40px' }}>
-                <p style={{ fontSize: '12px', color: '#666' }}>STUDENT</p>
-                <p style={{ fontSize: '16px', marginTop: '5px' }}>{result.name}</p>
-              </div>
-
-              <p style={{ fontSize: '14px', marginBottom: '40px' }}>{result.cert}</p>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #1a1a1a', paddingTop: '20px' }}>
-                <div style={{ fontSize: '10px', color: '#666', letterSpacing: '1px' }}>ISSUED · {result.date}</div>
-                <div style={{ fontSize: '10px', color: '#666', letterSpacing: '1px' }}>ID · {result.id}</div>
-              </div>
+        {/* Dynamic Result Section */}
+        {result === 'NOT_FOUND' && <p style={{ textAlign: 'center', marginTop: '20px', color: '#D4AF37', fontSize: '12px' }}>CREDENTIAL NOT FOUND.</p>}
+        
+        {result && result !== 'NOT_FOUND' && (
+          <div style={{ marginTop: '40px', border: '1px solid #D4AF37', padding: '40px', animation: 'fadeIn 0.5s' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+              <span style={{ color: '#D4AF37' }}>✓</span> 
+              <span style={{ fontSize: '10px', letterSpacing: '2px' }}>VERIFIED AUTHENTIC RECORD</span>
             </div>
-
-            <div style={{ marginTop: '20px', textAlign: 'center' }}>
-              <p style={{ fontSize: '10px', color: '#444', marginBottom: '20px' }}>This credential has been verified against the official Solo Genius credential registry.</p>
-              <button onClick={() => { setState('idle'); setId(''); }} style={{ background: 'transparent', border: 'none', color: '#fff', fontSize: '10px', letterSpacing: '2px', textDecoration: 'underline', cursor: 'pointer' }}>VERIFY ANOTHER</button>
+            <h2 style={{ fontSize: '18px', marginBottom: '5px' }}>{result.cert}</h2>
+            <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px' }}>{result.name}</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
+              <span>ID: {val}</span>
+              <span>{result.date}</span>
             </div>
           </div>
         )}
       </div>
-
-      <style jsx global>{`
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      `}</style>
+      <style jsx global>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
     </div>
   );
 }
