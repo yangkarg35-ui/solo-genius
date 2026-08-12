@@ -10,6 +10,7 @@ export default function ExplorePage() {
       title: "FOUNDATION",
       subtitle: "Building The Core",
       purpose: "Build the essential foundation required for lifelong musical growth.",
+      icon: "/logo.png",
       includes: [
         "Music Fundamentals",
         "Technique",
@@ -25,6 +26,7 @@ export default function ExplorePage() {
       title: "MUSICAL LANGUAGE",
       subtitle: "Understanding How Music Works",
       purpose: "Develop the ability to understand, analyze, and communicate through music.",
+      icon: "/logo.png",
       includes: [
         "Music Theory",
         "Rhythm",
@@ -42,6 +44,7 @@ export default function ExplorePage() {
       title: "CREATIVE DEVELOPMENT",
       subtitle: "Building Your Creative Voice",
       purpose: "Transform knowledge into original expression.",
+      icon: "/logo.png",
       includes: [
         "Creativity Framework",
         "Composition",
@@ -58,6 +61,7 @@ export default function ExplorePage() {
       title: "ARTISTIC MASTERY",
       subtitle: "Developing Your Craft",
       purpose: "Refine skills and develop personal artistic standards.",
+      icon: "/logo.png",
       includes: [
         "Advanced Technique",
         "Style Development",
@@ -74,6 +78,7 @@ export default function ExplorePage() {
       title: "CREATOR IDENTITY",
       subtitle: "Becoming The Person Behind The Work",
       purpose: "Develop the mindset and identity required for long-term creative success.",
+      icon: "/logo.png",
       includes: [
         "Creative Philosophy",
         "Critical Thinking",
@@ -89,6 +94,7 @@ export default function ExplorePage() {
       title: "MASTERY",
       subtitle: "Systematic Execution & Growth",
       purpose: "Lock in rigorous daily systems, performance reviews, and long-term optimization.",
+      icon: "/logo.png",
       includes: [
         "Deliberate Practice",
         "Habit System",
@@ -231,7 +237,16 @@ export default function ExplorePage() {
                 boxSizing: "border-box"
               }}>
                 <div>
-                  <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
+                  {/* Pillar Top Header with Thumbnail / Icon */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                    <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
+                    <img 
+                      src={item.icon} 
+                      alt={item.title} 
+                      style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212,175,55,0.4)" }}
+                    />
+                  </div>
+
                   <h3 style={{ fontSize: "18px", fontWeight: "700", margin: "10px 0 4px 0", color: "#ffffff", letterSpacing: "0.5px" }}>
                     {item.title}
                   </h3>
