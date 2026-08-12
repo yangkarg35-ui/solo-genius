@@ -1,139 +1,240 @@
 'use client';
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function VerifyPage() {
-  const [studentId, setStudentId] = useState('');
-  const [result, setResult] = useState<any>(null);
-
-  // Credentials Database
-  const credentials: Record<string, any> = {
-    'SG-2026-0002': {
-      title: 'Creativity and Critical Thinking Certificate · 2026',
-      id: 'SG-2026-0002',
-      issuer: 'SOLO GENIUS Official Student & Credential Registry'
-    },
-    'SG-2026-0001': {
-      title: 'Musical Compose and Creative Guitar [Mid Level] Certificate · 2026',
-      id: 'SG-2026-0001',
-      issuer: 'SOLO GENIUS Official Student & Credential Registry',
-      link: '#' // View Credential link
-    }
-  };
-
-  const handleVerify = (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanId = studentId.trim();
-    const data = credentials[cleanId];
-    setResult(data || 'invalid');
-  };
+  const [credentialId, setCredentialId] = useState('SG-2026-0001');
+  const [verified, setVerified] = useState(true);
 
   return (
-    <div style={{ backgroundColor: '#030712', color: '#ffffff', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif', padding: '120px 20px 40px', boxSizing: 'border-box' }}>
-      
-      {/* Luxury Navigation Bar (consistent with Home) */}
+    <div style={{
+      backgroundColor: "#02040a",
+      color: "#ffffff",
+      minHeight: "100vh",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      overflowX: "hidden",
+      width: "100%"
+    }}>
+      {/* Navigation Bar */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
         gap: "12px",
-        padding: "18px 24px",
+        padding: "20px 32px",
         width: "100%",
-        backgroundColor: "rgba(3, 7, 18, 0.92)",
-        backdropFilter: "blur(16px)",
+        backgroundColor: "rgba(2, 4, 10, 0.85)",
+        backdropFilter: "blur(20px)",
         position: "fixed",
         top: 0,
-        left: 0,
         zIndex: 100,
-        borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
+        borderBottom: "1px solid rgba(212, 175, 55, 0.12)",
         boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.5)" }}
           />
-          <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "12px", fontWeight: "700", color: "#ffffff", letterSpacing: "3px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
-          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+        <div style={{ display: "flex", gap: "24px", fontSize: "11px", fontWeight: "500", letterSpacing: "2px", color: "#888888", flexWrap: "wrap" }}>
+          <a href="/" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>HOME</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>EXPLORE</a>
           <a href="/verify" style={{ color: "#D4AF37", textDecoration: "none" }}>VERIFY</a>
+        </div>
+
+        <div>
+          <a href="#" style={{
+            background: "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.03) 100%)",
+            border: "1px solid rgba(212, 175, 55, 0.4)",
+            padding: "9px 18px",
+            borderRadius: "1px",
+            fontSize: "10px",
+            fontWeight: "700",
+            letterSpacing: "2.5px",
+            color: "#D4AF37",
+            textDecoration: "none",
+            transition: "all 0.3s ease"
+          }}>
+            VIP ACCESS
+          </a>
         </div>
       </nav>
 
-      {/* Verification Box */}
-      <div style={{ maxWidth: '600px', margin: '40px auto', border: '1px solid rgba(212, 175, 55, 0.4)', padding: '40px 30px', borderRadius: '6px', backgroundColor: '#0b0f19', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)', boxSizing: 'border-box' }}>
-        <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase", display: "block", textAlign: "center" }}>
-          AUTHENTICATION PORTAL
-        </span>
-        <h2 style={{ color: '#ffffff', fontSize: '20px', fontWeight: '700', letterSpacing: '1px', textAlign: 'center', margin: '10px 0 25px 0' }}>
-          STUDENT CREDENTIAL VERIFICATION
-        </h2>
-        
-        <form onSubmit={handleVerify} style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
-          <input 
-            type="text" 
-            placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0001)" 
-            value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
-            style={{ 
-              padding: '12px 14px', 
-              backgroundColor: 'rgba(3, 7, 18, 0.6)', 
-              border: '1px solid rgba(212, 175, 55, 0.3)', 
-              borderRadius: '4px',
-              color: '#fff', 
-              fontSize: '13px',
-              outline: 'none',
-              boxSizing: 'border-box',
-              letterSpacing: '1px'
-            }}
-          />
-          <button type="submit" style={{ 
-            padding: '12px', 
-            backgroundColor: '#D4AF37', 
-            color: '#030712', 
-            fontWeight: '700', 
-            fontSize: '12px',
-            letterSpacing: '1.5px',
-            border: 'none', 
-            borderRadius: '2px',
-            cursor: 'pointer' 
-          }}>
-            VERIFY CREDENTIAL
-          </button>
-        </form>
-
-        {result === 'invalid' && (
-          <div style={{ color: '#ef4444', textAlign: 'center', border: '1px solid rgba(239, 68, 68, 0.3)', backgroundColor: 'rgba(239, 68, 68, 0.05)', padding: '12px', borderRadius: '4px', fontSize: '12px', letterSpacing: '1px' }}>
-            Invalid Credential ID. Please check and try again.
-          </div>
-        )}
-
-        {result && result !== 'invalid' && (
-          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '20px', marginTop: '10px' }}>
-            <span style={{ color: '#10b981', fontSize: '10px', fontWeight: '700', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
-              ✓ VERIFIED AUTHENTIC RECORD
+      {/* Main Verification Container */}
+      <main style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "140px 20px 80px",
+        boxSizing: "border-box"
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: "580px",
+          backgroundColor: "rgba(10, 14, 23, 0.75)",
+          backgroundImage: "linear-gradient(145deg, rgba(212,175,55,0.03) 0%, transparent 100%)",
+          border: "1px solid rgba(212, 175, 55, 0.25)",
+          borderRadius: "4px",
+          padding: "45px 40px",
+          boxShadow: "0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.05)",
+          boxSizing: "border-box",
+          backdropFilter: "blur(10px)"
+        }}>
+          {/* Header */}
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+            <span style={{
+              color: "#D4AF37",
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "4px",
+              textTransform: "uppercase",
+              display: "block",
+              marginBottom: "10px"
+            }}>
+              Authentication Portal
             </span>
-            <h3 style={{ color: '#D4AF37', fontSize: '16px', fontWeight: '700', marginBottom: '10px', lineHeight: '1.4' }}>
-              {result.title}
-            </h3>
-            <p style={{ fontSize: '12px', color: '#d1d5db', marginBottom: '6px' }}>Credential ID: <strong style={{ color: '#fff' }}>{result.id}</strong></p>
-            <p style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '15px', letterSpacing: '0.5px' }}>ISSUED BY: {result.issuer}</p>
-            {result.link && (
-              <a href={result.link} style={{ color: '#D4AF37', textDecoration: 'none', fontSize: '12px', fontWeight: '600', letterSpacing: '1px' }}>
-                VIEW CREDENTIAL →
-              </a>
-            )}
+            <h1 style={{
+              fontSize: "clamp(20px, 3vw, 24px)",
+              fontWeight: "700",
+              letterSpacing: "2px",
+              color: "#ffffff",
+              margin: 0
+            }}>
+              STUDENT CREDENTIAL VERIFICATION
+            </h1>
           </div>
-        )}
-      </div>
+
+          {/* Input Form */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+            <div style={{ position: "relative" }}>
+              <input 
+                type="text" 
+                value={credentialId}
+                onChange={(e) => setCredentialId(e.target.value)}
+                placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0001)"
+                style={{
+                  width: "100%",
+                  backgroundColor: "rgba(3, 7, 18, 0.9)",
+                  border: "1px solid rgba(212, 175, 55, 0.35)",
+                  borderRadius: "2px",
+                  padding: "16px 20px",
+                  color: "#ffffff",
+                  fontSize: "13px",
+                  letterSpacing: "2px",
+                  outline: "none",
+                  boxSizing: "border-box",
+                  transition: "border-color 0.3s ease"
+                }}
+              />
+            </div>
+
+            <button 
+              onClick={() => setVerified(true)}
+              style={{
+                width: "100%",
+                background: "linear-gradient(135deg, #D4AF37 0%, #aa8c2c 100%)",
+                border: "none",
+                borderRadius: "2px",
+                padding: "16px",
+                color: "#030712",
+                fontSize: "11px",
+                fontWeight: "800",
+                letterSpacing: "2.5px",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                transition: "opacity 0.2s ease, transform 0.1s ease",
+                boxShadow: "0 4px 20px rgba(212, 175, 55, 0.2)"
+              }}
+            >
+              VERIFY CREDENTIAL
+            </button>
+          </div>
+
+          {/* Verification Result Box */}
+          {verified && (
+            <div style={{
+              borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+              paddingTop: "28px",
+              animation: "fadeIn 0.4s ease"
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px" }}>
+                <span style={{ color: "#34d399", fontSize: "14px" }}>✦</span>
+                <span style={{ color: "#34d399", fontSize: "10px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase" }}>
+                  Verified Authentic Record
+                </span>
+              </div>
+
+              <h3 style={{
+                fontSize: "15px",
+                fontWeight: "600",
+                color: "#ffffff",
+                letterSpacing: "0.5px",
+                margin: "0 0 10px 0",
+                lineHeight: "1.5"
+              }}>
+                Musical Compose and Creative Guitar [Mid Level] Certificate · 2026
+              </h3>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "20px" }}>
+                <p style={{ color: "#9ca3af", fontSize: "11.5px", letterSpacing: "1px", margin: 0 }}>
+                  Credential ID: <span style={{ color: "#ffffff", fontWeight: "600" }}>{credentialId}</span>
+                </p>
+                <p style={{ color: "#9ca3af", fontSize: "11px", letterSpacing: "1px", margin: 0, textTransform: "uppercase" }}>
+                  Issued By: Solo Genius Official Student & Credential Registry
+                </p>
+              </div>
+
+              <div>
+                <a href="#" style={{
+                  color: "#D4AF37",
+                  fontSize: "11px",
+                  fontWeight: "700",
+                  letterSpacing: "1.5px",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "opacity 0.2s"
+                }}>
+                  VIEW CREDENTIAL →
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer style={{ 
+        padding: "30px 40px", 
+        borderTop: "1px solid rgba(255, 255, 255, 0.06)", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        flexWrap: "wrap",
+        gap: "15px",
+        color: "#6b7280", 
+        fontSize: "10px", 
+        letterSpacing: "2px",
+        boxSizing: "border-box"
+      }}>
+        <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
+        <div style={{ display: "flex", gap: "24px" }}>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
+        </div>
+      </footer>
     </div>
   );
 }
