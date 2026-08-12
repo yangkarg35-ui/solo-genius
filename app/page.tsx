@@ -139,7 +139,7 @@ export default function HomePage() {
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="/verify" style={{ color: "#D4AF37", textDecoration: "none" }}>VERIFY</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
         </div>
 
         <div>
