@@ -17,13 +17,14 @@ export default function VerifyPage() {
       title: 'Musical Compose and Creative Guitar [Mid Level] Certificate · 2026',
       id: 'SG-2026-000002',
       issuer: 'SOLO GENIUS Official Student & Credential Registry',
-      link: '#' 
+      link: '#' // View Credential link
     }
   };
 
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
-    const data = credentials[studentId.trim()];
+    const cleanId = studentId.trim();
+    const data = credentials[cleanId];
     setResult(data || 'invalid');
   };
 
@@ -35,7 +36,7 @@ export default function VerifyPage() {
         <form onSubmit={handleVerify} style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
           <input 
             type="text" 
-            placeholder="ENTER CREDENTIAL ID (e.g., SG-2026-0001)" 
+            placeholder="ENTER CREDENTIAL ID" 
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
             style={{ padding: '15px', backgroundColor: '#111', border: '1px solid #333', color: '#fff', fontSize: '16px' }}
@@ -46,7 +47,7 @@ export default function VerifyPage() {
         </form>
 
         {result === 'invalid' && (
-          <div style={{ color: '#f00', textAlign: 'center' }}>Invalid Credential ID.</div>
+          <div style={{ color: '#f00', textAlign: 'center', border: '1px solid #f00', padding: '10px' }}>Invalid Credential ID.</div>
         )}
 
         {result && result !== 'invalid' && (
