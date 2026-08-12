@@ -1,7 +1,5 @@
 'use client';
-
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,14 +55,46 @@ export default function HomePage() {
   };
 
   const manifestoItems = [
-    { num: "01", title: "Mastery", desc: "We believe mastery cannot be rushed. Uncompromising depth over superficial speed." },
-    { num: "02", title: "Originality", desc: "We believe originality is more valuable than imitation. Creating absolute artistic autonomy." },
-    { num: "03", title: "Understanding", desc: "We believe deep understanding outlasts memorization. Grasping the core universal laws." },
-    { num: "04", title: "Systems", desc: "We believe great creators are built through systems, not shortcuts. Precision architecture." },
-    { num: "05", title: "Quality", desc: "We believe quality is remembered long after speed is forgotten. The elite standard." },
-    { num: "06", title: "Discipline", desc: "We believe creativity is a discipline, not an accident. Rigorous daily mechanical execution." },
-    { num: "07", title: "Transformation", desc: "We believe learning should transform the way you think, not just what you know." },
-    { num: "08", title: "Identity", desc: "We believe music is not the destination—it is the medium to discover your creative identity." }
+    {
+      num: "01",
+      title: "Mastery",
+      desc: "We believe mastery cannot be rushed. Uncompromising depth over superficial speed."
+    },
+    {
+      num: "02",
+      title: "Originality",
+      desc: "We believe originality is more valuable than imitation. Creating absolute artistic autonomy."
+    },
+    {
+      num: "03",
+      title: "Understanding",
+      desc: "We believe deep understanding outlasts memorization. Grasping the core universal laws."
+    },
+    {
+      num: "04",
+      title: "Systems",
+      desc: "We believe great creators are built through systems, not shortcuts. Precision architecture."
+    },
+    {
+      num: "05",
+      title: "Quality",
+      desc: "We believe quality is remembered long after speed is forgotten. The elite standard."
+    },
+    {
+      num: "06",
+      title: "Discipline",
+      desc: "We believe creativity is a discipline, not an accident. Rigorous daily mechanical execution."
+    },
+    {
+      num: "07",
+      title: "Transformation",
+      desc: "We believe learning should transform the way you think, not just what you know."
+    },
+    {
+      num: "08",
+      title: "Identity",
+      desc: "We believe music is not the destination—it is the medium to discover your creative identity."
+    }
   ];
 
   return (
@@ -78,33 +108,27 @@ export default function HomePage() {
       width: "100%"
     }}>
       {/* Luxury Navigation Bar */}
-      <motion.nav 
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "12px",
-          padding: "18px 24px",
-          width: "100%",
-          backgroundColor: "rgba(3, 7, 18, 0.92)",
-          backdropFilter: "blur(16px)",
-          position: "fixed",
-          top: 0,
-          zIndex: 100,
-          borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
-          boxSizing: "border-box"
-        }}
-      >
+      <nav style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        gap: "12px",
+        padding: "18px 24px",
+        width: "100%",
+        backgroundColor: "rgba(3, 7, 18, 0.92)",
+        backdropFilter: "blur(16px)",
+        position: "fixed",
+        top: 0,
+        zIndex: 100,
+        borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
+        boxSizing: "border-box"
+      }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
             style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
-            onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
           />
           <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
             Solo Genius
@@ -146,7 +170,7 @@ export default function HomePage() {
             APPLY FOR ENROLLMENT
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Cinematic Hero Section */}
       <section style={{
@@ -161,14 +185,13 @@ export default function HomePage() {
         overflow: "hidden",
         boxSizing: "border-box"
       }}>
-        {/* Background Image with Fallback check */}
         <div style={{
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: "url('/owner.png'), url('/owner.jpg')",
+          backgroundImage: "url('/owner.jpg')",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
@@ -186,12 +209,7 @@ export default function HomePage() {
           zIndex: 1
         }} />
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}
-        >
+        <div style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
           <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
             The Architecture of Mastery behind creative musicians
           </span>
@@ -232,7 +250,7 @@ export default function HomePage() {
               OUR MANIFESTO
             </a>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Manifesto Section */}
@@ -251,24 +269,17 @@ export default function HomePage() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px" }}>
           {manifestoItems.map((item, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.05 }}
-              style={{ 
-                backgroundColor: "rgba(11, 15, 25, 0.75)", 
-                border: "1px solid rgba(212, 175, 55, 0.2)", 
-                borderRadius: "4px", 
-                padding: "24px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                boxSizing: "border-box",
-                backdropFilter: "blur(8px)"
-              }}
-            >
+            <div key={idx} style={{ 
+              backgroundColor: "rgba(11, 15, 25, 0.75)", 
+              border: "1px solid rgba(212, 175, 55, 0.2)", 
+              borderRadius: "4px", 
+              padding: "24px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxSizing: "border-box",
+              backdropFilter: "blur(8px)"
+            }}>
               <div>
                 <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>
                   {item.num} — PRINCIPLE
@@ -280,7 +291,7 @@ export default function HomePage() {
                   {item.desc}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -302,23 +313,19 @@ export default function HomePage() {
           padding: "15px",
           boxSizing: "border-box"
         }}>
-          <motion.div 
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            style={{
-              backgroundColor: "#0b0f19",
-              border: "1px solid rgba(212, 175, 55, 0.4)",
-              borderRadius: "6px",
-              padding: "24px 20px",
-              width: "100%",
-              maxWidth: "520px",
-              maxHeight: "90vh",
-              overflowY: "auto",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
-              position: "relative",
-              boxSizing: "border-box"
-            }}
-          >
+          <div style={{
+            backgroundColor: "#0b0f19",
+            border: "1px solid rgba(212, 175, 55, 0.4)",
+            borderRadius: "6px",
+            padding: "24px 20px",
+            width: "100%",
+            maxWidth: "520px",
+            maxHeight: "90vh",
+            overflowY: "auto",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+            position: "relative",
+            boxSizing: "border-box"
+          }}>
             <button 
               onClick={() => setIsModalOpen(false)}
               style={{
@@ -524,7 +531,7 @@ export default function HomePage() {
                     type="submit"
                     disabled={isLoading}
                     style={{
-                      backgroundColor: isLoading ? "#554512" : "#D4AF37",
+                      backgroundColor: "#D4AF37",
                       color: "#030712",
                       border: "none",
                       padding: "12px",
@@ -549,7 +556,7 @@ export default function HomePage() {
                   Application Received Successfully
                 </h2>
                 <p style={{ color: "#9ca3af", fontSize: "12px", lineHeight: "1.5", marginBottom: "20px" }}>
-                  Your admission details and payment receipt have been dispatched securely. Verification will be processed promptly.
+                  Your admission details and payment receipt have been dispatched securely to Boss&apos;s Telegram channel. Verification will be processed promptly.
                 </p>
                 <button 
                   onClick={() => setIsModalOpen(false)}
@@ -569,7 +576,7 @@ export default function HomePage() {
                 </button>
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
       )}
 
