@@ -136,10 +136,10 @@ export default function HomePage() {
         </div>
 
         <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
-          <a href="/" style={{ color: "#D4AF37", textDecoration: "none" }}>HOME</a>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none" }}>MANIFESTO</a>
+          <a href="/verify" style={{ color: "#D4AF37", textDecoration: "none" }}>VERIFY</a>
         </div>
 
         <div>
