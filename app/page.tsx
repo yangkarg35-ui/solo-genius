@@ -1,232 +1,599 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function HomePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [screenshot, setScreenshot] = useState<string | null>(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // New Form Fields State
+  const [fullName, setFullName] = useState('');
+  const [age, setAge] = useState('');
+  const [city, setCity] = useState('');
+  const [phone, setPhone] = useState('');
+  const [goal, setGoal] = useState('');
 
-  // Animation Variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setScreenshot(imageUrl);
+    }
   };
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+  const handleConfirmPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (!fileInput.files?.[0]) return;
+
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('screenshot', fileInput.files[0]);
+    formData.append('fullName', fullName);
+    formData.append('age', age);
+    formData.append('city', city);
+    formData.append('phone', phone);
+    formData.append('goal', goal);
+
+    try {
+      const res = await fetch('/api/verify-payment', {
+        method: 'POST',
+        body: formData,
+      });
+      if (res.ok) {
+        setIsConfirmed(true);
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const goldGlowHover = {
-    hover: {
-      scale: 1.02,
-      boxShadow: '0px 0px 20px rgba(212, 175, 55, 0.4)',
-      borderColor: '#D4AF37',
-      transition: { duration: 0.3 },
-    },
-  };
+  const manifestoItems = [
+    { num: "01", title: "Mastery", desc: "We believe mastery cannot be rushed. Uncompromising depth over superficial speed." },
+    { num: "02", title: "Originality", desc: "We believe originality is more valuable than imitation. Creating absolute artistic autonomy." },
+    { num: "03", title: "Understanding", desc: "We believe deep understanding outlasts memorization. Grasping the core universal laws." },
+    { num: "04", title: "Systems", desc: "We believe great creators are built through systems, not shortcuts. Precision architecture." },
+    { num: "05", title: "Quality", desc: "We believe quality is remembered long after speed is forgotten. The elite standard." },
+    { num: "06", title: "Discipline", desc: "We believe creativity is a discipline, not an accident. Rigorous daily mechanical execution." },
+    { num: "07", title: "Transformation", desc: "We believe learning should transform the way you think, not just what you know." },
+    { num: "08", title: "Identity", desc: "We believe music is not the destination—it is the medium to discover your creative identity." }
+  ];
 
   return (
-    <div style={{ backgroundColor: '#0A0A0A', color: '#F5F5F7', minHeight: '100vh', fontFamily: "'Cinzel', 'Inter', sans-serif", overflowX: 'hidden' }}>
-      
-      {/* 1. Header & Navigation */}
+    <div style={{
+      backgroundColor: "#030712",
+      color: "#ffffff",
+      minHeight: "100vh",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      scrollBehavior: "smooth",
+      overflowX: "hidden",
+      width: "100%"
+    }}>
+      {/* Luxury Navigation Bar */}
       <motion.nav 
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 40px', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', backdropFilter: 'blur(10px)', position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'rgba(10, 10, 10, 0.8)' }}
+        transition={{ duration: 0.6 }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "12px",
+          padding: "18px 24px",
+          width: "100%",
+          backgroundColor: "rgba(3, 7, 18, 0.92)",
+          backdropFilter: "blur(16px)",
+          position: "fixed",
+          top: 0,
+          zIndex: 100,
+          borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
+          boxSizing: "border-box"
+        }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <img src="/logo.png" alt="Solo Genius Logo" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
-          <span style={{ fontSize: '1.2rem', fontWeight: '700', letterSpacing: '2px', color: '#D4AF37' }}>SOLO GENIUS</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img 
+            src="/logo.png" 
+            alt="Solo Genius Logo" 
+            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+          />
+          <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+            Solo Genius
+          </span>
         </div>
 
-        {/* Desktop Links */}
-        <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-          {['Curriculum', 'Manifesto', 'Identity'].map((item, index) => (
-            <a key={index} href={`#${item.toLowerCase()}`} style={{ color: '#A1A1A6', textDecoration: 'none', fontSize: '0.9rem', letterSpacing: '1px', transition: 'color 0.3s' }}>
-              {item}
-            </a>
-          ))}
-          <a href="/verify" style={{ color: '#D4AF37', textDecoration: 'none', fontSize: '0.85rem', letterSpacing: '1px', border: '1px solid #D4AF37', padding: '8px 16px', borderRadius: '2px' }}>
-            VERIFY STUDENT
-          </a>
+        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+          <a href="/verify" style={{ color: "#D4AF37", textDecoration: "none" }}>VERIFY</a>
+        </div>
+
+        <div>
+          <button 
+            onClick={() => {
+              setIsConfirmed(false);
+              setScreenshot(null);
+              setFullName('');
+              setAge('');
+              setCity('');
+              setPhone('');
+              setGoal('');
+              setIsModalOpen(true);
+            }}
+            style={{
+              background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212, 175, 55, 0.5)",
+              padding: "8px 16px",
+              borderRadius: "2px",
+              fontSize: "10px",
+              fontWeight: "700",
+              letterSpacing: "2px",
+              color: "#D4AF37",
+              cursor: "pointer",
+              transition: "all 0.3s ease"
+            }}
+          >
+            APPLY FOR ENROLLMENT
+          </button>
         </div>
       </motion.nav>
 
-      {/* 2. Hero Section */}
-      <motion.section 
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        style={{ minHeight: '85vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '0 20px', position: 'relative' }}
-      >
-        <motion.p variants={fadeInUp} style={{ color: '#D4AF37', fontSize: '0.9rem', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '15px' }}>
-          Private Exclusive Circle
-        </motion.p>
-        
-        <motion.h1 variants={fadeInUp} style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: '300', letterSpacing: '3px', lineHeight: '1.2', maxWidth: '900px', marginBottom: '25px' }}>
-          FOR THE <span style={{ color: '#D4AF37', fontStyle: 'italic', fontWeight: '600' }}>0.000833%</span> WHO DEMAND ABSOLUTE MASTERY
-        </motion.h1>
+      {/* Cinematic Hero Section */}
+      <section style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        padding: "130px 20px 60px",
+        position: "relative",
+        overflow: "hidden",
+        boxSizing: "border-box"
+      }}>
+        {/* Background Image with Fallback check */}
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url('/owner.png'), url('/owner.jpg')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          zIndex: 1,
+          filter: "brightness(1.1) contrast(1.1) saturate(1.05)"
+        }} />
 
-        <motion.p variants={fadeInUp} style={{ color: '#A1A1A6', fontSize: '1.1rem', maxWidth: '650px', lineHeight: '1.8', marginBottom: '40px' }}>
-          Silent, technical, and uncompromising guitar harmony logic. We do not teach the crowd; we craft the elite solitary genius.
-        </motion.p>
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "linear-gradient(180deg, rgba(3,7,18,0.35) 0%, rgba(3,7,18,0.88) 100%)",
+          zIndex: 1
+        }} />
 
-        <motion.div variants={fadeInUp}>
-          <motion.button 
-            whileHover={{ scale: 1.05, boxShadow: '0 0 25px rgba(212, 175, 55, 0.6)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsModalOpen(true)}
-            style={{ backgroundColor: '#D4AF37', color: '#0A0A0A', border: 'none', padding: '18px 42px', fontSize: '0.9rem', fontWeight: '700', letterSpacing: '2px', cursor: 'pointer', borderRadius: '2px' }}
-          >
-            REQUEST ACCESS
-          </motion.button>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}
+        >
+          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
+            The Architecture of Mastery behind creative musicians
+          </span>
+          <h1 style={{ fontSize: "clamp(28px, 6.5vw, 48px)", fontWeight: "800", letterSpacing: "-0.5px", color: "#ffffff", margin: 0, lineHeight: "1.2" }}>
+            Become The Creator<br />
+            <span style={{ color: "#D4AF37" }}>You Were Designed To Be</span>
+          </h1>
+          <p style={{ color: "#d1d5db", fontSize: "14px", lineHeight: "1.6", letterSpacing: "0.5px", margin: "8px 0 24px 0", padding: "0 10px" }}>
+            We believe originality is more valuable than imitation.
+          </p>
+          <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap", width: "100%" }}>
+            <a href="/explore" style={{
+              backgroundColor: "#ffffff",
+              color: "#030712",
+              padding: "12px 28px",
+              borderRadius: "2px",
+              fontSize: "11px",
+              fontWeight: "700",
+              letterSpacing: "1.5px",
+              textDecoration: "none",
+              textAlign: "center",
+              boxShadow: "0 4px 20px rgba(255,255,255,0.15)"
+            }}>
+              EXPLORE SYSTEMS
+            </a>
+            <a href="#manifesto" style={{
+              backgroundColor: "transparent",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.3)",
+              padding: "12px 28px",
+              borderRadius: "2px",
+              fontSize: "11px",
+              fontWeight: "700",
+              letterSpacing: "1.5px",
+              textDecoration: "none",
+              textAlign: "center"
+            }}>
+              OUR MANIFESTO
+            </a>
+          </div>
         </motion.div>
-      </motion.section>
+      </section>
 
-      {/* 3. The Brand Manifesto */}
-      <section id="manifesto" style={{ padding: '100px 20px', backgroundColor: '#050505', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={staggerContainer}
-            style={{ textAlign: 'center', marginBottom: '70px' }}
-          >
-            <motion.h2 variants={fadeInUp} style={{ fontSize: '2rem', letterSpacing: '3px', color: '#D4AF37', marginBottom: '10px' }}>THE MANIFESTO</motion.h2>
-            <motion.div variants={fadeInUp} style={{ width: '50px', height: '1px', backgroundColor: '#D4AF37', margin: '0 auto' }}></motion.div>
-          </motion.div>
+      {/* Manifesto Section */}
+      <section id="manifesto" style={{ maxWidth: "1200px", margin: "0 auto", padding: "90px 20px", boxSizing: "border-box" }}>
+        <div style={{ textAlign: "center", marginBottom: "50px" }}>
+          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
+            Core Philosophy
+          </span>
+          <h2 style={{ fontSize: "clamp(26px, 4.5vw, 40px)", fontWeight: "800", letterSpacing: "-0.5px", margin: "10px 0 15px 0", color: "#ffffff" }}>
+            Our Manifesto
+          </h2>
+          <p style={{ color: "#9ca3af", fontSize: "14px", maxWidth: "650px", margin: "0 auto", lineHeight: "1.6", padding: "0 10px" }}>
+            We exist to build creators who think deeply, create intentionally, and pursue excellence without compromise.
+          </p>
+        </div>
 
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-50px' }}
-            variants={staggerContainer}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}
-          >
-            {[
-              { title: 'NO WASTED TALK', desc: 'Direct, high-end technical connection. No ego, no fluff, no stage theatricals. Pure architectural chord theory.' },
-              { title: 'STATUS & BELONGING', desc: 'A silent, mysterious network reserved exclusively for those who value precise artistic execution over popular approval.' },
-              { title: 'CREATIVE MASTERPIECE', desc: 'Transforming foundational rhythm mechanics and numeric chord degree steps into absolute artistic dominance.' }
-            ].map((item, idx) => (
-              <motion.div 
-                key={idx}
-                variants={fadeInUp}
-                whileHover="hover"
-                initial="hidden"
-                animate="visible"
-                custom={idx}
-                style={{ backgroundColor: '#0F0F10', border: '1px solid rgba(212, 175, 55, 0.15)', padding: '40px 30px', borderRadius: '4px', cursor: 'default' }}
-              >
-                <h3 style={{ fontSize: '1.1rem', letterSpacing: '2px', color: '#F5F5F7', marginBottom: '15px' }}>{item.title}</h3>
-                <p style={{ color: '#8E8E93', fontSize: '0.95rem', lineHeight: '1.7' }}>{item.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px" }}>
+          {manifestoItems.map((item, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
+              style={{ 
+                backgroundColor: "rgba(11, 15, 25, 0.75)", 
+                border: "1px solid rgba(212, 175, 55, 0.2)", 
+                borderRadius: "4px", 
+                padding: "24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                boxSizing: "border-box",
+                backdropFilter: "blur(8px)"
+              }}
+            >
+              <div>
+                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>
+                  {item.num} — PRINCIPLE
+                </span>
+                <h3 style={{ fontSize: "17px", fontWeight: "700", color: "#ffffff", margin: "10px 0 10px 0", letterSpacing: "-0.3px" }}>
+                  {item.title}
+                </h3>
+                <p style={{ color: "#9ca3af", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* 4. Founder / Systemic Identity Section */}
-      <section id="identity" style={{ padding: '100px 20px', maxWidth: '1100px', margin: '0 auto' }}>
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '60px', alignItems: 'center' }}
-        >
-          <motion.div variants={fadeInUp} style={{ position: 'relative' }}>
-            <div style={{ width: '100%', height: '400px', border: '1px solid #D4AF37', position: 'absolute', top: '15px', left: '15px', zIndex: 0 }}></div>
-            <img 
-              src="/owner.jpg" 
-              alt="Solo Genius System" 
-              style={{ width: '100%', height: '400px', objectFit: 'cover', position: 'relative', zIndex: 1, filter: 'grayscale(100%) contrast(120%)' }} 
-            />
-          </motion.div>
-
-          <motion.div variants={fadeInUp}>
-            <p style={{ color: '#D4AF37', fontSize: '0.85rem', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '10px' }}>SYSTEM DESIGNER</p>
-            <h2 style={{ fontSize: '2.2rem', letterSpacing: '2px', marginBottom: '20px' }}>ARCHITECT OF HARMONY</h2>
-            <p style={{ color: '#A1A1A6', lineHeight: '1.8', marginBottom: '20px', fontSize: '0.95rem' }}>
-              We dismantle standard rote memorization and rebuild musical comprehension from raw structural chord degree pathways, aural mapping, and tactile precision.
-            </p>
-            <p style={{ color: '#A1A1A6', lineHeight: '1.8', fontSize: '0.95rem' }}>
-              Designed specifically for high-performers who treat time as their most non-renewable asset.
-            </p>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* 5. Footer */}
-      <footer style={{ borderTop: '1px solid rgba(212, 175, 55, 0.1)', padding: '40px 20px', textAlign: 'center', backgroundColor: '#050505' }}>
-        <p style={{ color: '#6E6E73', fontSize: '0.8rem', letterSpacing: '1px' }}>
-          &copy; {new Date().getFullYear()} SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.
-        </p>
-      </footer>
-
-      {/* 6. Application Modal with Framer Motion AnimatePresence */}
-      <AnimatePresence>
-        {isModalOpen && (
+      {/* Apply / Enrollment Modal */}
+      {isModalOpen && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(3, 7, 18, 0.9)",
+          backdropFilter: "blur(12px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000,
+          padding: "15px",
+          boxSizing: "border-box"
+        }}>
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsModalOpen(false)}
-            style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(8px)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '20px' }}
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            style={{
+              backgroundColor: "#0b0f19",
+              border: "1px solid rgba(212, 175, 55, 0.4)",
+              borderRadius: "6px",
+              padding: "24px 20px",
+              width: "100%",
+              maxWidth: "520px",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+              position: "relative",
+              boxSizing: "border-box"
+            }}
           >
-            <motion.div 
-              initial={{ scale: 0.9, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.9, y: 20, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              style={{ backgroundColor: '#0F0F10', border: '1px solid #D4AF37', padding: '40px', maxWidth: '500px', width: '100%', borderRadius: '4px', position: 'relative' }}
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                background: "transparent",
+                border: "none",
+                color: "#9ca3af",
+                fontSize: "16px",
+                cursor: "pointer",
+                padding: "4px"
+              }}
             >
-              <button 
-                onClick={() => setIsModalOpen(false)}
-                style={{ position: 'absolute', top: '15px', right: '20px', backgroundColor: 'transparent', border: 'none', color: '#A1A1A6', fontSize: '1.5rem', cursor: 'pointer' }}
-              >
-                &times;
-              </button>
-              
-              <h3 style={{ color: '#D4AF37', fontSize: '1.4rem', letterSpacing: '2px', marginBottom: '10px' }}>PRIVATE ADMISSION</h3>
-              <p style={{ color: '#A1A1A6', fontSize: '0.85rem', marginBottom: '25px', lineHeight: '1.5' }}>
-                Please provide your contact details. Admission is subject to strict review.
-              </p>
+              ✕
+            </button>
 
-              <form onSubmit={(e) => { e.preventDefault(); setIsModalOpen(false); alert('Application submitted under review.'); }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'block', color: '#F5F5F7', fontSize: '0.8rem', letterSpacing: '1px', marginBottom: '8px' }}>FULL NAME</label>
-                  <input type="text" required style={{ width: '100%', backgroundColor: '#050505', border: '1px solid #2C2C2E', padding: '12px', color: '#F5F5F7', borderRadius: '2px', outline: 'none' }} />
-                </div>
-                
-                <div style={{ marginBottom: '25px' }}>
-                  <label style={{ display: 'block', color: '#F5F5F7', fontSize: '0.8rem', letterSpacing: '1px', marginBottom: '8px' }}>DIRECT EMAIL</label>
-                  <input type="email" required style={{ width: '100%', backgroundColor: '#050505', border: '1px solid #2C2C2E', padding: '12px', color: '#F5F5F7', borderRadius: '2px', outline: 'none' }} />
+            {!isConfirmed ? (
+              <div>
+                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase" }}>
+                  SECURE ELITE ENROLLMENT
+                </span>
+                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", margin: "8px 0 6px 0" }}>
+                  Solo Genius Private Admission Form
+                </h2>
+                <p style={{ color: "#9ca3af", fontSize: "12px", marginBottom: "16px", lineHeight: "1.5" }}>
+                  Fill out your details and complete your tuition fee transfer via KBZ Pay to secure admission.
+                </p>
+
+                {/* Investment Breakdown Box */}
+                <div style={{ backgroundColor: "rgba(3, 7, 18, 0.8)", border: "1px solid rgba(212, 175, 55, 0.3)", borderRadius: "4px", padding: "14px", marginBottom: "14px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Tuition Investment:</span>
+                    <span style={{ color: "#D4AF37", fontSize: "13px", fontWeight: "800" }}>USD 500</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Exchange Rate:</span>
+                    <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "600" }}>1 USD = 4,400 MMK</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Total Payable Amount:</span>
+                    <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: "800" }}>2,200,000 MMK</span>
+                  </div>
                 </div>
 
-                <motion.button 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit" 
-                  style={{ width: '100%', backgroundColor: '#D4AF37', color: '#0A0A0A', border: 'none', padding: '14px', fontWeight: '700', letterSpacing: '2px', cursor: 'pointer', borderRadius: '2px' }}
+                {/* KPay Transfer Details Box */}
+                <div style={{ backgroundColor: "rgba(17, 24, 39, 0.9)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "4px", padding: "14px", marginBottom: "18px" }}>
+                  <p style={{ color: "#9ca3af", fontSize: "10px", textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: "6px", fontWeight: "700" }}>
+                    KBZ Pay Official Transfer Details
+                  </p>
+                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: "0 0 4px 0" }}>Account Name: <strong style={{ color: "#ffffff" }}>Yan Kha</strong></p>
+                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: 0 }}>KPay Number: <strong style={{ color: "#D4AF37", fontSize: "15px", letterSpacing: "1px" }}>09971097886</strong></p>
+                </div>
+
+                {/* Enrollment Form */}
+                <form onSubmit={handleConfirmPayment} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  <div>
+                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
+                      Full Name *
+                    </label>
+                    <input 
+                      type="text" 
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                      placeholder="Enter your full name"
+                      style={{
+                        width: "100%",
+                        color: "#ffffff",
+                        fontSize: "12px",
+                        padding: "10px",
+                        backgroundColor: "rgba(3, 7, 18, 0.6)",
+                        border: "1px solid rgba(212, 175, 55, 0.3)",
+                        borderRadius: "4px",
+                        boxSizing: "border-box"
+                      }}
+                    />
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                    <div>
+                      <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
+                        Age *
+                      </label>
+                      <input 
+                        type="number" 
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                        placeholder="Age"
+                        style={{
+                          width: "100%",
+                          color: "#ffffff",
+                          fontSize: "12px",
+                          padding: "10px",
+                          backgroundColor: "rgba(3, 7, 18, 0.6)",
+                          border: "1px solid rgba(212, 175, 55, 0.3)",
+                          borderRadius: "4px",
+                          boxSizing: "border-box"
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
+                        City / Township *
+                      </label>
+                      <input 
+                        type="text" 
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        required
+                        placeholder="City / Township"
+                        style={{
+                          width: "100%",
+                          color: "#ffffff",
+                          fontSize: "12px",
+                          padding: "10px",
+                          backgroundColor: "rgba(3, 7, 18, 0.6)",
+                          border: "1px solid rgba(212, 175, 55, 0.3)",
+                          borderRadius: "4px",
+                          boxSizing: "border-box"
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
+                      Phone Number / Telegram *
+                    </label>
+                    <input 
+                      type="text" 
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required
+                      placeholder="Phone number or Telegram contact"
+                      style={{
+                        width: "100%",
+                        color: "#ffffff",
+                        fontSize: "12px",
+                        padding: "10px",
+                        backgroundColor: "rgba(3, 7, 18, 0.6)",
+                        border: "1px solid rgba(212, 175, 55, 0.3)",
+                        borderRadius: "4px",
+                        boxSizing: "border-box"
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
+                      Musical Goal / Background *
+                    </label>
+                    <textarea 
+                      value={goal}
+                      onChange={(e) => setGoal(e.target.value)}
+                      required
+                      rows={3}
+                      placeholder="Briefly state your primary musical goal or current level..."
+                      style={{
+                        width: "100%",
+                        color: "#ffffff",
+                        fontSize: "12px",
+                        padding: "10px",
+                        backgroundColor: "rgba(3, 7, 18, 0.6)",
+                        border: "1px solid rgba(212, 175, 55, 0.3)",
+                        borderRadius: "4px",
+                        boxSizing: "border-box",
+                        resize: "vertical"
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "6px", fontWeight: "500" }}>
+                      Upload Payment Transfer Receipt *
+                    </label>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={handleFileUpload}
+                      required
+                      style={{
+                        width: "100%",
+                        color: "#9ca3af",
+                        fontSize: "11px",
+                        padding: "8px",
+                        backgroundColor: "rgba(3, 7, 18, 0.5)",
+                        border: "1px dashed rgba(212, 175, 55, 0.4)",
+                        borderRadius: "4px",
+                        boxSizing: "border-box"
+                      }}
+                    />
+                  </div>
+
+                  {screenshot && (
+                    <div style={{ maxHeight: "120px", overflow: "hidden", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                      <img src={screenshot} alt="Preview" style={{ width: "100%", objectFit: "cover" }} />
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit"
+                    disabled={isLoading}
+                    style={{
+                      backgroundColor: isLoading ? "#554512" : "#D4AF37",
+                      color: "#030712",
+                      border: "none",
+                      padding: "12px",
+                      borderRadius: "2px",
+                      fontWeight: "700",
+                      fontSize: "12px",
+                      letterSpacing: "1.5px",
+                      cursor: isLoading ? "not-allowed" : "pointer",
+                      opacity: isLoading ? 0.7 : 1,
+                      marginTop: "6px",
+                      width: "100%"
+                    }}
+                  >
+                    {isLoading ? "TRANSMITTING APPLICATION..." : "SUBMIT APPLICATION & PROOF"}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", padding: "20px 0" }}>
+                <div style={{ fontSize: "38px", marginBottom: "12px" }}>✨</div>
+                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", marginBottom: "8px" }}>
+                  Application Received Successfully
+                </h2>
+                <p style={{ color: "#9ca3af", fontSize: "12px", lineHeight: "1.5", marginBottom: "20px" }}>
+                  Your admission details and payment receipt have been dispatched securely. Verification will be processed promptly.
+                </p>
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "#D4AF37",
+                    border: "1px solid rgba(212, 175, 55, 0.6)",
+                    padding: "10px 20px",
+                    borderRadius: "2px",
+                    fontWeight: "600",
+                    fontSize: "11px",
+                    letterSpacing: "1px",
+                    cursor: "pointer"
+                  }}
                 >
-                  SUBMIT APPLICATION
-                </motion.button>
-              </form>
-            </motion.div>
+                  CLOSE WINDOW
+                </button>
+              </div>
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
+      {/* Luxury Footer */}
+      <footer style={{ 
+        padding: "40px 20px", 
+        borderTop: "1px solid rgba(255, 255, 255, 0.06)", 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        flexWrap: "wrap", 
+        gap: "15px",
+        color: "#6b7280", 
+        fontSize: "10px", 
+        letterSpacing: "1.5px",
+        boxSizing: "border-box",
+        textAlign: "center"
+      }}>
+        <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
+        <div style={{ display: "flex", gap: "20px" }}>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+        </div>
+      </footer>
     </div>
   );
 }
