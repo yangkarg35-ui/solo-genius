@@ -10,7 +10,7 @@ export default function ExplorePage() {
       title: "FOUNDATION",
       subtitle: "Building The Core",
       purpose: "Build the essential foundation required for lifelong musical growth.",
-      icon: "/logo.png",
+      icon: "/file.svg", // Pillar 1 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Music Fundamentals",
         "Technique",
@@ -26,7 +26,7 @@ export default function ExplorePage() {
       title: "MUSICAL LANGUAGE",
       subtitle: "Understanding How Music Works",
       purpose: "Develop the ability to understand, analyze, and communicate through music.",
-      icon: "/logo.png",
+      icon: "/globe.svg", // Pillar 2 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Music Theory",
         "Rhythm",
@@ -44,7 +44,7 @@ export default function ExplorePage() {
       title: "CREATIVE DEVELOPMENT",
       subtitle: "Building Your Creative Voice",
       purpose: "Transform knowledge into original expression.",
-      icon: "/logo.png",
+      icon: "/next.svg", // Pillar 3 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Creativity Framework",
         "Composition",
@@ -61,7 +61,7 @@ export default function ExplorePage() {
       title: "ARTISTIC MASTERY",
       subtitle: "Developing Your Craft",
       purpose: "Refine skills and develop personal artistic standards.",
-      icon: "/logo.png",
+      icon: "/file.svg", // Pillar 4 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Advanced Technique",
         "Style Development",
@@ -78,7 +78,7 @@ export default function ExplorePage() {
       title: "CREATOR IDENTITY",
       subtitle: "Becoming The Person Behind The Work",
       purpose: "Develop the mindset and identity required for long-term creative success.",
-      icon: "/logo.png",
+      icon: "/globe.svg", // Pillar 5 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Creative Philosophy",
         "Critical Thinking",
@@ -94,7 +94,7 @@ export default function ExplorePage() {
       title: "MASTERY",
       subtitle: "Systematic Execution & Growth",
       purpose: "Lock in rigorous daily systems, performance reviews, and long-term optimization.",
-      icon: "/logo.png",
+      icon: "/next.svg", // Pillar 6 အတွက် သက်ဆိုင်ရာ ပုံ
       includes: [
         "Deliberate Practice",
         "Habit System",
@@ -237,13 +237,13 @@ export default function ExplorePage() {
                 boxSizing: "border-box"
               }}>
                 <div>
-                  {/* Pillar Top Header with Thumbnail / Icon */}
+                  {/* Pillar Top Header with Unique Pillar Icon */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
                     <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
                     <img 
                       src={item.icon} 
                       alt={item.title} 
-                      style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212,175,55,0.4)" }}
+                      style={{ width: "26px", height: "26px", objectFit: "contain", filter: "drop-shadow(0 0 2px rgba(212,175,55,0.5))" }}
                     />
                   </div>
 
