@@ -164,31 +164,11 @@ export default function AboutPage() {
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap", alignItems: "center" }}>
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "#D4AF37", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="#manifesto" onClick={openVerifyModal} style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}>MANIFESTO</a>
-        </div>
-
-        <div>
-          <button 
-            onClick={openVerifyModal}
-            style={{
-              background: "transparent",
-              border: "1px solid rgba(212, 175, 55, 0.6)",
-              padding: "8px 16px",
-              borderRadius: "2px",
-              fontSize: "10px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-              color: "#D4AF37",
-              cursor: "pointer",
-              transition: "all 0.3s ease"
-            }}
-          >
-            APPLY FOR ENROLLMENT
-          </button>
+          <a href="#verify" onClick={openVerifyModal} style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}>VERIFY</a>
         </div>
       </nav>
 
