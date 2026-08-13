@@ -44,6 +44,13 @@ export default function AboutPage() {
     }
   };
 
+  const openVerifyModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsConfirmed(false);
+    setScreenshot(null);
+    setIsModalOpen(true);
+  };
+
   const focusAreas = [
     "Music Theory",
     "Guitar Performance",
@@ -161,19 +168,15 @@ export default function AboutPage() {
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "#D4AF37", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="/#manifesto" style={{ color: "inherit", textDecoration: "none" }}>MANIFESTO</a>
+          <a href="#manifesto" onClick={openVerifyModal} style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}>MANIFESTO</a>
         </div>
 
         <div>
           <button 
-            onClick={() => {
-              setIsConfirmed(false);
-              setScreenshot(null);
-              setIsModalOpen(true);
-            }}
+            onClick={openVerifyModal}
             style={{
-              background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
-              border: "1px solid rgba(212, 175, 55, 0.5)",
+              background: "transparent",
+              border: "1px solid rgba(212, 175, 55, 0.6)",
               padding: "8px 16px",
               borderRadius: "2px",
               fontSize: "10px",
@@ -184,7 +187,7 @@ export default function AboutPage() {
               transition: "all 0.3s ease"
             }}
           >
-            VIP ACCESS
+            APPLY FOR ENROLLMENT
           </button>
         </div>
       </nav>
