@@ -44,13 +44,6 @@ export default function AboutPage() {
     }
   };
 
-  const openVerifyModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsConfirmed(false);
-    setScreenshot(null);
-    setIsModalOpen(true);
-  };
-
   const focusAreas = [
     "Music Theory",
     "Guitar Performance",
@@ -134,70 +127,41 @@ export default function AboutPage() {
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       scrollBehavior: "smooth",
       overflowX: "hidden",
-      width: "100%"
+      width: "100%",
+      boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar (Centered Links & High-End Look) */}
+      {/* Luxury Navigation Bar - Removed fixed position so it scrolls naturally */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "20px 32px",
+        padding: "16px 20px",
         width: "100%",
-        backgroundColor: "rgba(3, 7, 18, 0.92)",
-        backdropFilter: "blur(16px)",
-        position: "fixed",
-        top: 0,
-        zIndex: 100,
+        backgroundColor: "rgba(3, 7, 18, 0.95)",
         borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
         boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
           />
-          <span style={{ fontSize: "12px", fontWeight: "700", color: "#ffffff", letterSpacing: "3px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        {/* Centered Navigation Links */}
-        <div style={{ 
-          display: "flex", 
-          gap: "28px", 
-          fontSize: "11px", 
-          fontWeight: "600", 
-          letterSpacing: "2px", 
-          color: "#888888",
-          alignItems: "center"
-        }}>
-          <a href="/" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>HOME</a>
+        <div style={{ display: "flex", gap: "14px", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", color: "#888888", alignItems: "center" }}>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "#D4AF37", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>EXPLORE</a>
-          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>VERIFY</a>
-        </div>
-
-        <div>
-          <a href="/explore" style={{
-            background: "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.03) 100%)",
-            border: "1px solid rgba(212, 175, 55, 0.4)",
-            padding: "9px 18px",
-            borderRadius: "1px",
-            fontSize: "10px",
-            fontWeight: "700",
-            letterSpacing: "2.5px",
-            color: "#D4AF37",
-            textDecoration: "none",
-            transition: "all 0.3s ease"
-          }}>
-            EXPLORE
-          </a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
         </div>
       </nav>
 
       {/* Page Header */}
-      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "130px 20px 20px", textAlign: "center", boxSizing: "border-box" }}>
+      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "50px 20px 20px", textAlign: "center", boxSizing: "border-box" }}>
         <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
           Solo Genius Architecture
         </span>

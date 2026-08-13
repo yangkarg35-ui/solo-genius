@@ -115,18 +115,14 @@ export default function ExplorePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar - Fixed mobile spacing */}
+      {/* Navigation Bar - Removed fixed position so it scrolls naturally with the page */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "14px 20px",
+        padding: "16px 20px",
         width: "100%",
         backgroundColor: "rgba(3, 7, 18, 0.95)",
-        backdropFilter: "blur(16px)",
-        position: "fixed",
-        top: 0,
-        zIndex: 100,
         borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
         boxSizing: "border-box"
       }}>
@@ -149,14 +145,14 @@ export default function ExplorePage() {
         </div>
       </nav>
 
-      {/* Hero Header - Added proper top padding so it clears the fixed navbar */}
+      {/* Hero Header */}
       <section style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "110px 20px 40px",
+        padding: "50px 20px 40px",
         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
         background: "linear-gradient(180deg, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.95) 100%)",
         boxSizing: "border-box"

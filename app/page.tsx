@@ -105,22 +105,19 @@ export default function HomePage() {
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       scrollBehavior: "smooth",
       overflowX: "hidden",
-      width: "100%"
+      width: "100%",
+      boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar */}
+      {/* Luxury Navigation Bar - Removed fixed position so it scrolls naturally */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
         gap: "12px",
-        padding: "18px 24px",
+        padding: "16px 20px",
         width: "100%",
-        backgroundColor: "rgba(3, 7, 18, 0.92)",
-        backdropFilter: "blur(16px)",
-        position: "fixed",
-        top: 0,
-        zIndex: 100,
+        backgroundColor: "rgba(3, 7, 18, 0.95)",
         borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
         boxSizing: "border-box"
       }}>
@@ -128,18 +125,18 @@ export default function HomePage() {
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
           />
-          <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap" }}>
-          <a href="/" style={{ color: "#9ca3af", textDecoration: "none" }}>HOME</a>
-          <a href="/about" style={{ color: "#9ca3af", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "#9ca3af", textDecoration: "none" }}>EXPLORE</a>
-          <a href="/verify" style={{ color: "#9ca3af", textDecoration: "none" }}>VERIFY</a>
+        <div style={{ display: "flex", gap: "14px", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", color: "#888888", alignItems: "center", flexWrap: "wrap" }}>
+          <a href="/" style={{ color: "#D4AF37", textDecoration: "none" }}>HOME</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
         </div>
 
         <div>
@@ -157,11 +154,11 @@ export default function HomePage() {
             style={{
               background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
               border: "1px solid rgba(212, 175, 55, 0.5)",
-              padding: "8px 16px",
+              padding: "7px 14px",
               borderRadius: "2px",
-              fontSize: "10px",
+              fontSize: "9.5px",
               fontWeight: "700",
-              letterSpacing: "2px",
+              letterSpacing: "1.5px",
               color: "#D4AF37",
               cursor: "pointer",
               transition: "all 0.3s ease"
@@ -174,13 +171,13 @@ export default function HomePage() {
 
       {/* Cinematic Hero Section */}
       <section style={{
-        minHeight: "100vh",
+        minHeight: "90vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "130px 20px 60px",
+        padding: "60px 20px",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box"
