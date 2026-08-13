@@ -115,14 +115,12 @@ export default function ExplorePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Navigation Bar */}
+      {/* Luxury Navigation Bar - Fixed mobile spacing */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: "12px",
-        padding: "16px 20px",
+        padding: "14px 20px",
         width: "100%",
         backgroundColor: "rgba(3, 7, 18, 0.95)",
         backdropFilter: "blur(16px)",
@@ -136,45 +134,29 @@ export default function ExplorePage() {
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "30px", height: "30px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
           />
-          <span style={{ fontSize: "12px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "16px", fontSize: "10.5px", fontWeight: "600", letterSpacing: "1.5px", color: "#888888", alignItems: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: "14px", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", color: "#888888", alignItems: "center" }}>
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
           <a href="/explore" style={{ color: "#D4AF37", textDecoration: "none" }}>EXPLORE</a>
           <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
         </div>
-
-        <div>
-          <a href="/verify" style={{
-            background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
-            border: "1px solid rgba(212, 175, 55, 0.5)",
-            padding: "8px 14px",
-            borderRadius: "1px",
-            fontSize: "9.5px",
-            fontWeight: "700",
-            letterSpacing: "2px",
-            color: "#D4AF37",
-            textDecoration: "none"
-          }}>
-            VIP ACCESS
-          </a>
-        </div>
       </nav>
 
-      {/* Hero Header */}
+      {/* Hero Header - Added proper top padding so it clears the fixed navbar */}
       <section style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "120px 16px 40px",
+        padding: "110px 20px 40px",
         borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
         background: "linear-gradient(180deg, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.95) 100%)",
         boxSizing: "border-box"
@@ -183,7 +165,7 @@ export default function ExplorePage() {
           color: "#D4AF37", 
           textTransform: "uppercase", 
           fontSize: "10px", 
-          letterSpacing: "1.5px", 
+          letterSpacing: "2px", 
           fontWeight: "700", 
           marginBottom: "12px", 
           maxWidth: "100%", 
@@ -191,7 +173,7 @@ export default function ExplorePage() {
           boxSizing: "border-box"
         }}>
           Our learning system is designed around one principle:<br/>
-          <span style={{ fontSize: "12px", letterSpacing: "1.5px", fontWeight: "800", color: "#ffffff", display: "inline-block", marginTop: "6px" }}>
+          <span style={{ fontSize: "11.5px", letterSpacing: "2px", fontWeight: "800", color: "#ffffff", display: "inline-block", marginTop: "6px" }}>
             UNDERSTAND → PRACTICE → CREATE → REFLECT → IMPROVE
           </span>
         </span>
@@ -201,10 +183,10 @@ export default function ExplorePage() {
       </section>
 
       {/* Explore Grid */}
-      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 16px", boxSizing: "border-box" }}>
+      <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 20px", boxSizing: "border-box" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "25px", flexWrap: "wrap", gap: "10px" }}>
           <div>
-            <h3 style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "2px", marginBottom: "4px", fontWeight: "700" }}>
+            <h3 style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "2.5px", marginBottom: "4px", fontWeight: "700" }}>
               System Modules
             </h3>
             <h2 style={{ fontSize: "clamp(20px, 4vw, 28px)", fontWeight: "800", letterSpacing: "-0.5px", margin: 0 }}>
@@ -214,15 +196,15 @@ export default function ExplorePage() {
           <span style={{ color: "#9ca3af", fontSize: "11px", letterSpacing: "1px" }}>01 — 06 PILLARS</span>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
           {exploreModules.map((item, idx) => {
             const isOpen = openPillar === idx;
             return (
               <div key={idx} onClick={() => setOpenPillar(isOpen ? null : idx)} style={{
                 backgroundColor: "rgba(17, 24, 39, 0.8)",
-                border: isOpen ? "1px solid rgba(212, 175, 55, 0.8)" : "1px solid rgba(212, 175, 55, 0.35)",
+                border: isOpen ? "1px solid rgba(212, 175, 55, 0.8)" : "1px solid rgba(212, 175, 55, 0.4)",
                 borderRadius: "6px",
-                padding: "20px",
+                padding: "24px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -232,36 +214,36 @@ export default function ExplorePage() {
               }}>
                 <div>
                   <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
-                  <h3 style={{ fontSize: "17px", fontWeight: "700", margin: "8px 0 4px 0", color: "#ffffff", letterSpacing: "0.5px" }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: "700", margin: "10px 0 4px 0", color: "#ffffff", letterSpacing: "0.5px" }}>
                     {item.title}
                   </h3>
-                  <p style={{ color: "#9ca3af", fontSize: "11px", fontWeight: "500", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "14px" }}>
+                  <p style={{ color: "#9ca3af", fontSize: "11.5px", fontWeight: "500", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "16px" }}>
                     {item.subtitle}
                   </p>
-                  <p style={{ color: "#d1d5db", fontSize: "12.5px", lineHeight: "1.5", margin: "0 0 14px 0" }}>
+                  <p style={{ color: "#d1d5db", fontSize: "13px", lineHeight: "1.6", margin: "0 0 16px 0" }}>
                     <strong style={{ color: "#ffffff" }}>Purpose:</strong> {item.purpose}
                   </p>
 
                   {isOpen && (
-                    <div style={{ marginTop: "14px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                      <p style={{ color: "#D4AF37", fontSize: "10.5px", fontWeight: "700", letterSpacing: "1px", marginBottom: "8px" }}>INCLUDES:</p>
-                      <ul style={{ margin: 0, paddingLeft: "16px", color: "#e5e7eb", fontSize: "12px", lineHeight: "1.6", marginBottom: item.transformation ? "14px" : "0" }}>
+                    <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                      <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "8px" }}>INCLUDES:</p>
+                      <ul style={{ margin: 0, paddingLeft: "16px", color: "#e5e7eb", fontSize: "12.5px", lineHeight: "1.7", marginBottom: item.transformation ? "16px" : "0" }}>
                         {item.includes?.map((subItem, sIdx) => (
                           <li key={sIdx}>{subItem}</li>
                         ))}
                       </ul>
                       {item.transformation && (
                         <>
-                          <p style={{ color: "#D4AF37", fontSize: "10.5px", fontWeight: "700", letterSpacing: "1px", marginBottom: "4px" }}>TRANSFORMATION:</p>
-                          <p style={{ color: "#ffffff", fontSize: "12.5px", fontWeight: "600", margin: 0 }}>{item.transformation}</p>
+                          <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "4px" }}>TRANSFORMATION:</p>
+                          <p style={{ color: "#ffffff", fontSize: "13px", fontWeight: "600", margin: 0 }}>{item.transformation}</p>
                         </>
                       )}
                     </div>
                   )}
                 </div>
 
-                <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "#D4AF37", fontSize: "10.5px", fontWeight: "600", letterSpacing: "1px" }}>
+                <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "600", letterSpacing: "1px" }}>
                     {isOpen ? "CLOSE DETAILS" : "CLICK TO READ FULL DETAILS →"}
                   </span>
                 </div>
@@ -273,21 +255,21 @@ export default function ExplorePage() {
 
       {/* Footer */}
       <footer style={{ 
-        padding: "30px 16px", 
+        padding: "30px 20px", 
         borderTop: "1px solid rgba(255, 255, 255, 0.08)", 
         display: "flex", 
         justifyContent: "space-between", 
         alignItems: "center", 
         flexWrap: "wrap",
-        gap: "12px",
+        gap: "15px",
         color: "#6b7280", 
-        fontSize: "9.5px", 
+        fontSize: "10px", 
         letterSpacing: "1.5px",
         boxSizing: "border-box",
         textAlign: "center"
       }}>
         <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
-        <div style={{ display: "flex", gap: "16px" }}>
+        <div style={{ display: "flex", gap: "20px" }}>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
           <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
