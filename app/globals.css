@@ -1,35 +1,58 @@
-/* Bang & Olufsen / LVMH Style Luxury Menu & Motion */
+/* ==========================================
+   SOLO GENIUS - LUXURY DNA (B&O / LVMH Style)
+   ========================================== */
+
+/* 1. Luxury Nav Link & Animated Underline (ဘယ်ကနေ ညာကို ဇိမ်ခံဆန်ဆန် ဖြာထွက်ခြင်း) */
 .luxury-nav-link {
   position: relative;
+  display: inline-block;
+  color: #ffffff;
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .luxury-nav-link::after {
   content: '';
   position: absolute;
-  width: 0;
+  width: 100%;
   height: 1px;
   bottom: -4px;
   left: 0;
-  background-color: #D4AF37;
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #D4AF37; /* Luxury Gold */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-nav-link:hover {
+  color: #D4AF37;
 }
 
 .luxury-nav-link:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
+/* 2. Luxury Fade Up Motion */
 .luxury-fade-up {
+  opacity: 0;
+  transform: translateY(25px);
   animation: fadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* 3. Luxury Tracking Expansion (Mouse တင်ရင် စာလုံးကြားကွက်လပ် ဖြည်းဖြည်းချင်း ကျယ်လာခြင်း) */
+.luxury-tracking {
+  letter-spacing: 0.05em;
+  transition: letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
+}
+
+.luxury-tracking:hover {
+  letter-spacing: 0.15em;
+  color: #D4AF37;
 }
