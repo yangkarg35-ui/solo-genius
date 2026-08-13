@@ -2,25 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --transition-smooth: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-hero: 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --color-gold: #D4AF37;
+  --color-bg: #030712;
+}
+
 body {
-  background-color: #030712;
+  background-color: var(--color-bg);
   color: #ffffff;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* ဘေးကို ကျော်ထွက်တာတွေမရှိအောင် ကာကွယ်ပေးခြင်း */
+  overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 /* ==========================================
-   SOLO GENIUS - PREMIUM SIDE-SLIDE MOTION ARCHITECTURE
+   SOLO GENIUS - LUXURY MOTION DESIGN SYSTEM
+   Inspired by Aēsop, Prada, and Loewe
    ========================================== */
 
-/* 1. Website တစ်ခုလုံးရှိ Link တွေအတွက် မောက်စ်တင်ရင် ရွှေရောင်မျဉ်းကြောင်း ဘယ်ကနေညာကို ဖြာထွက်ခြင်း */
+/* 1. Global Link & Underline Interaction (Precision Hover) */
 a {
   position: relative;
   display: inline-block;
   color: #ffffff;
   text-decoration: none;
-  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color var(--transition-smooth);
 }
 
 a::after {
@@ -30,14 +39,14 @@ a::after {
   height: 1px;
   bottom: -4px;
   left: 0;
-  background-color: #D4AF37; /* Luxury Gold */
+  background-color: var(--color-gold);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a:hover {
-  color: #D4AF37;
+  color: var(--color-gold);
 }
 
 a:hover::after {
@@ -45,11 +54,11 @@ a:hover::after {
   transform-origin: left;
 }
 
-/* 2. အပေါ်ကနေတက်မလာတော့ဘဲ ဘေး (ဘယ်ဘက်) ကနေ ဖြည်းညှင်းစွာ ဝင်လာမည့် Premium Side Slide Motion */
-h1, h2, h3, .luxury-slide-left {
+/* 2. Premium Side-Slide & Atmosphere (No vertical jump, calm left-to-right entrance) */
+h1, h2, h3, .luxury-slide-in {
   opacity: 0;
-  transform: translateX(-40px); /* ဘယ်ဘက် အဝေးကနေ စတင်မည် */
-  animation: luxurySideSlide 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateX(-30px);
+  animation: luxurySideSlide var(--transition-hero) forwards;
 }
 
 @keyframes luxurySideSlide {
@@ -59,11 +68,32 @@ h1, h2, h3, .luxury-slide-left {
   }
 }
 
-/* 3. စာလုံးကြားကွက်လပ် ဇိမ်ခံဆန်ဆန် ကျယ်လာခြင်း */
-h1 {
+/* Stagger delay classes for progressive editorial reveals */
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+/* 3. Editorial Typography Tracking (Prada Discipline) */
+.luxury-tracking {
   letter-spacing: 0.05em;
-  transition: letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
 }
-h1:hover {
-  letter-spacing: 0.15em;
+
+.luxury-tracking:hover {
+  letter-spacing: 0.12em;
+  color: var(--color-gold);
+}
+
+/* 4. Loewe Inspired Creative Image Reveal */
+.luxury-image-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.luxury-image-wrapper img {
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-image-wrapper:hover img {
+  transform: scale(1.03);
 }
