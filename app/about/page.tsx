@@ -136,14 +136,12 @@ export default function AboutPage() {
       overflowX: "hidden",
       width: "100%"
     }}>
-      {/* Luxury Navigation Bar */}
+      {/* Luxury Navigation Bar (Centered Links & High-End Look) */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: "12px",
-        padding: "18px 24px",
+        padding: "20px 32px",
         width: "100%",
         backgroundColor: "rgba(3, 7, 18, 0.92)",
         backdropFilter: "blur(16px)",
@@ -153,22 +151,48 @@ export default function AboutPage() {
         borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
         boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
             style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
           />
-          <span style={{ fontSize: "13px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "12px", fontWeight: "700", color: "#ffffff", letterSpacing: "3px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "18px", fontSize: "11px", fontWeight: "500", letterSpacing: "1.5px", color: "#9ca3af", flexWrap: "wrap", alignItems: "center" }}>
-          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>HOME</a>
+        {/* Centered Navigation Links */}
+        <div style={{ 
+          display: "flex", 
+          gap: "28px", 
+          fontSize: "11px", 
+          fontWeight: "600", 
+          letterSpacing: "2px", 
+          color: "#888888",
+          alignItems: "center"
+        }}>
+          <a href="/" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>HOME</a>
           <a href="/about" style={{ color: "#D4AF37", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="#verify" onClick={openVerifyModal} style={{ color: "inherit", textDecoration: "none", cursor: "pointer" }}>VERIFY</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>EXPLORE</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.2s" }}>VERIFY</a>
+        </div>
+
+        <div>
+          <a href="/explore" style={{
+            background: "linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.03) 100%)",
+            border: "1px solid rgba(212, 175, 55, 0.4)",
+            padding: "9px 18px",
+            borderRadius: "1px",
+            fontSize: "10px",
+            fontWeight: "700",
+            letterSpacing: "2.5px",
+            color: "#D4AF37",
+            textDecoration: "none",
+            transition: "all 0.3s ease"
+          }}>
+            EXPLORE
+          </a>
         </div>
       </nav>
 
