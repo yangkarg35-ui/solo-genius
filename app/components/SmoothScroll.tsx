@@ -5,8 +5,9 @@ import Lenis from '@studio-freight/lenis';
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1, // ဇိမ်ခံဆန်ပြီး နူးညံ့တဲ့ scroll မြန်နှုန်း
+      lerp: 0.05, // 0.1 ကနေ 0.05 ထိ လျှော့ချလိုက်ဖြင့် Bang & Olufsen လိုမျိုး လေးလံပြီး ဇိမ်ခံဆန်တဲ့ smooth scroll ရပါမယ်
       smoothWheel: true,
+      wheelMultiplier: 0.9,
     });
 
     function raf(time: number) {
@@ -14,6 +15,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
   }, []);
 
   return <>{children}</>;
