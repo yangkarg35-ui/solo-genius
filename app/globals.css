@@ -7,13 +7,14 @@ body {
   color: #ffffff;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* ဘေးကို ကျော်ထွက်တာတွေမရှိအောင် ကာကွယ်ပေးခြင်း */
 }
 
 /* ==========================================
-   SOLO GENIUS - GLOBAL LUXURY MOTION ARCHITECTURE
+   SOLO GENIUS - PREMIUM SIDE-SLIDE MOTION ARCHITECTURE
    ========================================== */
 
-/* 1. Website တစ်ခုလုံးရှိ Link တွေအားလုံးကို မောက်စ်တင်ရင် ရွှေရောင်မျဉ်းကြောင်း ဖြာထွက်စေခြင်း */
+/* 1. Website တစ်ခုလုံးရှိ Link တွေအတွက် မောက်စ်တင်ရင် ရွှေရောင်မျဉ်းကြောင်း ဘယ်ကနေညာကို ဖြာထွက်ခြင်း */
 a {
   position: relative;
   display: inline-block;
@@ -44,25 +45,25 @@ a:hover::after {
   transform-origin: left;
 }
 
-/* 2. Page ပေါ်လာတိုင်း ခေါင်းစဉ်နှင့် စာသားများ အောက်ကနေ ဖြည်းဖြည်းချင်း ပေါ်လာခြင်း (Fade Up) */
-h1, h2, h3, .luxury-fade-up {
+/* 2. အပေါ်ကနေတက်မလာတော့ဘဲ ဘေး (ဘယ်ဘက်) ကနေ ဖြည်းညှင်းစွာ ဝင်လာမည့် Premium Side Slide Motion */
+h1, h2, h3, .luxury-slide-left {
   opacity: 0;
-  transform: translateY(30px);
-  animation: luxuryFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateX(-40px); /* ဘယ်ဘက် အဝေးကနေ စတင်မည် */
+  animation: luxurySideSlide 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes luxuryFadeUp {
+@keyframes luxurySideSlide {
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
 /* 3. စာလုံးကြားကွက်လပ် ဇိမ်ခံဆန်ဆန် ကျယ်လာခြင်း */
 h1 {
   letter-spacing: 0.05em;
-  transition: letter-spacing 0.6s ease;
+  transition: letter-spacing 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 h1:hover {
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
 }
