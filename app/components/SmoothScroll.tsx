@@ -4,7 +4,6 @@ import Lenis from '@studio-freight/lenis';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Check if window is available (Client-side only)
     if (typeof window === 'undefined') return;
 
     const lenis = new Lenis({
