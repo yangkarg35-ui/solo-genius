@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Solo Genius | Luxury Musical School",
-  description: "The Architecture of Mastery behind creative musicians.",
+  description: "The Architecture of Mastery",
 };
 
 export default function RootLayout({
@@ -29,7 +30,9 @@ export default function RootLayout({
       style={{ scrollBehavior: 'smooth' }}
     >
       <body className="min-h-full flex flex-col" style={{ backgroundColor: '#030712', color: '#ffffff', margin: 0, padding: 0 }}>
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
