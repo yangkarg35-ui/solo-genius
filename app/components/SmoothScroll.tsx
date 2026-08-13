@@ -4,8 +4,11 @@ import Lenis from '@studio-freight/lenis';
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Check if window is available (Client-side only)
+    if (typeof window === 'undefined') return;
+
     const lenis = new Lenis({
-      lerp: 0.05, // 0.1 ကနေ 0.05 ထိ လျှော့ချလိုက်ဖြင့် Bang & Olufsen လိုမျိုး လေးလံပြီး ဇိမ်ခံဆန်တဲ့ smooth scroll ရပါမယ်
+      lerp: 0.05,
       smoothWheel: true,
       wheelMultiplier: 0.9,
     });
