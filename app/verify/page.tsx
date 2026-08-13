@@ -18,19 +18,23 @@ const credentialRegistry: Record<string, { title: string; image: string; holder:
 };
 
 export default function VerifyPage() {
-  const [credentialId, setCredentialId] = useState('SG-2026-0001');
-  const [searchId, setSearchId] = useState('SG-2026-0001');
-  const [verifiedData, setVerifiedData] = useState(credentialRegistry['SG-2026-0001']);
+  const [credentialId, setCredentialId] = useState('');
+  const [searchId, setSearchId] = useState('');
+  const [verifiedData, setVerifiedData] = useState<{ title: string; image: string; holder: string; date: string } | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   const handleVerify = (e: React.FormEvent) => {
     e.preventDefault();
     const cleanId = credentialId.trim();
+    if (!cleanId) return;
+    
     if (credentialRegistry[cleanId]) {
       setVerifiedData(credentialRegistry[cleanId]);
       setSearchId(cleanId);
       setNotFound(false);
     } else {
+      setVerifiedData(null);
+      setSearchId(cleanId);
       setNotFound(true);
     }
   };
@@ -153,7 +157,7 @@ export default function VerifyPage() {
                 type="text" 
                 value={credentialId}
                 onChange={(e) => setCredentialId(e.target.value)}
-                placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0001 or SG-2026-0002)"
+                placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0001)"
                 style={{
                   width: "100%",
                   backgroundColor: "rgba(3, 7, 18, 0.9)",
