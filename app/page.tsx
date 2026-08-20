@@ -141,17 +141,8 @@ export default function HomePage() {
         </div>
 
         <div>
-          <button 
-            onClick={() => {
-              setIsConfirmed(false);
-              setScreenshot(null);
-              setFullName('');
-              setAge('');
-              setCity('');
-              setPhone('');
-              setGoal('');
-              setIsModalOpen(true);
-            }}
+          <a 
+            href="/apply"
             style={{
               background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
               border: "1px solid rgba(212, 175, 55, 0.5)",
@@ -161,12 +152,13 @@ export default function HomePage() {
               fontWeight: "700",
               letterSpacing: "1.5px",
               color: "#D4AF37",
-              cursor: "pointer",
+              textDecoration: "none",
+              display: "inline-block",
               transition: "all 0.3s ease"
             }}
           >
             APPLY FOR ENROLLMENT
-          </button>
+          </a>
         </div>
       </nav>
 
@@ -233,19 +225,20 @@ export default function HomePage() {
             }}>
               EXPLORE SYSTEMS
             </a>
-            <a href="#manifesto" style={{
-              backgroundColor: "transparent",
-              color: "#ffffff",
-              border: "1px solid rgba(255,255,255,0.3)",
+            <a href="/apply" style={{
+              background: "linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.08) 100%)",
+              color: "#D4AF37",
+              border: "1px solid rgba(212, 175, 55, 0.6)",
               padding: "12px 28px",
               borderRadius: "2px",
               fontSize: "11px",
               fontWeight: "700",
               letterSpacing: "1.5px",
               textDecoration: "none",
-              textAlign: "center"
+              textAlign: "center",
+              display: "inline-block"
             }}>
-              OUR MANIFESTO
+              APPLY FOR ENROLLMENT
             </a>
           </div>
         </div>
@@ -293,290 +286,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* Apply / Enrollment Modal */}
-      {isModalOpen && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(3, 7, 18, 0.9)",
-          backdropFilter: "blur(12px)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1000,
-          padding: "15px",
-          boxSizing: "border-box"
-        }}>
-          <div style={{
-            backgroundColor: "#0b0f19",
-            border: "1px solid rgba(212, 175, 55, 0.4)",
-            borderRadius: "6px",
-            padding: "24px 20px",
-            width: "100%",
-            maxWidth: "520px",
-            maxHeight: "90vh",
-            overflowY: "auto",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
-            position: "relative",
-            boxSizing: "border-box"
-          }}>
-            <button 
-              onClick={() => setIsModalOpen(false)}
-              style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "transparent",
-                border: "none",
-                color: "#9ca3af",
-                fontSize: "16px",
-                cursor: "pointer",
-                padding: "4px"
-              }}
-            >
-              ✕
-            </button>
-
-            {!isConfirmed ? (
-              <div>
-                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px", textTransform: "uppercase" }}>
-                  SECURE ELITE ENROLLMENT
-                </span>
-                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", margin: "8px 0 6px 0" }}>
-                  Solo Genius Private Admission Form
-                </h2>
-                <p style={{ color: "#9ca3af", fontSize: "12px", marginBottom: "16px", lineHeight: "1.5" }}>
-                  Fill out your details and complete your tuition fee transfer via KBZ Pay to secure admission.
-                </p>
-
-                {/* Investment Breakdown Box */}
-                <div style={{ backgroundColor: "rgba(3, 7, 18, 0.8)", border: "1px solid rgba(212, 175, 55, 0.3)", borderRadius: "4px", padding: "14px", marginBottom: "14px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Tuition Investment:</span>
-                    <span style={{ color: "#D4AF37", fontSize: "13px", fontWeight: "800" }}>USD 500</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: "8px" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Exchange Rate:</span>
-                    <span style={{ color: "#ffffff", fontSize: "11px", fontWeight: "600" }}>1 USD = 4,400 MMK</span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ color: "#9ca3af", fontSize: "11px" }}>Total Payable Amount:</span>
-                    <span style={{ color: "#ffffff", fontSize: "13px", fontWeight: "800" }}>2,200,000 MMK</span>
-                  </div>
-                </div>
-
-                {/* KPay Transfer Details Box */}
-                <div style={{ backgroundColor: "rgba(17, 24, 39, 0.9)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "4px", padding: "14px", marginBottom: "18px" }}>
-                  <p style={{ color: "#9ca3af", fontSize: "10px", textTransform: "uppercase", letterSpacing: "1.5px", marginBottom: "6px", fontWeight: "700" }}>
-                    KBZ Pay Official Transfer Details
-                  </p>
-                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: "0 0 4px 0" }}>Account Name: <strong style={{ color: "#ffffff" }}>Yan Kha</strong></p>
-                  <p style={{ color: "#d1d5db", fontSize: "12px", margin: 0 }}>KPay Number: <strong style={{ color: "#D4AF37", fontSize: "15px", letterSpacing: "1px" }}>09971097886</strong></p>
-                </div>
-
-                {/* Enrollment Form */}
-                <form onSubmit={handleConfirmPayment} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                  <div>
-                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
-                      Full Name *
-                    </label>
-                    <input 
-                      type="text" 
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                      placeholder="Enter your full name"
-                      style={{
-                        width: "100%",
-                        color: "#ffffff",
-                        fontSize: "12px",
-                        padding: "10px",
-                        backgroundColor: "rgba(3, 7, 18, 0.6)",
-                        border: "1px solid rgba(212, 175, 55, 0.3)",
-                        borderRadius: "4px",
-                        boxSizing: "border-box"
-                      }}
-                    />
-                  </div>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-                    <div>
-                      <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
-                        Age *
-                      </label>
-                      <input 
-                        type="number" 
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
-                        required
-                        placeholder="Age"
-                        style={{
-                          width: "100%",
-                          color: "#ffffff",
-                          fontSize: "12px",
-                          padding: "10px",
-                          backgroundColor: "rgba(3, 7, 18, 0.6)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "4px",
-                          boxSizing: "border-box"
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
-                        City / Township *
-                      </label>
-                      <input 
-                        type="text" 
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        required
-                        placeholder="City / Township"
-                        style={{
-                          width: "100%",
-                          color: "#ffffff",
-                          fontSize: "12px",
-                          padding: "10px",
-                          backgroundColor: "rgba(3, 7, 18, 0.6)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "4px",
-                          boxSizing: "border-box"
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
-                      Phone Number / Telegram *
-                    </label>
-                    <input 
-                      type="text" 
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                      placeholder="Phone number or Telegram contact"
-                      style={{
-                        width: "100%",
-                        color: "#ffffff",
-                        fontSize: "12px",
-                        padding: "10px",
-                        backgroundColor: "rgba(3, 7, 18, 0.6)",
-                        border: "1px solid rgba(212, 175, 55, 0.3)",
-                        borderRadius: "4px",
-                        boxSizing: "border-box"
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "4px", fontWeight: "500" }}>
-                      Musical Goal / Background *
-                    </label>
-                    <textarea 
-                      value={goal}
-                      onChange={(e) => setGoal(e.target.value)}
-                      required
-                      rows={3}
-                      placeholder="Briefly state your primary musical goal or current level..."
-                      style={{
-                        width: "100%",
-                        color: "#ffffff",
-                        fontSize: "12px",
-                        padding: "10px",
-                        backgroundColor: "rgba(3, 7, 18, 0.6)",
-                        border: "1px solid rgba(212, 175, 55, 0.3)",
-                        borderRadius: "4px",
-                        boxSizing: "border-box",
-                        resize: "vertical"
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: "block", color: "#d1d5db", fontSize: "11px", marginBottom: "6px", fontWeight: "500" }}>
-                      Upload Payment Transfer Receipt *
-                    </label>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={handleFileUpload}
-                      required
-                      style={{
-                        width: "100%",
-                        color: "#9ca3af",
-                        fontSize: "11px",
-                        padding: "8px",
-                        backgroundColor: "rgba(3, 7, 18, 0.5)",
-                        border: "1px dashed rgba(212, 175, 55, 0.4)",
-                        borderRadius: "4px",
-                        boxSizing: "border-box"
-                      }}
-                    />
-                  </div>
-
-                  {screenshot && (
-                    <div style={{ maxHeight: "120px", overflow: "hidden", borderRadius: "4px", border: "1px solid rgba(255,255,255,0.1)" }}>
-                      <img src={screenshot} alt="Preview" style={{ width: "100%", objectFit: "cover" }} />
-                    </div>
-                  )}
-
-                  <button 
-                    type="submit"
-                    disabled={isLoading}
-                    style={{
-                      backgroundColor: "#D4AF37",
-                      color: "#030712",
-                      border: "none",
-                      padding: "12px",
-                      borderRadius: "2px",
-                      fontWeight: "700",
-                      fontSize: "12px",
-                      letterSpacing: "1.5px",
-                      cursor: isLoading ? "not-allowed" : "pointer",
-                      opacity: isLoading ? 0.7 : 1,
-                      marginTop: "6px",
-                      width: "100%"
-                    }}
-                  >
-                    {isLoading ? "TRANSMITTING APPLICATION..." : "SUBMIT APPLICATION & PROOF"}
-                  </button>
-                </form>
-              </div>
-            ) : (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <div style={{ fontSize: "38px", marginBottom: "12px" }}>✨</div>
-                <h2 style={{ fontSize: "19px", fontWeight: "700", color: "#ffffff", marginBottom: "8px" }}>
-                  Application Received Successfully
-                </h2>
-                <p style={{ color: "#9ca3af", fontSize: "12px", lineHeight: "1.5", marginBottom: "20px" }}>
-                  Your admission details and payment receipt have been dispatched securely. ငါတို့ Team က 24 နာရီအတွင်း ပြန်လည်ဆက်သွယ်ပေးပါမယ်။
-                </p>
-                <button 
-                  onClick={() => setIsModalOpen(false)}
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "#D4AF37",
-                    border: "1px solid rgba(212, 175, 55, 0.6)",
-                    padding: "10px 20px",
-                    borderRadius: "2px",
-                    fontWeight: "600",
-                    fontSize: "11px",
-                    letterSpacing: "1px",
-                    cursor: "pointer"
-                  }}
-                >
-                  CLOSE WINDOW
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Luxury Footer */}
       <footer style={{ 
