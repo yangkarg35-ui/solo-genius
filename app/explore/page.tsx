@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function ExplorePage() {
   const [openPillar, setOpenPillar] = useState<number | null>(null);
@@ -9,6 +10,7 @@ export default function ExplorePage() {
       code: "PILLAR 01", 
       title: "FOUNDATION",
       subtitle: "Building The Core",
+      image: "/fd.png",
       purpose: "Build the essential foundation required for lifelong musical growth.",
       includes: [
         "Music Fundamentals",
@@ -24,6 +26,7 @@ export default function ExplorePage() {
       code: "PILLAR 02", 
       title: "MUSICAL LANGUAGE",
       subtitle: "Understanding How Music Works",
+      image: "/ml.png",
       purpose: "Develop the ability to understand, analyze, and communicate through music.",
       includes: [
         "Music Theory",
@@ -41,6 +44,7 @@ export default function ExplorePage() {
       code: "PILLAR 03", 
       title: "CREATIVE DEVELOPMENT",
       subtitle: "Building Your Creative Voice",
+      image: "/cd.png",
       purpose: "Transform knowledge into original expression.",
       includes: [
         "Creativity Framework",
@@ -57,6 +61,7 @@ export default function ExplorePage() {
       code: "PILLAR 04", 
       title: "ARTISTIC MASTERY",
       subtitle: "Developing Your Craft",
+      image: "/am.png",
       purpose: "Refine skills and develop personal artistic standards.",
       includes: [
         "Advanced Technique",
@@ -73,6 +78,7 @@ export default function ExplorePage() {
       code: "PILLAR 05", 
       title: "CREATOR IDENTITY",
       subtitle: "Becoming The Person Behind The Work",
+      image: "/ci.png",
       purpose: "Develop the mindset and identity required for long-term creative success.",
       includes: [
         "Creative Philosophy",
@@ -88,6 +94,7 @@ export default function ExplorePage() {
       code: "PILLAR 06", 
       title: "MASTERY",
       subtitle: "Systematic Execution & Growth",
+      image: "/ms.png",
       purpose: "Lock in rigorous daily systems, performance reviews, and long-term optimization.",
       includes: [
         "Deliberate Practice",
@@ -115,7 +122,7 @@ export default function ExplorePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Navigation Bar - Removed fixed position so it scrolls naturally with the page */}
+      {/* Navigation Bar */}
       <nav style={{
         display: "flex",
         alignItems: "center",
@@ -178,7 +185,7 @@ export default function ExplorePage() {
         </h1>
       </section>
 
-      {/* Explore Grid */}
+      {/* Explore Grid with Background Images & Motion */}
       <section style={{ maxWidth: "1200px", margin: "0 auto", padding: "40px 20px", boxSizing: "border-box" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "25px", flexWrap: "wrap", gap: "10px" }}>
           <div>
@@ -196,54 +203,103 @@ export default function ExplorePage() {
           {exploreModules.map((item, idx) => {
             const isOpen = openPillar === idx;
             return (
-              <div key={idx} onClick={() => setOpenPillar(isOpen ? null : idx)} style={{
-                backgroundColor: "rgba(17, 24, 39, 0.8)",
-                border: isOpen ? "1px solid rgba(212, 175, 55, 0.8)" : "1px solid rgba(212, 175, 55, 0.4)",
-                borderRadius: "6px",
-                padding: "24px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                cursor: "pointer",
-                transition: "all 0.3s ease",
-                boxSizing: "border-box"
-              }}>
-                <div>
-                  <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
-                  <h3 style={{ fontSize: "18px", fontWeight: "700", margin: "10px 0 4px 0", color: "#ffffff", letterSpacing: "0.5px" }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ color: "#9ca3af", fontSize: "11.5px", fontWeight: "500", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "16px" }}>
-                    {item.subtitle}
-                  </p>
-                  <p style={{ color: "#d1d5db", fontSize: "13px", lineHeight: "1.6", margin: "0 0 16px 0" }}>
-                    <strong style={{ color: "#ffffff" }}>Purpose:</strong> {item.purpose}
-                  </p>
+              <motion.div 
+                key={idx} 
+                onClick={() => setOpenPillar(isOpen ? null : idx)}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  position: "relative",
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  border: isOpen ? "1px solid rgba(212, 175, 55, 0.9)" : "1px solid rgba(212, 175, 55, 0.4)",
+                  cursor: "pointer",
+                  boxSizing: "border-box",
+                  minHeight: "340px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end"
+                }}
+              >
+                {/* Background Image Layer */}
+                <div style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: `url(${item.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  opacity: 0.35,
+                  zIndex: 1,
+                  transition: "transform 0.5s ease"
+                }} />
 
-                  {isOpen && (
-                    <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                      <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "8px" }}>INCLUDES:</p>
-                      <ul style={{ margin: 0, paddingLeft: "16px", color: "#e5e7eb", fontSize: "12.5px", lineHeight: "1.7", marginBottom: item.transformation ? "16px" : "0" }}>
-                        {item.includes?.map((subItem, sIdx) => (
-                          <li key={sIdx}>{subItem}</li>
-                        ))}
-                      </ul>
-                      {item.transformation && (
-                        <>
-                          <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "4px" }}>TRANSFORMATION:</p>
-                          <p style={{ color: "#ffffff", fontSize: "13px", fontWeight: "600", margin: 0 }}>{item.transformation}</p>
-                        </>
-                      )}
-                    </div>
-                  )}
-                </div>
+                {/* Dark Gradient Overlay for Readability */}
+                <div style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  background: "linear-gradient(180deg, rgba(3,7,18,0.3) 0%, rgba(3,7,18,0.92) 70%, rgba(3,7,18,0.98) 100%)",
+                  zIndex: 2
+                }} />
 
-                <div style={{ marginTop: "20px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "600", letterSpacing: "1px" }}>
-                    {isOpen ? "CLOSE DETAILS" : "CLICK TO READ FULL DETAILS →"}
-                  </span>
+                {/* Content Layer */}
+                <div style={{
+                  position: "relative",
+                  zIndex: 3,
+                  padding: "24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  height: "100%",
+                  boxSizing: "border-box"
+                }}>
+                  <div>
+                    <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>{item.code}</span>
+                    <h3 style={{ fontSize: "18px", fontWeight: "700", margin: "10px 0 4px 0", color: "#ffffff", letterSpacing: "0.5px" }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ color: "#9ca3af", fontSize: "11.5px", fontWeight: "500", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "12px" }}>
+                      {item.subtitle}
+                    </p>
+                    <p style={{ color: "#d1d5db", fontSize: "13px", lineHeight: "1.6", margin: "0 0 12px 0" }}>
+                      <strong style={{ color: "#ffffff" }}>Purpose:</strong> {item.purpose}
+                    </p>
+
+                    {isOpen && (
+                      <motion.div 
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        transition={{ duration: 0.3 }}
+                        style={{ marginTop: "12px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.15)" }}
+                      >
+                        <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "8px" }}>INCLUDES:</p>
+                        <ul style={{ margin: 0, paddingLeft: "16px", color: "#e5e7eb", fontSize: "12.5px", lineHeight: "1.7", marginBottom: item.transformation ? "14px" : "0" }}>
+                          {item.includes?.map((subItem, sIdx) => (
+                            <li key={sIdx}>{subItem}</li>
+                          ))}
+                        </ul>
+                        {item.transformation && (
+                          <>
+                            <p style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "700", letterSpacing: "1px", marginBottom: "4px" }}>TRANSFORMATION:</p>
+                            <p style={{ color: "#ffffff", fontSize: "13px", fontWeight: "600", margin: 0 }}>{item.transformation}</p>
+                          </>
+                        )}
+                      </motion.div>
+                    )}
+                  </div>
+
+                  <div style={{ marginTop: "20px", paddingTop: "12px", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ color: "#D4AF37", fontSize: "11px", fontWeight: "600", letterSpacing: "1px" }}>
+                      {isOpen ? "CLOSE DETAILS" : "CLICK TO READ FULL DETAILS →"}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
