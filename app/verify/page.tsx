@@ -66,11 +66,7 @@ export default function VerifyPage() {
         gap: "12px",
         padding: "20px 32px",
         width: "100%",
-        backgroundColor: "rgba(2, 4, 10, 0.85)",
-        backdropFilter: "blur(20px)",
-        position: "fixed",
-        top: 0,
-        zIndex: 100,
+        backgroundColor: "rgba(2, 4, 10, 0.95)",
         borderBottom: "1px solid rgba(212, 175, 55, 0.12)",
         boxSizing: "border-box"
       }}>
@@ -117,7 +113,7 @@ export default function VerifyPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "140px 20px 80px",
+        padding: "60px 20px 80px",
         boxSizing: "border-box"
       }}>
         <div style={{
