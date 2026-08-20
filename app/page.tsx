@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -108,7 +109,7 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar - Removed fixed position so it scrolls naturally */}
+      {/* Luxury Navigation Bar */}
       <nav style={{
         display: "flex",
         alignItems: "center",
