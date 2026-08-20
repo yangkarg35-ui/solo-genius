@@ -7,39 +7,34 @@ export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 6;
 
-  // Form State Architecture (Ready for backend, CRM & student ID linking)
+  // Form State Architecture (Ready for backend, CRM & student ID linking)[cite: 3]
   const [formData, setFormData] = useState({
-    // Step 1: About You
+    // Step 1: About You[cite: 3]
     fullName: '',
     preferredName: '',
     email: '',
     phone: '',
     city: '',
     ageRange: '',
-    
-    // Step 2: Where You Are
+    // Step 2: Where You Are[cite: 3]
     experienceLevel: '',
     currentFocus: '',
     biggestChallenge: '',
     previousAttempts: '',
-
-    // Step 3: Where You Want To Go
+    // Step 3: Where You Want To Go[cite: 3]
     desiredAreas: [] as string[],
     primaryGoalFocus: '',
     desiredCapabilities: '',
     transformationWhy: '',
     twelveMonthVision: '',
-
     // Step 4: How You Learn
     learningEnvironments: [] as string[],
     weeklyCommitment: '',
     progressObstacles: '',
-
     // Step 5: Your Experience
     valuedTraits: [] as string[],
     exceptionalExperienceExpectation: '',
     institutionExpectations: '',
-
     // Step 6: Final Details
     discoverySource: '',
     programInterest: '',
@@ -66,7 +61,7 @@ export default function ApplyPage() {
   };
 
   const handleNext = () => {
-    if (currentStep < totalSteps + 1) {
+    if (currentStep < totalSteps) {
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -82,18 +77,32 @@ export default function ApplyPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Generate private application reference ID
+
+    // Generate private application reference ID[cite: 3]
     const randomId = Math.floor(100000 + Math.random() * 900000);
     const refCode = `SG-APP-${randomId}`;
     setAppReference(refCode);
 
-    // Simulate secure transmission to admissions intelligence system
-    setTimeout(() => {
+    try {
+      // Telegram ဆီသို့ တိုက်ရိုက်ပို့မည့် API Route ကို ခေါ်ဆိုခြင်း
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, appReference: refCode }),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || !result.success) {
+        console.error('Failed to transmit data to Telegram');
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+    } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1200);
+    }
   };
 
   return (
@@ -105,7 +114,7 @@ export default function ApplyPage() {
       boxSizing: "border-box",
       overflowX: "hidden"
     }}>
-      {/* Minimal Header */}
+      {/* Minimal Header[cite: 3] */}
       <header style={{
         display: "flex",
         alignItems: "center",
@@ -117,9 +126,9 @@ export default function ApplyPage() {
         boxSizing: "border-box"
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <img 
-            src="/logo.png" 
-            alt="Solo Genius Logo" 
+          <img
+            src="/logo.png"
+            alt="Solo Genius Logo"
             style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.4)" }}
           />
           <span style={{ fontSize: "11px", fontWeight: "600", color: "#FFFFFF", letterSpacing: "3px", textTransform: "uppercase" }}>
@@ -130,9 +139,8 @@ export default function ApplyPage() {
             Application
           </span>
         </div>
-
-        <a 
-          href="/" 
+        <a
+          href="/"
           style={{
             color: "#A1A1AA",
             fontSize: "11px",
@@ -146,21 +154,19 @@ export default function ApplyPage() {
         </a>
       </header>
 
-      {/* Main Container */}
+      {/* Main Container[cite: 3] */}
       <main style={{ maxWidth: "720px", margin: "0 auto", padding: "60px 24px 100px 24px", boxSizing: "border-box" }}>
-        
-        {!isSubmitted && currentStep <= totalSteps && (
+        {!isSubmitted && (
           <>
-            {/* Hero Section on Step 1 */}
             {currentStep === 1 && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 style={{ marginBottom: "50px", textAlign: "left" }}
               >
                 <div style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "600", marginBottom: "12px" }}>
-                  SOLO GENIUS · PRIVATE EDUCATION
+                  SOLO GENIUS • PRIVATE EDUCATION
                 </div>
                 <h1 style={{ fontSize: "clamp(32px, 5vw, 44px)", fontWeight: "700", letterSpacing: "-1px", color: "#FFFFFF", margin: "0 0 16px 0", lineHeight: "1.15" }}>
                   Begin Your Creative Development
@@ -174,7 +180,7 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* Subtle Progress Indicator */}
+            {/* Subtle Progress Indicator[cite: 3] */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "40px" }}>
               {Array.from({ length: totalSteps }).map((_, index) => {
                 const stepNum = index + 1;
@@ -202,9 +208,9 @@ export default function ApplyPage() {
         <form onSubmit={currentStep === totalSteps ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
           <AnimatePresence mode="wait">
             
-            {/* STEP 1: ABOUT YOU */}
+            {/* STEP 1: ABOUT YOU[cite: 3] */}
             {currentStep === 1 && (
-              <motion.div 
+              <motion.div
                 key="step1"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -218,17 +224,14 @@ export default function ApplyPage() {
                     About You
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Help us understand who we are welcoming into the Solo Genius environment.
+                    Help us understand who we are welcoming into the Solo Genius environment.[cite: 3]
                   </p>
                 </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Full Name *
-                    </label>
-                    <input 
-                      type="text" 
+                    <label style={labelStyle}>Full Name *</label>
+                    <input
+                      type="text"
                       required
                       value={formData.fullName}
                       onChange={(e) => updateField('fullName', e.target.value)}
@@ -237,11 +240,9 @@ export default function ApplyPage() {
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Preferred Name
-                    </label>
-                    <input 
-                      type="text" 
+                    <label style={labelStyle}>Preferred Name</label>
+                    <input
+                      type="text"
                       value={formData.preferredName}
                       onChange={(e) => updateField('preferredName', e.target.value)}
                       placeholder="How you prefer to be addressed"
@@ -249,14 +250,11 @@ export default function ApplyPage() {
                     />
                   </div>
                 </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Email Address *
-                    </label>
-                    <input 
-                      type="email" 
+                    <label style={labelStyle}>Email Address *</label>
+                    <input
+                      type="email"
                       required
                       value={formData.email}
                       onChange={(e) => updateField('email', e.target.value)}
@@ -265,11 +263,9 @@ export default function ApplyPage() {
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Phone / Contact *
-                    </label>
-                    <input 
-                      type="text" 
+                    <label style={labelStyle}>Phone / Contact *</label>
+                    <input
+                      type="text"
                       required
                       value={formData.phone}
                       onChange={(e) => updateField('phone', e.target.value)}
@@ -278,14 +274,11 @@ export default function ApplyPage() {
                     />
                   </div>
                 </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      City / Country *
-                    </label>
-                    <input 
-                      type="text" 
+                    <label style={labelStyle}>City / Country *</label>
+                    <input
+                      type="text"
                       required
                       value={formData.city}
                       onChange={(e) => updateField('city', e.target.value)}
@@ -294,9 +287,7 @@ export default function ApplyPage() {
                     />
                   </div>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Age Range
-                    </label>
+                    <label style={labelStyle}>Age Range</label>
                     <select
                       value={formData.ageRange}
                       onChange={(e) => updateField('ageRange', e.target.value)}
@@ -304,9 +295,9 @@ export default function ApplyPage() {
                     >
                       <option value="" disabled>Select age range</option>
                       <option value="Under 20">Under 20</option>
-                      <option value="20-25">20–25</option>
-                      <option value="26-35">26–35</option>
-                      <option value="36-45">36–45</option>
+                      <option value="20-25">20-25</option>
+                      <option value="26-35">26-35</option>
+                      <option value="36-45">36-45</option>
                       <option value="46+">46+</option>
                     </select>
                   </div>
@@ -314,9 +305,9 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* STEP 2: WHERE YOU ARE */}
+            {/* STEP 2: WHERE YOU ARE[cite: 3] */}
             {currentStep === 2 && (
-              <motion.div 
+              <motion.div
                 key="step2"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -330,19 +321,16 @@ export default function ApplyPage() {
                     Where You Are
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Where would you describe yourself right now?
+                    Where would you describe yourself right now?[cite: 3]
                   </p>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "10px", textTransform: "uppercase" }}>
-                    Current Experience Level *
-                  </label>
+                  <label style={labelStyle}>Current Experience Level *</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
                     {['BEGINNER', 'SOME EXPERIENCE', 'INTERMEDIATE', 'ADVANCED', 'PROFESSIONAL'].map((level) => {
                       const isSelected = formData.experienceLevel === level;
                       return (
-                        <div 
+                        <div
                           key={level}
                           onClick={() => updateField('experienceLevel', level)}
                           style={{
@@ -365,12 +353,9 @@ export default function ApplyPage() {
                     })}
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What are you currently learning, creating, or working on? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What are you currently learning, creating, or working on? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.currentFocus}
@@ -379,12 +364,9 @@ export default function ApplyPage() {
                     style={textareaStyle}
                   />
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What is the biggest challenge you are currently trying to solve? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What is the biggest challenge you are currently trying to solve? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.biggestChallenge}
@@ -393,12 +375,9 @@ export default function ApplyPage() {
                     style={textareaStyle}
                   />
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What have you already tried?
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What have you already tried?</label>
+                  <textarea
                     rows={2}
                     value={formData.previousAttempts}
                     onChange={(e) => updateField('previousAttempts', e.target.value)}
@@ -409,9 +388,9 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* STEP 3: WHERE YOU WANT TO GO */}
+            {/* STEP 3: WHERE YOU WANT TO GO[cite: 3] */}
             {currentStep === 3 && (
-              <motion.div 
+              <motion.div
                 key="step3"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -425,22 +404,16 @@ export default function ApplyPage() {
                     Where You Want To Go
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Define your trajectory and the capabilities you wish to unlock.
+                    Define your trajectory and the capabilities you wish to unlock.[cite: 3]
                   </p>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "10px", textTransform: "uppercase" }}>
-                    What would you most like to become better at? (Select all that apply)
-                  </label>
+                  <label style={labelStyle}>What would you most like to become better at? (Select all that apply)</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "10px" }}>
-                    {[
-                      'MUSIC', 'CREATIVITY', 'THINKING', 'BUSINESS', 
-                      'MARKETING', 'CONTENT CREATION', 'FINANCE', 'LEARNING SYSTEMS'
-                    ].map((area) => {
+                    {['MUSIC', 'CREATIVITY', 'THINKING', 'BUSINESS', 'MARKETING', 'CONTENT CREATION', 'FINANCE', 'LEARNING SYSTEMS'].map((area) => {
                       const isSelected = formData.desiredAreas.includes(area);
                       return (
-                        <div 
+                        <div
                           key={area}
                           onClick={() => toggleMultiSelect('desiredAreas', area)}
                           style={{
@@ -462,12 +435,9 @@ export default function ApplyPage() {
                     })}
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What would you like to be able to do that you cannot do today? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What would you like to be able to do that you cannot do today? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.desiredCapabilities}
@@ -476,12 +446,9 @@ export default function ApplyPage() {
                     style={textareaStyle}
                   />
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    Why does this matter to you? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>Why does this matter to you? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.transformationWhy}
@@ -490,12 +457,9 @@ export default function ApplyPage() {
                     style={textareaStyle}
                   />
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    If your development goes exceptionally well, what would be different 12 months from now?
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>If your development goes exceptionally well, what would be different 12 months from now?</label>
+                  <textarea
                     rows={2}
                     value={formData.twelveMonthVision}
                     onChange={(e) => updateField('twelveMonthVision', e.target.value)}
@@ -508,7 +472,7 @@ export default function ApplyPage() {
 
             {/* STEP 4: HOW YOU LEARN */}
             {currentStep === 4 && (
-              <motion.div 
+              <motion.div
                 key="step4"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -525,20 +489,13 @@ export default function ApplyPage() {
                     Determine your optimal conditions for intellectual and practical assimilation.
                   </p>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "10px", textTransform: "uppercase" }}>
-                    What kind of learning environment helps you perform at your best? (Select all that apply)
-                  </label>
+                  <label style={labelStyle}>What kind of learning environment helps you perform at your best? (Select all that apply)</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px" }}>
-                    {[
-                      'STRUCTURED CURRICULUM', 'PRACTICAL PROJECTS', 
-                      'DIRECT FEEDBACK', 'MENTORSHIP', 
-                      'INDEPENDENT STUDY', 'A COMBINATION'
-                    ].map((env) => {
+                    {['STRUCTURED CURRICULUM', 'PRACTICAL PROJECTS', 'DIRECT FEEDBACK', 'MENTORSHIP', 'INDEPENDENT STUDY', 'A COMBINATION'].map((env) => {
                       const isSelected = formData.learningEnvironments.includes(env);
                       return (
-                        <div 
+                        <div
                           key={env}
                           onClick={() => toggleMultiSelect('learningEnvironments', env)}
                           style={{
@@ -560,16 +517,13 @@ export default function ApplyPage() {
                     })}
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "10px", textTransform: "uppercase" }}>
-                    How much time can you realistically dedicate to your development each week? *
-                  </label>
+                  <label style={labelStyle}>How much time can you realistically dedicate to your development each week? *</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "10px" }}>
-                    {['UNDER 2 HOURS', '2–5 HOURS', '5–10 HOURS', '10+ HOURS'].map((time) => {
+                    {['UNDER 2 HOURS', '2-5 HOURS', '5-10 HOURS', '10+ HOURS'].map((time) => {
                       const isSelected = formData.weeklyCommitment === time;
                       return (
-                        <div 
+                        <div
                           key={time}
                           onClick={() => updateField('weeklyCommitment', time)}
                           style={{
@@ -592,12 +546,9 @@ export default function ApplyPage() {
                     })}
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What usually prevents you from making progress?
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What usually prevents you from making progress?</label>
+                  <textarea
                     rows={3}
                     value={formData.progressObstacles}
                     onChange={(e) => updateField('progressObstacles', e.target.value)}
@@ -610,7 +561,7 @@ export default function ApplyPage() {
 
             {/* STEP 5: YOUR EXPERIENCE */}
             {currentStep === 5 && (
-              <motion.div 
+              <motion.div
                 key="step5"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -627,20 +578,13 @@ export default function ApplyPage() {
                     We value rigor, privacy, and absolute clarity. Tell us what matters to you.
                   </p>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "10px", textTransform: "uppercase" }}>
-                    What do you value most in a private learning environment? (Select all that apply)
-                  </label>
+                  <label style={labelStyle}>What do you value most in a private learning environment? (Select all that apply)</label>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "10px" }}>
-                    {[
-                      'PRIVACY', 'PERSONAL FEEDBACK', 'STRUCTURE', 
-                      'FLEXIBILITY', 'HIGH-QUALITY RESOURCES', 'DIRECT MENTORSHIP', 
-                      'COMMUNITY', 'PROGRESS TRACKING', 'PERSONALIZATION'
-                    ].map((trait) => {
+                    {['PRIVACY', 'PERSONAL FEEDBACK', 'STRUCTURE', 'FLEXIBILITY', 'HIGH-QUALITY RESOURCES', 'DIRECT MENTORSHIP', 'COMMUNITY', 'PROGRESS TRACKING', 'PERSONALIZATION'].map((trait) => {
                       const isSelected = formData.valuedTraits.includes(trait);
                       return (
-                        <div 
+                        <div
                           key={trait}
                           onClick={() => toggleMultiSelect('valuedTraits', trait)}
                           style={{
@@ -662,12 +606,9 @@ export default function ApplyPage() {
                     })}
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What would make an educational experience feel exceptional to you? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What would make an educational experience feel exceptional to you? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.exceptionalExperienceExpectation}
@@ -676,12 +617,9 @@ export default function ApplyPage() {
                     style={textareaStyle}
                   />
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    What do you expect from an institution you choose to invest your time and attention in? *
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>What do you expect from an institution you choose to invest your time and attention in? *</label>
+                  <textarea
                     required
                     rows={3}
                     value={formData.institutionExpectations}
@@ -695,7 +633,7 @@ export default function ApplyPage() {
 
             {/* STEP 6: FINAL DETAILS */}
             {currentStep === 6 && (
-              <motion.div 
+              <motion.div
                 key="step6"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -712,12 +650,9 @@ export default function ApplyPage() {
                     Concluding administrative details before transmitting your profile for review.
                   </p>
                 </div>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      How did you first discover Solo Genius? *
-                    </label>
+                    <label style={labelStyle}>How did you first discover Solo Genius? *</label>
                     <select
                       required
                       value={formData.discoverySource}
@@ -734,11 +669,8 @@ export default function ApplyPage() {
                       <option value="Other">Other</option>
                     </select>
                   </div>
-
                   <div>
-                    <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                      Primary Program Interest *
-                    </label>
+                    <label style={labelStyle}>Primary Program Interest *</label>
                     <select
                       required
                       value={formData.programInterest}
@@ -753,12 +685,9 @@ export default function ApplyPage() {
                     </select>
                   </div>
                 </div>
-
                 <div>
-                  <label style={{ display: "block", color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", marginBottom: "8px", textTransform: "uppercase" }}>
-                    Is there anything else you would like us to know?
-                  </label>
-                  <textarea 
+                  <label style={labelStyle}>Is there anything else you would like us to know?</label>
+                  <textarea
                     rows={3}
                     value={formData.additionalNotes}
                     onChange={(e) => updateField('additionalNotes', e.target.value)}
@@ -773,24 +702,23 @@ export default function ApplyPage() {
                     Application Summary
                   </h3>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "12px", color: "#A1A1AA" }}>
-                    <div>Applicant: <strong style={{ color: "#FFFFFF" }}>{formData.fullName || "—"}</strong></div>
-                    <div>Contact: <strong style={{ color: "#FFFFFF" }}>{formData.email || "—"}</strong></div>
-                    <div>Location: <strong style={{ color: "#FFFFFF" }}>{formData.city || "—"}</strong></div>
-                    <div>Level: <strong style={{ color: "#FFFFFF" }}>{formData.experienceLevel || "—"}</strong></div>
-                    <div>Program: <strong style={{ color: "#FFFFFF" }}>{formData.programInterest || "—"}</strong></div>
-                    <div>Commitment: <strong style={{ color: "#FFFFFF" }}>{formData.weeklyCommitment || "—"}</strong></div>
+                    <div>Applicant: <strong style={{ color: "#FFFFFF" }}>{formData.fullName || "-"}</strong></div>
+                    <div>Contact: <strong style={{ color: "#FFFFFF" }}>{formData.email || "-"}</strong></div>
+                    <div>Location: <strong style={{ color: "#FFFFFF" }}>{formData.city || "-"}</strong></div>
+                    <div>Level: <strong style={{ color: "#FFFFFF" }}>{formData.experienceLevel || "-"}</strong></div>
+                    <div>Program: <strong style={{ color: "#FFFFFF" }}>{formData.programInterest || "-"}</strong></div>
+                    <div>Commitment: <strong style={{ color: "#FFFFFF" }}>{formData.weeklyCommitment || "-"}</strong></div>
                   </div>
                 </div>
               </motion.div>
             )}
-
           </AnimatePresence>
 
           {/* Navigation Controls */}
           {!isSubmitted && (
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", borderTop: "1px solid rgba(255, 255, 255, 0.06)", paddingTop: "24px" }}>
               {currentStep > 1 ? (
-                <button 
+                <button
                   type="button"
                   onClick={handleBack}
                   style={{
@@ -811,7 +739,7 @@ export default function ApplyPage() {
               ) : <div />}
 
               {currentStep < totalSteps ? (
-                <button 
+                <button
                   type="submit"
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -829,7 +757,7 @@ export default function ApplyPage() {
                   NEXT STEP
                 </button>
               ) : (
-                <button 
+                <button
                   type="submit"
                   disabled={isSubmitting}
                   style={{
@@ -855,7 +783,7 @@ export default function ApplyPage() {
 
         {/* Submission Success State */}
         {isSubmitted && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -864,7 +792,6 @@ export default function ApplyPage() {
             <div style={{ width: "48px", height: "48px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", border: "1px solid rgba(212, 175, 55, 0.4)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px auto", color: "#D4AF37", fontSize: "20px" }}>
               ✦
             </div>
-
             <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "3px", textTransform: "uppercase" }}>
               ADMISSION PROTOCOL ACTIVE
             </span>
@@ -874,7 +801,6 @@ export default function ApplyPage() {
             <p style={{ color: "#A1A1AA", fontSize: "14px", lineHeight: "1.6", maxWidth: "480px", margin: "0 auto 30px auto" }}>
               Thank you for taking the time to introduce yourself to Solo Genius. Your application has been dispatched securely and will be reviewed as part of our private admission process.
             </p>
-
             <div style={{ display: "inline-block", backgroundColor: "rgba(13, 13, 15, 0.9)", border: "1px solid rgba(212, 175, 55, 0.25)", borderRadius: "4px", padding: "16px 28px", marginBottom: "32px", textAlign: "left" }}>
               <div style={{ display: "flex", justifyContent: "space-between", gap: "40px", marginBottom: "6px", fontSize: "11px" }}>
                 <span style={{ color: "#71717A" }}>APPLICATION STATUS</span>
@@ -885,9 +811,8 @@ export default function ApplyPage() {
                 <span style={{ color: "#FFFFFF", fontWeight: "600", letterSpacing: "1px" }}>{appReference}</span>
               </div>
             </div>
-
             <div>
-              <a 
+              <a
                 href="/"
                 style={{
                   display: "inline-block",
@@ -908,13 +833,22 @@ export default function ApplyPage() {
             </div>
           </motion.div>
         )}
-
       </main>
     </div>
   );
 }
 
-// Reusable Input Styles for Luxury Aesthetics
+// Reusable Styles
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  color: "#D4AF37",
+  fontSize: "10px",
+  fontWeight: "600",
+  letterSpacing: "1.5px",
+  marginBottom: "8px",
+  textTransform: "uppercase"
+};
+
 const inputStyle: React.CSSProperties = {
   width: "100%",
   backgroundColor: "rgba(13, 13, 15, 0.8)",
