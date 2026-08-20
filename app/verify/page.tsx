@@ -14,6 +14,12 @@ const credentialRegistry: Record<string, { title: string; image: string; holder:
     image: "/0002.jpg",
     holder: "Verified Student",
     date: "2026"
+  },
+  "SG-2026-0003": {
+    title: "Solo Genius Professional Mastery & Artistic Execution",
+    image: "/std3.jpg",
+    holder: "Verified Student",
+    date: "2026"
   }
 };
 
@@ -157,7 +163,7 @@ export default function VerifyPage() {
                 type="text" 
                 value={credentialId}
                 onChange={(e) => setCredentialId(e.target.value)}
-                placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0001)"
+                placeholder="ENTER CREDENTIAL ID (e.g. SG-2026-0003)"
                 style={{
                   width: "100%",
                   backgroundColor: "rgba(3, 7, 18, 0.9)",
@@ -199,7 +205,7 @@ export default function VerifyPage() {
           {/* Not Found State */}
           {notFound && (
             <div style={{ textAlign: "center", padding: "20px 0", color: "#f87171", fontSize: "12px", letterSpacing: "1px" }}>
-              ⚠️ Credential ID not found in the official registry. Please try SG-2026-0001 or SG-2026-0002.
+              ⚠️ Credential ID not found in the official registry. Please try SG-2026-0001, SG-2026-0002, or SG-2026-0003.
             </div>
           )}
 
