@@ -7,21 +7,21 @@ export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 6;
 
-  // Form State Architecture (Ready for backend, CRM & student ID linking)[cite: 3]
+  // Form State Architecture
   const [formData, setFormData] = useState({
-    // Step 1: About You[cite: 3]
+    // Step 1: About You
     fullName: '',
     preferredName: '',
     email: '',
     phone: '',
     city: '',
     ageRange: '',
-    // Step 2: Where You Are[cite: 3]
+    // Step 2: Where You Are
     experienceLevel: '',
     currentFocus: '',
     biggestChallenge: '',
     previousAttempts: '',
-    // Step 3: Where You Want To Go[cite: 3]
+    // Step 3: Where You Want To Go
     desiredAreas: [] as string[],
     primaryGoalFocus: '',
     desiredCapabilities: '',
@@ -78,13 +78,11 @@ export default function ApplyPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Generate private application reference ID[cite: 3]
     const randomId = Math.floor(100000 + Math.random() * 900000);
     const refCode = `SG-APP-${randomId}`;
     setAppReference(refCode);
 
     try {
-      // Telegram ဆီသို့ တိုက်ရိုက်ပို့မည့် API Route ကို ခေါ်ဆိုခြင်း
       const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -92,7 +90,6 @@ export default function ApplyPage() {
       });
 
       const result = await res.json();
-
       if (!res.ok || !result.success) {
         console.error('Failed to transmit data to Telegram');
       }
@@ -114,7 +111,7 @@ export default function ApplyPage() {
       boxSizing: "border-box",
       overflowX: "hidden"
     }}>
-      {/* Minimal Header[cite: 3] */}
+      {/* Minimal Header */}
       <header style={{
         display: "flex",
         alignItems: "center",
@@ -154,7 +151,7 @@ export default function ApplyPage() {
         </a>
       </header>
 
-      {/* Main Container[cite: 3] */}
+      {/* Main Container */}
       <main style={{ maxWidth: "720px", margin: "0 auto", padding: "60px 24px 100px 24px", boxSizing: "border-box" }}>
         {!isSubmitted && (
           <>
@@ -180,7 +177,7 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* Subtle Progress Indicator[cite: 3] */}
+            {/* Subtle Progress Indicator */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "40px" }}>
               {Array.from({ length: totalSteps }).map((_, index) => {
                 const stepNum = index + 1;
@@ -208,7 +205,7 @@ export default function ApplyPage() {
         <form onSubmit={currentStep === totalSteps ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
           <AnimatePresence mode="wait">
             
-            {/* STEP 1: ABOUT YOU[cite: 3] */}
+            {/* STEP 1: ABOUT YOU */}
             {currentStep === 1 && (
               <motion.div
                 key="step1"
@@ -224,7 +221,7 @@ export default function ApplyPage() {
                     About You
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Help us understand who we are welcoming into the Solo Genius environment.[cite: 3]
+                    Help us understand who we are welcoming into the Solo Genius environment.
                   </p>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
@@ -305,7 +302,7 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* STEP 2: WHERE YOU ARE[cite: 3] */}
+            {/* STEP 2: WHERE YOU ARE */}
             {currentStep === 2 && (
               <motion.div
                 key="step2"
@@ -321,7 +318,7 @@ export default function ApplyPage() {
                     Where You Are
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Where would you describe yourself right now?[cite: 3]
+                    Where would you describe yourself right now?
                   </p>
                 </div>
                 <div>
@@ -388,7 +385,7 @@ export default function ApplyPage() {
               </motion.div>
             )}
 
-            {/* STEP 3: WHERE YOU WANT TO GO[cite: 3] */}
+            {/* STEP 3: WHERE YOU WANT TO GO */}
             {currentStep === 3 && (
               <motion.div
                 key="step3"
@@ -404,7 +401,7 @@ export default function ApplyPage() {
                     Where You Want To Go
                   </h2>
                   <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
-                    Define your trajectory and the capabilities you wish to unlock.[cite: 3]
+                    Define your trajectory and the capabilities you wish to unlock.
                   </p>
                 </div>
                 <div>
