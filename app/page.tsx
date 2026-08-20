@@ -554,7 +554,7 @@ export default function HomePage() {
                   Application Received Successfully
                 </h2>
                 <p style={{ color: "#9ca3af", fontSize: "12px", lineHeight: "1.5", marginBottom: "20px" }}>
-                  Your admission details and payment receipt have been dispatched securely to Boss&apos;s Telegram channel. Verification will be processed promptly.
+                  Your admission details and payment receipt have been dispatched securely. ငါတို့ Team က 24 နာရီအတွင်း ပြန်လည်ဆက်သွယ်ပေးပါမယ်။
                 </p>
                 <button 
                   onClick={() => setIsModalOpen(false)}
