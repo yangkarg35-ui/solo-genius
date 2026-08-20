@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       }),
     });
 
-    const result =.await response.json();
+    const result = await response.json();
 
     if (!result.ok) {
       console.error('Telegram API Error:', result);
