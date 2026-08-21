@@ -16,6 +16,7 @@ export default function ApplyPage() {
     commitment: '',
     customerFit: '',
     whySoloGenius: '',
+    personalThesis: '', // Added deep qualitative input
     fullName: '',
     preferredName: '',
     email: '',
@@ -292,13 +293,44 @@ export default function ApplyPage() {
                         cursor: 'pointer',
                         transition: 'all 0.25s ease',
                         boxShadow: isSelected ? '0 0 25px rgba(212, 175, 55, 0.08)' : 'none',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '16px',
                       }}
                     >
-                      <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1.5px', marginBottom: '8px' }}>
-                        {item.title}
+                      {/* Luxury Radio Indicator */}
+                      <div
+                        style={{
+                          width: '18px',
+                          height: '18px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: '2px',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '8px',
+                              height: '8px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
                       </div>
-                      <div style={{ fontSize: '14px', color: '#94A3B8', lineHeight: '1.6' }}>
-                        {item.desc}
+                      <div>
+                        <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1.5px', marginBottom: '8px' }}>
+                          {item.title}
+                        </div>
+                        <div style={{ fontSize: '14px', color: '#94A3B8', lineHeight: '1.6' }}>
+                          {item.desc}
+                        </div>
                       </div>
                     </div>
                   );
@@ -347,12 +379,42 @@ export default function ApplyPage() {
                         borderRadius: '6px',
                         cursor: 'pointer',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '14px',
                       }}
                     >
-                      <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1px', marginBottom: '4px' }}>
-                        {state.title}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginTop: '2px',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
                       </div>
-                      <div style={{ fontSize: '13px', color: '#94A3B8', lineHeight: '1.5' }}>{state.desc}</div>
+                      <div>
+                        <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1px', marginBottom: '4px' }}>
+                          {state.title}
+                        </div>
+                        <div style={{ fontSize: '13px', color: '#94A3B8', lineHeight: '1.5' }}>{state.desc}</div>
+                      </div>
                     </div>
                   );
                 })}
@@ -411,9 +473,31 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {isSelected ? '✓ ' : '• '} {item.label}
+                      {/* Checkbox Style Luxury Indicator */}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '3px',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                          color: '#D4AF37',
+                          fontSize: '10px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {isSelected ? '✓' : ''}
+                      </div>
+                      <div>{item.label}</div>
                     </div>
                   );
                 })}
@@ -459,9 +543,36 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {method}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>{method}</div>
                     </div>
                   );
                 })}
@@ -518,9 +629,36 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {item}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>{item}</div>
                     </div>
                   );
                 })}
@@ -563,9 +701,36 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {item}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>{item}</div>
                     </div>
                   );
                 })}
@@ -607,9 +772,36 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {item}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>{item}</div>
                     </div>
                   );
                 })}
@@ -651,9 +843,36 @@ export default function ApplyPage() {
                         fontWeight: '600',
                         color: isSelected ? '#D4AF37' : '#D4D4D8',
                         transition: 'all 0.25s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
                       }}
                     >
-                      {item}
+                      <div
+                        style={{
+                          width: '16px',
+                          height: '16px',
+                          borderRadius: '50%',
+                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
+                        }}
+                      >
+                        {isSelected && (
+                          <div
+                            style={{
+                              width: '6px',
+                              height: '6px',
+                              borderRadius: '50%',
+                              backgroundColor: '#D4AF37',
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>{item}</div>
                     </div>
                   );
                 })}
@@ -661,48 +880,41 @@ export default function ApplyPage() {
             </div>
           )}
 
-          {/* STEP 09 — FINAL INTENT */}
+          {/* STEP 09 — WRITTEN ESSAY THESIS (Added Qualitative Depth) */}
           {!isSubmitted && currentStep === 9 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
                 <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 09 — THESIS
+                  STEP 09 — QUALITATIVE THESIS
                 </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  Why Solo Genius?
+                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 4px 0', letterSpacing: '-0.5px' }}>
+                  State your primary objective or artistic conviction.
                 </h2>
+                <p style={{ color: '#94A3B8', fontSize: '13px', margin: '0' }}>
+                  Briefly articulate what drives you to seek admission into Solo Genius. (Be direct and precise).
+                </p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {[
-                  '① Seeking an entirely superior pedagogical model.',
-                  '② Demanding architectural depth over surface-level media.',
-                  '③ Rejecting mediocrity in favor of absolute independence.',
-                  '④ Pursuing elite creative and cognitive mastery.',
-                  '⑤ Building an unshakeable personal operating system.',
-                  '⑥ Aligning with the 0.000833% standard.',
-                ].map((item) => {
-                  const isSelected = formData.whySoloGenius === item;
-                  return (
-                    <div
-                      key={item}
-                      onClick={() => updateField('whySoloGenius', item)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                      }}
-                    >
-                      {item}
-                    </div>
-                  );
-                })}
+              <div>
+                <textarea
+                  rows={5}
+                  value={formData.personalThesis}
+                  onChange={(e) => updateField('personalThesis', e.target.value)}
+                  placeholder="Write your thesis here... (e.g., I am building an uncompromising path in musical creation and require deep architectural systems rather than surface tutorials.)"
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'rgba(10, 10, 12, 0.8)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    borderRadius: '6px',
+                    padding: '16px',
+                    color: '#FFFFFF',
+                    fontSize: '13px',
+                    lineHeight: '1.6',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    resize: 'vertical',
+                  }}
+                />
               </div>
             </div>
           )}
