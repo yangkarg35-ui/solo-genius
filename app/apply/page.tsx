@@ -1,13 +1,12 @@
 'use client';
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 6;
+  const totalSteps = 7;
 
-  // Form State Architecture (Aligned with Solo Genius Brand standards)
+  // Form State Architecture (Aligned with Solo Genius Brand Standards)
   const [formData, setFormData] = useState({
     // Step 1: About You
     fullName: '',
@@ -21,21 +20,25 @@ export default function ApplyPage() {
     currentFocus: '',
     biggestChallenge: '',
     previousAttempts: '',
-    // Step 3: Where You Want To Go
+    // Step 3: Musical Background & Problems (Localized to English)
+    playingDuration: '',
+    startingContext: '',
+    selectedProblems: [] as string[],
+    // Step 4: Where You Want To Go
     desiredAreas: [] as string[],
     primaryGoalFocus: '',
     desiredCapabilities: '',
     transformationWhy: '',
     twelveMonthVision: '',
-    // Step 4: How You Learn
+    // Step 5: How You Learn
     learningEnvironments: [] as string[],
     weeklyCommitment: '',
     progressObstacles: '',
-    // Step 5: Your Experience & Standards
+    // Step 6: Your Experience & Standards
     valuedTraits: [] as string[],
     exceptionalExperienceExpectation: '',
     institutionExpectations: '',
-    // Step 6: Final Details
+    // Step 7: Final Details
     discoverySource: '',
     programInterest: '',
     additionalNotes: '',
@@ -44,17 +47,18 @@ export default function ApplyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [appReference, setAppReference] = useState('');
+  const [recommendedClass, setRecommendedClass] = useState('CLASS-1');
 
   const updateField = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const toggleMultiSelect = (
-    field: 'desiredAreas' | 'learningEnvironments' | 'valuedTraits',
+    field: 'desiredAreas' | 'learningEnvironments' | 'valuedTraits' | 'selectedProblems',
     item: string
   ) => {
     setFormData((prev) => {
-      const list = prev[field];
+      const list = prev[field] as string[];
       if (list.includes(item)) {
         return { ...prev, [field]: list.filter((i) => i !== item) };
       } else {
@@ -63,8 +67,21 @@ export default function ApplyPage() {
     });
   };
 
+  // Determine Class based on user input
+  const calculateClassRecommendation = (data: typeof formData) => {
+    if (data.selectedProblems.length >= 4 || data.playingDuration === 'Under 1 Year' || data.experienceLevel === 'BEGINNER') {
+      return 'CLASS-1 (Foundation & Core Systems)';
+    } else {
+      return 'CLASS-2 (Advanced Architecture & Mastery)';
+    }
+  };
+
   const handleNext = () => {
     if (currentStep < totalSteps) {
+      if (currentStep === 6) {
+        const assignedClass = calculateClassRecommendation(formData);
+        setRecommendedClass(assignedClass);
+      }
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -80,16 +97,21 @@ export default function ApplyPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const randomId = Math.floor(100000 + Math.random() * 900000);
     const refCode = `SG-APP-${randomId}`;
     setAppReference(refCode);
+
+    const finalPayload = {
+      ...formData,
+      appReference: refCode,
+      recommendedClass,
+    };
 
     try {
       const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, appReference: refCode }),
+        body: JSON.stringify(finalPayload),
       });
       const result = await res.json();
       if (!res.ok || !result.success) {
@@ -104,13 +126,28 @@ export default function ApplyPage() {
     }
   };
 
+  const problemList = [
+    'Unsure what to study or focus on next',
+    'Overwhelmed by excessive information without a clear filter',
+    'Quickly forget concepts shortly after studying them',
+    'A noticeable gap between theoretical knowledge and practical execution',
+    'Lack of strong critical or analytical thinking structures',
+    'Difficulty properly defining and isolating core problems',
+    'Inability to cleanly separate empirical evidence from subjective opinions',
+    'Struggle with independent research and data gathering',
+    'Limited creative thinking or idea generation capability',
+    'Uncertain how to properly adapt and leverage AI tools',
+    'Unable to convert raw knowledge into tangible results or value',
+    'Unable to construct a self-sustaining personal learning system',
+  ];
+
   return (
     <div
       style={{
         backgroundColor: '#09090B',
         color: '#F4F4F5',
         minHeight: '100vh',
-        fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         boxSizing: 'border-box',
         overflowX: 'hidden',
       }}
@@ -305,25 +342,8 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        01
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>01</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         About You
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
@@ -403,9 +423,7 @@ export default function ApplyPage() {
                             color: formData.ageRange ? '#F4F4F5' : '#71717A',
                           }}
                         >
-                          <option value="" disabled>
-                            Select age range
-                          </option>
+                          <option value="" disabled>Select age range</option>
                           <option value="Under 20">Under 20</option>
                           <option value="20-25">20-25</option>
                           <option value="26-35">26-35</option>
@@ -428,25 +446,8 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        02
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>02</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         Where You Are
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
@@ -456,41 +457,31 @@ export default function ApplyPage() {
 
                     <div>
                       <label style={labelStyle}>Current Experience Level *</label>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-                          gap: '10px',
-                        }}
-                      >
-                        {['BEGINNER', 'SOME EXPERIENCE', 'INTERMEDIATE', 'ADVANCED', 'PROFESSIONAL'].map(
-                          (level) => {
-                            const isSelected = formData.experienceLevel === level;
-                            return (
-                              <div
-                                key={level}
-                                onClick={() => updateField('experienceLevel', level)}
-                                style={{
-                                  padding: '14px 12px',
-                                  backgroundColor: isSelected
-                                    ? 'rgba(212, 175, 55, 0.08)'
-                                    : 'rgba(255, 255, 255, 0.02)',
-                                  border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
-                                  borderRadius: '4px',
-                                  textAlign: 'center',
-                                  cursor: 'pointer',
-                                  fontSize: '11px',
-                                  fontWeight: '600',
-                                  letterSpacing: '1px',
-                                  color: isSelected ? '#D4AF37' : '#D4D4D8',
-                                  transition: 'all 0.2s ease',
-                                }}
-                              >
-                                {level}
-                              </div>
-                            );
-                          }
-                        )}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px' }}>
+                        {['BEGINNER', 'SOME EXPERIENCE', 'INTERMEDIATE', 'ADVANCED', 'PROFESSIONAL'].map((level) => {
+                          const isSelected = formData.experienceLevel === level;
+                          return (
+                            <div
+                              key={level}
+                              onClick={() => updateField('experienceLevel', level)}
+                              style={{
+                                padding: '14px 12px',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                                border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
+                                borderRadius: '4px',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                fontSize: '11px',
+                                fontWeight: '600',
+                                letterSpacing: '1px',
+                                color: isSelected ? '#D4AF37' : '#D4D4D8',
+                                transition: 'all 0.2s ease',
+                              }}
+                            >
+                              {level}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -531,7 +522,7 @@ export default function ApplyPage() {
                   </motion.div>
                 )}
 
-                {/* STEP 3: WHERE YOU WANT TO GO */}
+                {/* STEP 3: MUSICAL BACKGROUND & PROBLEMS (ENGLISH TRANSLATED) */}
                 {currentStep === 3 && (
                   <motion.div
                     key="step3"
@@ -542,25 +533,122 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        03
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>03</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
+                        Musical Background & Diagnostics
+                      </h2>
+                      <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
+                        Tell us about your history with the instrument and current blocks to determine your entry pathway.
+                      </p>
+                    </div>
+
+                    {/* Playing Experience Duration */}
+                    <div>
+                      <label style={labelStyle}>Playing Experience Duration *</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                        {['Under 1 Year', '1-2 Years', 'Over 3 Years'].map((time) => {
+                          const isSelected = formData.playingDuration === time;
+                          return (
+                            <div
+                              key={time}
+                              onClick={() => updateField('playingDuration', time)}
+                              style={{
+                                padding: '12px',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                                border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
+                                borderRadius: '4px',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                fontSize: '11px',
+                                fontWeight: '600',
+                                color: isSelected ? '#D4AF37' : '#D4D4D8',
+                                transition: 'all 0.2s ease',
+                              }}
+                            >
+                              {time}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Initial Starting Context */}
+                    <div>
+                      <label style={labelStyle}>Initial Starting Context *</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
+                        {[
+                          'Zero Experience (Never studied before)',
+                          'Informal / Peer Learning (Self-taught or learned from peers)',
+                          'Structured Beginning (Studied systematically from the start)',
+                        ].map((context) => {
+                          const isSelected = formData.startingContext === context;
+                          return (
+                            <div
+                              key={context}
+                              onClick={() => updateField('startingContext', context)}
+                              style={{
+                                padding: '12px 14px',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                                border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '11px',
+                                fontWeight: '600',
+                                color: isSelected ? '#D4AF37' : '#D4D4D8',
+                                transition: 'all 0.2s ease',
+                              }}
+                            >
+                              {isSelected ? '✓ ' : '+ '} {context}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Problem Checklist */}
+                    <div>
+                      <label style={labelStyle}>Select any of the following problems or blocks you faced (Select all that apply) *</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '8px' }}>
+                        {problemList.map((prob) => {
+                          const isSelected = formData.selectedProblems.includes(prob);
+                          return (
+                            <div
+                              key={prob}
+                              onClick={() => toggleMultiSelect('selectedProblems', prob)}
+                              style={{
+                                padding: '10px 14px',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+                                border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '11px',
+                                fontWeight: '500',
+                                color: isSelected ? '#D4AF37' : '#A1A1AA',
+                                transition: 'all 0.2s ease',
+                              }}
+                            >
+                              {isSelected ? '☑ ' : '☐ '} {prob}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 4: WHERE YOU WANT TO GO */}
+                {currentStep === 4 && (
+                  <motion.div
+                    key="step4"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
+                  >
+                    <div>
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>04</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         Where You Want To Go
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
@@ -569,26 +657,9 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>
-                        What would you most like to become better at? (Select all that apply)
-                      </label>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-                          gap: '10px',
-                        }}
-                      >
-                        {[
-                          'MUSIC',
-                          'CREATIVITY',
-                          'THINKING',
-                          'BUSINESS',
-                          'MARKETING',
-                          'CONTENT CREATION',
-                          'FINANCE',
-                          'LEARNING SYSTEMS',
-                        ].map((area) => {
+                      <label style={labelStyle}>What would you most like to become better at? (Select all that apply)</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
+                        {['MUSIC', 'CREATIVITY', 'THINKING', 'BUSINESS', 'MARKETING', 'CONTENT CREATION', 'FINANCE', 'LEARNING SYSTEMS'].map((area) => {
                           const isSelected = formData.desiredAreas.includes(area);
                           return (
                             <div
@@ -596,15 +667,12 @@ export default function ApplyPage() {
                               onClick={() => toggleMultiSelect('desiredAreas', area)}
                               style={{
                                 padding: '12px',
-                                backgroundColor: isSelected
-                                  ? 'rgba(212, 175, 55, 0.08)'
-                                  : 'rgba(255, 255, 255, 0.02)',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
                                 border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
                                 borderRadius: '4px',
                                 cursor: 'pointer',
                                 fontSize: '11px',
                                 fontWeight: '600',
-                                letterSpacing: '1px',
                                 color: isSelected ? '#D4AF37' : '#D4D4D8',
                                 transition: 'all 0.2s ease',
                               }}
@@ -641,9 +709,7 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>
-                        If your development goes exceptionally well, what would be different 12 months from now?
-                      </label>
+                      <label style={labelStyle}>If your development goes exceptionally well, what would be different 12 months from now?</label>
                       <textarea
                         rows={2}
                         value={formData.twelveMonthVision}
@@ -655,10 +721,10 @@ export default function ApplyPage() {
                   </motion.div>
                 )}
 
-                {/* STEP 4: HOW YOU LEARN */}
-                {currentStep === 4 && (
+                {/* STEP 5: HOW YOU LEARN */}
+                {currentStep === 5 && (
                   <motion.div
-                    key="step4"
+                    key="step5"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
@@ -666,25 +732,8 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        04
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>05</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         How You Learn
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
@@ -693,24 +742,9 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>
-                        What kind of learning environment helps you perform at your best? (Select all that apply)
-                      </label>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                          gap: '10px',
-                        }}
-                      >
-                        {[
-                          'STRUCTURED CURRICULUM',
-                          'PRACTICAL PROJECTS',
-                          'DIRECT FEEDBACK',
-                          'MENTORSHIP',
-                          'INDEPENDENT STUDY',
-                          'A COMBINATION',
-                        ].map((env) => {
+                      <label style={labelStyle}>What kind of learning environment helps you perform at your best? (Select all that apply)</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px' }}>
+                        {['STRUCTURED CURRICULUM', 'PRACTICAL PROJECTS', 'DIRECT FEEDBACK', 'MENTORSHIP', 'INDEPENDENT STUDY', 'A COMBINATION'].map((env) => {
                           const isSelected = formData.learningEnvironments.includes(env);
                           return (
                             <div
@@ -718,15 +752,12 @@ export default function ApplyPage() {
                               onClick={() => toggleMultiSelect('learningEnvironments', env)}
                               style={{
                                 padding: '12px',
-                                backgroundColor: isSelected
-                                  ? 'rgba(212, 175, 55, 0.08)'
-                                  : 'rgba(255, 255, 255, 0.02)',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
                                 border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
                                 borderRadius: '4px',
                                 cursor: 'pointer',
                                 fontSize: '11px',
                                 fontWeight: '600',
-                                letterSpacing: '1px',
                                 color: isSelected ? '#D4AF37' : '#D4D4D8',
                                 transition: 'all 0.2s ease',
                               }}
@@ -740,13 +771,7 @@ export default function ApplyPage() {
 
                     <div>
                       <label style={labelStyle}>How much time can you realistically dedicate to your development each week? *</label>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                          gap: '10px',
-                        }}
-                      >
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px' }}>
                         {['UNDER 2 HOURS', '2-5 HOURS', '5-10 HOURS', '10+ HOURS'].map((time) => {
                           const isSelected = formData.weeklyCommitment === time;
                           return (
@@ -755,16 +780,13 @@ export default function ApplyPage() {
                               onClick={() => updateField('weeklyCommitment', time)}
                               style={{
                                 padding: '12px',
-                                backgroundColor: isSelected
-                                  ? 'rgba(212, 175, 55, 0.08)'
-                                  : 'rgba(255, 255, 255, 0.02)',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
                                 border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
                                 borderRadius: '4px',
                                 textAlign: 'center',
                                 cursor: 'pointer',
                                 fontSize: '11px',
                                 fontWeight: '600',
-                                letterSpacing: '1px',
                                 color: isSelected ? '#D4AF37' : '#D4D4D8',
                                 transition: 'all 0.2s ease',
                               }}
@@ -789,10 +811,10 @@ export default function ApplyPage() {
                   </motion.div>
                 )}
 
-                {/* STEP 5: YOUR EXPERIENCE */}
-                {currentStep === 5 && (
+                {/* STEP 6: YOUR EXPERIENCE & STANDARDS */}
+                {currentStep === 6 && (
                   <motion.div
-                    key="step5"
+                    key="step6"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
@@ -800,25 +822,8 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        05
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>06</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         Your Experience & Standards
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
@@ -827,27 +832,9 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>
-                        What do you value most in a private learning environment? (Select all that apply)
-                      </label>
-                      <div
-                        style={{
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
-                          gap: '10px',
-                        }}
-                      >
-                        {[
-                          'PRIVACY',
-                          'PERSONAL FEEDBACK',
-                          'STRUCTURE',
-                          'FLEXIBILITY',
-                          'HIGH-QUALITY RESOURCES',
-                          'DIRECT MENTORSHIP',
-                          'COMMUNITY',
-                          'PROGRESS TRACKING',
-                          'PERSONALIZATION',
-                        ].map((trait) => {
+                      <label style={labelStyle}>What do you value most in a private learning environment? (Select all that apply)</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '10px' }}>
+                        {['PRIVACY', 'PERSONAL FEEDBACK', 'STRUCTURE', 'FLEXIBILITY', 'HIGH-QUALITY RESOURCES', 'DIRECT MENTORSHIP', 'COMMUNITY', 'PROGRESS TRACKING', 'PERSONALIZATION'].map((trait) => {
                           const isSelected = formData.valuedTraits.includes(trait);
                           return (
                             <div
@@ -855,15 +842,12 @@ export default function ApplyPage() {
                               onClick={() => toggleMultiSelect('valuedTraits', trait)}
                               style={{
                                 padding: '12px',
-                                backgroundColor: isSelected
-                                  ? 'rgba(212, 175, 55, 0.08)'
-                                  : 'rgba(255, 255, 255, 0.02)',
+                                backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255, 255, 255, 0.02)',
                                 border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
                                 borderRadius: '4px',
                                 cursor: 'pointer',
                                 fontSize: '11px',
                                 fontWeight: '600',
-                                letterSpacing: '1px',
                                 color: isSelected ? '#D4AF37' : '#D4D4D8',
                                 transition: 'all 0.2s ease',
                               }}
@@ -888,9 +872,7 @@ export default function ApplyPage() {
                     </div>
 
                     <div>
-                      <label style={labelStyle}>
-                        What do you expect from an institution you choose to invest your time and attention in? *
-                      </label>
+                      <label style={labelStyle}>What do you expect from an institution you choose to invest your time and attention in? *</label>
                       <textarea
                         required
                         rows={3}
@@ -903,10 +885,10 @@ export default function ApplyPage() {
                   </motion.div>
                 )}
 
-                {/* STEP 6: FINAL DETAILS */}
-                {currentStep === 6 && (
+                {/* STEP 7: FINAL DETAILS & REVIEW */}
+                {currentStep === 7 && (
                   <motion.div
-                    key="step6"
+                    key="step7"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
@@ -914,29 +896,41 @@ export default function ApplyPage() {
                     style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
                   >
                     <div>
-                      <span
-                        style={{
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: '600',
-                          letterSpacing: '2px',
-                        }}
-                      >
-                        06
-                      </span>
-                      <h2
-                        style={{
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#FFFFFF',
-                          margin: '6px 0 8px 0',
-                          letterSpacing: '-0.5px',
-                        }}
-                      >
+                      <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2px' }}>07</span>
+                      <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#FFFFFF', margin: '6px 0 8px 0', letterSpacing: '-0.5px' }}>
                         Final Details & Review
                       </h2>
                       <p style={{ color: '#A1A1AA', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-                        Concluding administrative details before transmitting your profile for review.
+                        Concluding administrative details and automated placement preview.
+                      </p>
+                    </div>
+
+                    {/* Instant Placement Preview Box (1st Impression Brand Identity) */}
+                    <div
+                      style={{
+                        backgroundColor: 'rgba(212, 175, 55, 0.05)',
+                        border: '1px solid rgba(212, 175, 55, 0.4)',
+                        borderRadius: '4px',
+                        padding: '20px',
+                      }}
+                    >
+                      <h3
+                        style={{
+                          color: '#D4AF37',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          letterSpacing: '2px',
+                          textTransform: 'uppercase',
+                          margin: '0 0 8px 0',
+                        }}
+                      >
+                        ✦ Recommended Program Tier (Instant Diagnostic)
+                      </h3>
+                      <p style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: '600', margin: '0 0 6px 0' }}>
+                        {recommendedClass}
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#A1A1AA', margin: 0, lineHeight: '1.5' }}>
+                        Based on your diagnostic profile, problem patterns, and experience level, our system assigns you to this tier to optimize your creative development curve.
                       </p>
                     </div>
 
@@ -953,9 +947,7 @@ export default function ApplyPage() {
                             color: formData.discoverySource ? '#F4F4F5' : '#71717A',
                           }}
                         >
-                          <option value="" disabled>
-                            Select discovery channel
-                          </option>
+                          <option value="" disabled>Select discovery channel</option>
                           <option value="Search">Search</option>
                           <option value="Social Media">Social Media</option>
                           <option value="Referral">Referral</option>
@@ -977,9 +969,7 @@ export default function ApplyPage() {
                             color: formData.programInterest ? '#F4F4F5' : '#71717A',
                           }}
                         >
-                          <option value="" disabled>
-                            Select primary area
-                          </option>
+                          <option value="" disabled>Select primary area</option>
                           <option value="Elite Music & Harmony">Elite Music & Harmony</option>
                           <option value="Creative Architecture">Creative Architecture</option>
                           <option value="Digital Systems & Business">Digital Systems & Business</option>
@@ -1043,7 +1033,7 @@ export default function ApplyPage() {
                           Level: <strong style={{ color: '#FFFFFF' }}>{formData.experienceLevel || '-'}</strong>
                         </div>
                         <div>
-                          Program: <strong style={{ color: '#FFFFFF' }}>{formData.programInterest || '-'}</strong>
+                          Duration: <strong style={{ color: '#FFFFFF' }}>{formData.playingDuration || '-'}</strong>
                         </div>
                         <div>
                           Commitment: <strong style={{ color: '#FFFFFF' }}>{formData.weeklyCommitment || '-'}</strong>
@@ -1179,7 +1169,7 @@ export default function ApplyPage() {
                 letterSpacing: '-0.5px',
               }}
             >
-              Application Received
+              Application Received & Tier Assigned
             </h2>
             <p
               style={{
@@ -1190,8 +1180,10 @@ export default function ApplyPage() {
                 margin: '0 auto 30px auto',
               }}
             >
-              Thank you for taking the time to introduce yourself to Solo Genius. Your application has been dispatched securely to our secure operations desk and will be reviewed as part of our private admission process.
+              Thank you for taking the time to introduce yourself to Solo Genius. Based on your diagnostics, your designated entry path is{' '}
+              <strong style={{ color: '#D4AF37' }}>{recommendedClass}</strong>. Your file has been securely dispatched.
             </p>
+
             <div
               style={{
                 display: 'inline-block',
@@ -1203,32 +1195,20 @@ export default function ApplyPage() {
                 textAlign: 'left',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: '40px',
-                  marginBottom: '6px',
-                  fontSize: '11px',
-                }}
-              >
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '40px', marginBottom: '6px', fontSize: '11px' }}>
+                <span style={{ color: '#71717A' }}>ASSIGNED TIER</span>
+                <span style={{ color: '#D4AF37', fontWeight: '600', letterSpacing: '1px' }}>{recommendedClass}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '40px', marginBottom: '6px', fontSize: '11px' }}>
                 <span style={{ color: '#71717A' }}>APPLICATION STATUS</span>
                 <span style={{ color: '#D4AF37', fontWeight: '600', letterSpacing: '1px' }}>RECEIVED</span>
               </div>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: '40px',
-                  fontSize: '11px',
-                }}
-              >
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '40px', fontSize: '11px' }}>
                 <span style={{ color: '#71717A' }}>APPLICATION REFERENCE</span>
-                <span style={{ color: '#FFFFFF', fontWeight: '600', letterSpacing: '1px' }}>
-                  {appReference}
-                </span>
+                <span style={{ color: '#FFFFFF', fontWeight: '600', letterSpacing: '1px' }}>{appReference}</span>
               </div>
             </div>
+
             <div>
               <a
                 href="/"
@@ -1291,6 +1271,6 @@ const textareaStyle: React.CSSProperties = {
   outline: 'none',
   boxSizing: 'border-box',
   resize: 'vertical',
-  fontFamily: "Inter, sans-serif",
+  fontFamily: '"Inter", sans-serif',
   transition: 'border-color 0.2s ease',
 };
