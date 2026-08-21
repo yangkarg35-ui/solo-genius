@@ -1,28 +1,32 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 10;
+  const tuitionFee = 500; // USD 500 Standard Pricing
 
+  // Form State Architecture
   const [formData, setFormData] = useState({
-    intention: '', 
-    currentState: '',
-    friction: [] as string[], 
+    intention: '',
+    currentMusicState: '',
+    currentLearningState: '',
+    frictionPoints: [] as string[],
     currentMethod: '',
     desiredResult: '',
     transformationPriority: '',
-    commitment: '',
+    commitmentLevel: '',
     customerFit: '',
     whySoloGenius: '',
-    personalThesis: '', // Added deep qualitative input
     fullName: '',
     preferredName: '',
     email: '',
     phone: '',
     city: '',
     ageRange: '',
+    additionalNotes: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,14 +37,14 @@ export default function ApplyPage() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const toggleFrictionSelect = (item: string) => {
+  const toggleMultiSelect = (field: 'frictionPoints', item: string) => {
     setFormData((prev) => {
-      const list = prev.friction;
+      const list = prev[field];
       if (list.includes(item)) {
-        return { ...prev, friction: list.filter((i) => i !== item) };
+        return { ...prev, [field]: list.filter((i) => i !== item) };
       } else {
         if (list.length >= 3) return prev;
-        return { ...prev, friction: [...list, item] };
+        return { ...prev, [field]: [...list, item] };
       }
     });
   };
@@ -70,7 +74,7 @@ export default function ApplyPage() {
       const res = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, appReference: refCode }),
+        body: JSON.stringify({ ...formData, appReference: refCode, tuitionFee: `USD ${tuitionFee}` }),
       });
       const result = await res.json();
       if (!res.ok || !result.success) {
@@ -86,74 +90,48 @@ export default function ApplyPage() {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: '#050507',
-        color: '#F4F4F5',
-        minHeight: '100vh',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        boxSizing: 'border-box',
-        overflowX: 'hidden',
-      }}
-    >
+    <div style={{
+      backgroundColor: "#09090B",
+      color: "#F4F4F5",
+      minHeight: "100vh",
+      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      boxSizing: "border-box",
+      overflowX: "hidden"
+    }}>
       {/* Minimal Header */}
-      <header
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '28px 48px',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.1)',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+      <header style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "24px 40px",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+        maxWidth: "1100px",
+        margin: "0 auto",
+        boxSizing: "border-box"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <img
             src="/logo.png"
             alt="Solo Genius Logo"
-            style={{
-              width: '26px',
-              height: '26px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              border: '1px solid rgba(212, 175, 55, 0.5)',
-            }}
+            style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.4)" }}
           />
-          <span
-            style={{
-              fontSize: '11px',
-              fontWeight: '600',
-              color: '#FFFFFF',
-              letterSpacing: '3.5px',
-              textTransform: 'uppercase',
-            }}
-          >
+          <span style={{ fontSize: "11px", fontWeight: "600", color: "#FFFFFF", letterSpacing: "3px", textTransform: "uppercase" }}>
             Solo Genius
           </span>
-          <span style={{ color: '#52525B', fontSize: '11px' }}>/</span>
-          <span
-            style={{
-              fontSize: '10px',
-              fontWeight: '500',
-              color: '#D4AF37',
-              letterSpacing: '2.5px',
-              textTransform: 'uppercase',
-            }}
-          >
-            Private Assessment
+          <span style={{ color: "#71717A", fontSize: "11px" }}>/</span>
+          <span style={{ fontSize: "10px", fontWeight: "500", color: "#D4AF37", letterSpacing: "2px", textTransform: "uppercase" }}>
+            Application
           </span>
         </div>
         <a
           href="/"
           style={{
-            color: '#A1A1AA',
-            fontSize: '10px',
-            textDecoration: 'none',
-            letterSpacing: '2px',
-            fontWeight: '500',
-            transition: 'color 0.2s ease',
+            color: "#A1A1AA",
+            fontSize: "11px",
+            textDecoration: "none",
+            letterSpacing: "1.5px",
+            fontWeight: "500",
+            transition: "color 0.2s ease"
           }}
         >
           BACK TO SOLO GENIUS
@@ -161,1027 +139,483 @@ export default function ApplyPage() {
       </header>
 
       {/* Main Container */}
-      <main
-        style={{
-          maxWidth: '760px',
-          margin: '0 auto',
-          padding: '70px 24px 120px 24px',
-          boxSizing: 'border-box',
-        }}
-      >
-        {!isSubmitted && currentStep === 1 && (
-          <div style={{ marginBottom: '48px', textAlign: 'left' }}>
-            <div
-              style={{
-                color: '#D4AF37',
-                textTransform: 'uppercase',
-                fontSize: '10px',
-                letterSpacing: '3.5px',
-                fontWeight: '600',
-                marginBottom: '14px',
-              }}
-            >
-              SOLO GENIUS — PRIVATE SELECTION
-            </div>
-            <h1
-              style={{
-                fontSize: 'clamp(34px, 5vw, 48px)',
-                fontWeight: '700',
-                letterSpacing: '-1px',
-                color: '#FFFFFF',
-                margin: '0 0 16px 0',
-                lineHeight: '1.15',
-              }}
-            >
-              BECOME MORE CAPABLE.
-            </h1>
-            <p
-              style={{
-                color: '#94A3B8',
-                fontSize: '15px',
-                lineHeight: '1.7',
-                margin: '0',
-                maxWidth: '600px',
-              }}
-            >
-              An exclusive diagnostic protocol designed strictly for individuals pursuing absolute mastery in music, thinking, and creation.
-            </p>
-          </div>
-        )}
-
-        {/* Progress Indicator */}
+      <main style={{ maxWidth: "720px", margin: "0 auto", padding: "60px 24px 100px 24px", boxSizing: "border-box" }}>
         {!isSubmitted && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '48px' }}>
-            {Array.from({ length: totalSteps }).map((_, index) => {
-              const stepNum = index + 1;
-              const isActive = currentStep === stepNum;
-              const isPassed = currentStep > stepNum;
-              return (
-                <div key={index} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                  <div
-                    style={{
-                      height: '2px',
-                      width: '100%',
-                      backgroundColor: isPassed || isActive ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)',
-                      transition: 'background-color 0.4s ease',
-                    }}
-                  />
+          <>
+            {currentStep === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ marginBottom: "50px", textAlign: "left" }}
+              >
+                <div style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "600", marginBottom: "12px" }}>
+                  BECOME MORE CAPABLE.
                 </div>
-              );
-            })}
-            <div
-              style={{
-                fontSize: '11px',
-                color: '#71717A',
-                fontWeight: '600',
-                letterSpacing: '1.5px',
-                minWidth: '40px',
-                textAlign: 'right',
-              }}
-            >
-              {currentStep < 10 ? `0${currentStep}` : currentStep}/10
-            </div>
-          </div>
-        )}
-
-        {/* Form Body */}
-        <form
-          onSubmit={
-            currentStep === totalSteps
-              ? handleSubmit
-              : (e) => {
-                  e.preventDefault();
-                  handleNext();
-                }
-          }
-        >
-          {/* STEP 01 — INTENTION */}
-          {!isSubmitted && currentStep === 1 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 01 — INTENTION
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  What domain are you here to master?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '14px' }}>
-                {[
-                  {
-                    id: 'CREATIVE MUSIC',
-                    title: '① CREATIVE MUSIC',
-                    desc: 'I want to command my instrument and build an uncompromising foundation in modern musical theory and expression.',
-                  },
-                  {
-                    id: 'GENIUS LEARNING',
-                    title: '② GENIUS LEARNING',
-                    desc: 'I want to engineer my mental models, cognitive architecture, and autonomous problem-solving capabilities.',
-                  },
-                ].map((item) => {
-                  const isSelected = formData.intention === item.id;
-                  return (
-                    <div
-                      key={item.id}
-                      onClick={() => updateField('intention', item.id)}
-                      style={{
-                        padding: '24px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'all 0.25s ease',
-                        boxShadow: isSelected ? '0 0 25px rgba(212, 175, 55, 0.08)' : 'none',
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '16px',
-                      }}
-                    >
-                      {/* Luxury Radio Indicator */}
-                      <div
-                        style={{
-                          width: '18px',
-                          height: '18px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginTop: '2px',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '8px',
-                              height: '8px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1.5px', marginBottom: '8px' }}>
-                          {item.title}
-                        </div>
-                        <div style={{ fontSize: '14px', color: '#94A3B8', lineHeight: '1.6' }}>
-                          {item.desc}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 02 — CURRENT STATE */}
-          {!isSubmitted && currentStep === 2 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 02 — CURRENT STATE
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  Evaluate your current standing ({formData.intention || 'General'})
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '12px' }}>
-                {formData.intention === 'CREATIVE MUSIC' ? (
-                  [
-                    { id: 'BEGINNING', title: '① BEGINNING', desc: 'Functional mechanics, yet heavily dependent on standard guidance.' },
-                    { id: 'DEVELOPING', title: '② DEVELOPING', desc: 'Capable of independent execution, but hitting structural boundaries.' },
-                    { id: 'CAPABLE', title: '③ CAPABLE', desc: 'Confident execution, missing deep theoretical integration and composition fluency.' },
-                    { id: 'ADVANCED', title: '④ ADVANCED', desc: 'Performing at high levels, seeking elite intelligence and absolute refinement.' },
-                  ]
-                ) : (
-                  [
-                    { id: 'BEGINNING', title: '① BEGINNING', desc: 'Relying heavily on external frameworks and fragmented learning.' },
-                    { id: 'DEVELOPING', title: '② DEVELOPING', desc: 'Independent acquisition, lacking a unified execution engine.' },
-                    { id: 'CAPABLE', title: '③ CAPABLE', desc: 'Strong output, seeking advanced synthesis and higher leverage.' },
-                    { id: 'ADVANCED', title: '④ ADVANCED', desc: 'Operating autonomously, pursuing peak intellectual and strategic mastery.' },
-                  ]
-                ).map((state) => {
-                  const isSelected = formData.currentState === state.id;
-                  return (
-                    <div
-                      key={state.id}
-                      onClick={() => updateField('currentState', state.id)}
-                      style={{
-                        padding: '18px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          marginTop: '2px',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '12px', fontWeight: '700', color: isSelected ? '#D4AF37' : '#FFFFFF', letterSpacing: '1px', marginBottom: '4px' }}>
-                          {state.title}
-                        </div>
-                        <div style={{ fontSize: '13px', color: '#94A3B8', lineHeight: '1.5' }}>{state.desc}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 03 — THE FRICTION */}
-          {!isSubmitted && currentStep === 3 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 03 — THE FRICTION
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  Identify your primary constraints (Select up to 3)
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {formData.intention === 'CREATIVE MUSIC' ? (
-                  [
-                    { id: 'DIRECTION', label: '① DIRECTION — Absence of absolute tactical clarity for progression.' },
-                    { id: 'PROGRESS', label: '② PROGRESS — Diminished return on hours invested.' },
-                    { id: 'APPLICATION', label: '③ APPLICATION — Theoretical knowledge failing to convert into live execution.' },
-                    { id: 'MUSICAL UNDERSTANDING', label: '④ MUSICAL UNDERSTANDING — Surface performance lacking deep architectural comprehension.' },
-                    { id: 'CREATION', label: '⑤ CREATION — Inability to reliably synthesize original compositions.' },
-                    { id: 'TASTE', label: '⑥ TASTE — Stagnant artistic discrimination and nuance.' },
-                    { id: 'FEEDBACK', label: '⑦ FEEDBACK — Lacking a high-resolution mirror to expose structural flaws.' },
-                    { id: 'LEARNING', label: '⑧ LEARNING — Information consumption unaligned with true mastery.' },
-                  ]
-                ) : (
-                  [
-                    { id: 'DIRECTION', label: '① DIRECTION — Unclear trajectory for high-leverage skill acquisition.' },
-                    { id: 'RETENTION', label: '② RETENTION — Signal decay and rapid loss of complex concepts.' },
-                    { id: 'APPLICATION', label: '③ APPLICATION — Friction in deploying mental models to real-world scenarios.' },
-                    { id: 'THINKING', label: '④ THOUGH-PROCESS — Lack of razor-sharp first-principles reasoning.' },
-                    { id: 'RESEARCH', label: '⑤ RESEARCH — Noise pollution and inability to source premier intelligence.' },
-                    { id: 'CREATIVITY', label: '⑥ CREATIVITY — Linear ideation instead of asymmetric leverage.' },
-                    { id: 'SYSTEM', label: '⑦ SYSTEM — Absence of a permanent operational learning engine.' },
-                    { id: 'ADAPTATION', label: '⑧ ADAPTATION — Slow calibration speed in a high-velocity environment.' },
-                  ]
-                ).map((item) => {
-                  const isSelected = formData.friction.includes(item.id);
-                  return (
-                    <div
-                      key={item.id}
-                      onClick={() => toggleFrictionSelect(item.id)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      {/* Checkbox Style Luxury Indicator */}
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '3px',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                          color: '#D4AF37',
-                          fontSize: '10px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        {isSelected ? '✓' : ''}
-                      </div>
-                      <div>{item.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 04 — CURRENT METHOD */}
-          {!isSubmitted && currentStep === 4 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 04 — CURRENT PROTOCOL
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  How do you currently attempt to solve this?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {[
-                  '① UNSTRUCTURED SELF-STUDY',
-                  '② FRAGMENTED YOUTUBE / PUBLIC MEDIA',
-                  '③ CONVENTIONAL ONLINE COURSES',
-                  '④ PRIVATE INSTRUCTORS / COACHES',
-                  '⑤ LITERATURE AND RESEARCH',
-                  '⑥ AI LEVERAGE',
-                  '⑦ AD-HOC PERSONAL ROUTINES',
-                  '⑧ LACKING ANY COHERENT SYSTEM',
-                ].map((method) => {
-                  const isSelected = formData.currentMethod === method;
-                  return (
-                    <div
-                      key={method}
-                      onClick={() => updateField('currentMethod', method)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>{method}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 05 — THE TARGET RESULT */}
-          {!isSubmitted && currentStep === 5 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 05 — THE DESIRED OUTCOME
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  What specific capability must you possess?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {formData.intention === 'CREATIVE MUSIC' ? (
-                  [
-                    '① COMMAND — Absolute technical execution with effortless precision.',
-                    '② ARCHITECTURE — Total comprehension of harmonic structures.',
-                    '③ AUDITORY ACUMEN — Instantaneous aural identification and analysis.',
-                    '④ SYNTHESIS — Autonomous generation of sophisticated compositions.',
-                    '⑤ ARRANGEMENT — Flawless translation of raw concepts into full arrangements.',
-                    '⑥ EXPRESSION — Total alignment between internal voice and instrument.',
-                    '⑦ ELITE MASTERY — Reaching tier-one musical execution.',
-                  ]
-                ) : (
-                  [
-                    '① AUTONOMY — Complete self-directed capability in any domain.',
-                    '② RETENTION — Permanent cognitive encoding and retrieval.',
-                    '③ STRATEGY — Flawless analytical judgment under ambiguity.',
-                    '④ EXECUTION — Asymmetric problem-solving efficiency.',
-                    '⑤ INVENTION — Generation of high-value intellectual property.',
-                    '⑥ VELOCITY — Unmatched speed of paradigm adoption.',
-                    '⑦ SOVEREIGNTY — Building a personal engine for lifelong mastery.',
-                  ]
-                ).map((item) => {
-                  const isSelected = formData.desiredResult === item;
-                  return (
-                    <div
-                      key={item}
-                      onClick={() => updateField('desiredResult', item)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>{item}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 06 — TRANSFORMATION PRIORITY */}
-          {!isSubmitted && currentStep === 6 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 06 — CORE LEVERAGE
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  What is your absolute highest priority?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {[
-                  '① CAPABILITY — Raw, undeniable skill.',
-                  '② INDEPENDENCE — Total eradication of external reliance.',
-                  '③ GENIUS CREATION — Producing original masterworks.',
-                  '④ ELITE STATUS — Operating in the top fraction of one percent.',
-                  '⑤ IDENTITY SHIFT — Becoming structurally transformed.',
-                ].map((item) => {
-                  const isSelected = formData.transformationPriority === item;
-                  return (
-                    <div
-                      key={item}
-                      onClick={() => updateField('transformationPriority', item)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>{item}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 07 — COMMITMENT */}
-          {!isSubmitted && currentStep === 7 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 07 — CONVICTION
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  What is your level of commitment?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {[
-                  '① CURIOUS — Evaluating the architecture of Solo Genius.',
-                  '② ACTIVE SEARCH — Seeking a premier, uncompromising solution.',
-                  '③ COMMITTED — Prepared to deploy heavy capital and deep focus.',
-                  '④ UNCOMPROMISING — Treating this as a non-negotiable life pillar.',
-                ].map((item) => {
-                  const isSelected = formData.commitment === item;
-                  return (
-                    <div
-                      key={item}
-                      onClick={() => updateField('commitment', item)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>{item}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 08 — FIT */}
-          {!isSubmitted && currentStep === 8 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 08 — ALIGNMENT
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  Which archetype aligns with your expectations?
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
-                {[
-                  '① I require standard hand-holding and direct instructions.',
-                  '② I need a structured curriculum to follow passively.',
-                  '③ I want to master the system to execute entirely on my own.',
-                  '④ I demand rigorous intellectual challenge and high-end sovereignty.',
-                ].map((item) => {
-                  const isSelected = formData.customerFit === item;
-                  return (
-                    <div
-                      key={item}
-                      onClick={() => updateField('customerFit', item)}
-                      style={{
-                        padding: '16px 20px',
-                        backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(15, 15, 18, 0.6)',
-                        border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.07)'}`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                        fontWeight: '600',
-                        color: isSelected ? '#D4AF37' : '#D4D4D8',
-                        transition: 'all 0.25s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '14px',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '50%',
-                          border: `2px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.2)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.15)' : 'transparent',
-                        }}
-                      >
-                        {isSelected && (
-                          <div
-                            style={{
-                              width: '6px',
-                              height: '6px',
-                              borderRadius: '50%',
-                              backgroundColor: '#D4AF37',
-                            }}
-                          />
-                        )}
-                      </div>
-                      <div>{item}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* STEP 09 — WRITTEN ESSAY THESIS (Added Qualitative Depth) */}
-          {!isSubmitted && currentStep === 9 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 09 — QUALITATIVE THESIS
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 4px 0', letterSpacing: '-0.5px' }}>
-                  State your primary objective or artistic conviction.
-                </h2>
-                <p style={{ color: '#94A3B8', fontSize: '13px', margin: '0' }}>
-                  Briefly articulate what drives you to seek admission into Solo Genius. (Be direct and precise).
+                <h1 style={{ fontSize: "clamp(32px, 5vw, 44px)", fontWeight: "700", letterSpacing: "-1px", color: "#FFFFFF", margin: "0 0 16px 0", lineHeight: "1.15" }}>
+                  Private Application
+                </h1>
+                <p style={{ color: "#A1A1AA", fontSize: "15px", lineHeight: "1.6", margin: "0 0 24px 0", maxWidth: "580px" }}>
+                  A private application for people who are serious about developing their ability to learn, think, create and perform.
                 </p>
-              </div>
+                <div style={{ display: "inline-block", padding: "6px 12px", backgroundColor: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "4px", fontSize: "11px", color: "#D4AF37", letterSpacing: "1px" }}>
+                  PRIVATE ASSESSMENT • SOLO GENIUS STANDARD (USD 500)
+                </div>
+              </motion.div>
+            )}
 
-              <div>
-                <textarea
-                  rows={5}
-                  value={formData.personalThesis}
-                  onChange={(e) => updateField('personalThesis', e.target.value)}
-                  placeholder="Write your thesis here... (e.g., I am building an uncompromising path in musical creation and require deep architectural systems rather than surface tutorials.)"
-                  style={{
-                    width: '100%',
-                    backgroundColor: 'rgba(10, 10, 12, 0.8)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    borderRadius: '6px',
-                    padding: '16px',
-                    color: '#FFFFFF',
-                    fontSize: '13px',
-                    lineHeight: '1.6',
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                    resize: 'vertical',
-                  }}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* STEP 10 — DISPATCH DETAILS */}
-          {!isSubmitted && currentStep === 10 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div>
-                <span style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px' }}>
-                  STEP 10 — TRANSMISSION
-                </span>
-                <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#FFFFFF', margin: '8px 0 0 0', letterSpacing: '-0.5px' }}>
-                  Private credentials for review dispatch
-                </h2>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={labelStyle}>Full Legal Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.fullName}
-                    onChange={(e) => updateField('fullName', e.target.value)}
-                    placeholder="Full Name"
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Preferred Alias</label>
-                  <input
-                    type="text"
-                    value={formData.preferredName}
-                    onChange={(e) => updateField('preferredName', e.target.value)}
-                    placeholder="Alias"
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={labelStyle}>Secure Email *</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => updateField('email', e.target.value)}
-                    placeholder="name@domain.com"
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Direct Phone / Telegram *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => updateField('phone', e.target.value)}
-                    placeholder="@handle or +95..."
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <label style={labelStyle}>Location / City *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.city}
-                    onChange={(e) => updateField('city', e.target.value)}
-                    placeholder="City, Country"
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Age Tier</label>
-                  <select
-                    value={formData.ageRange}
-                    onChange={(e) => updateField('ageRange', e.target.value)}
-                    style={{ ...inputStyle, backgroundColor: '#0A0A0C', color: formData.ageRange ? '#F4F4F5' : '#71717A' }}
-                  >
-                    <option value="" disabled>Select bracket</option>
-                    <option value="Under 20">Under 20</option>
-                    <option value="20-25">20-25</option>
-                    <option value="26-35">26-35</option>
-                    <option value="36-45">36-45</option>
-                    <option value="46+">46+</option>
-                  </select>
-                </div>
+            {/* Subtle Progress Indicator */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "40px" }}>
+              {Array.from({ length: totalSteps }).map((_, index) => {
+                const stepNum = index + 1;
+                const isActive = currentStep === stepNum;
+                const isPassed = currentStep > stepNum;
+                return (
+                  <div key={index} style={{ display: "flex", alignItems: "center", flex: 1 }}>
+                    <div style={{
+                      height: "2px",
+                      width: "100%",
+                      backgroundColor: isPassed || isActive ? "#D4AF37" : "rgba(255, 255, 255, 0.1)",
+                      transition: "background-color 0.4s ease"
+                    }} />
+                  </div>
+                );
+              })}
+              <div style={{ fontSize: "11px", color: "#71717A", fontWeight: "600", letterSpacing: "1px", minWidth: "35px", textAlign: "right" }}>
+                {currentStep < 10 ? `0${currentStep}` : currentStep}/10
               </div>
             </div>
-          )}
 
-          {/* Navigation Controls */}
-          {!isSubmitted && (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginTop: '48px',
-                borderTop: '1px solid rgba(255, 255, 255, 0.07)',
-                paddingTop: '28px',
-              }}
-            >
-              {currentStep > 1 ? (
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#A1A1AA',
-                    border: '1px solid rgba(255, 255, 255, 0.15)',
-                    padding: '12px 28px',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    letterSpacing: '2px',
-                    cursor: 'pointer',
-                    transition: 'border-color 0.2s ease',
-                  }}
-                >
-                  BACK
-                </button>
-              ) : (
-                <div />
-              )}
+            {/* Form Steps */}
+            <form onSubmit={currentStep === totalSteps ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
+              <AnimatePresence mode="wait">
+                
+                {/* STEP 01 — INTENTION */}
+                {currentStep === 1 && (
+                  <motion.div key="step1" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 01</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>What are you here to develop?</h2>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                      {[
+                        { id: 'CREATIVE MUSIC', title: '① CREATIVE MUSIC', desc: 'I want to develop my musical ability and turn my instrument into a tool for expression and creation. (ဂီတစွမ်းရည်ကို မြှင့်တင်ချင်ပြီး ဖန်တီးသူဘဝသို့ ကူးပြောင်းချင်သူများအတွက်)' },
+                        { id: 'GENIUS LEARNING', title: '② GENIUS LEARNING', desc: 'I want to develop how I learn, think, create and solve problems — especially if you face difficulties in studying or building systems. (လေ့လာသင်ယူရာမှာ၊ အချက်အလက်မှတ်သားရာမှာ ဒါမှမဟုတ် ကိုယ်ပိုင်စနစ်တည်ဆောက်ရာမှာ အခက်အခဲရှိနေသူများအတွက်)' }
+                      ].map((item) => {
+                        const isSelected = formData.intention === item.id;
+                        return (
+                          <div key={item.id} onClick={() => updateField('intention', item.id)} style={{ padding: "16px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", transition: "all 0.2s ease" }}>
+                            <div style={{ fontSize: "12px", fontWeight: "700", color: isSelected ? "#D4AF37" : "#FFFFFF", letterSpacing: "1px", marginBottom: "4px" }}>{item.title}</div>
+                            <div style={{ fontSize: "12px", color: "#A1A1AA", lineHeight: "1.5" }}>{item.desc}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
 
-              {currentStep < totalSteps ? (
-                <button
-                  type="submit"
-                  style={{
-                    backgroundColor: '#FFFFFF',
-                    color: '#050507',
-                    border: 'none',
-                    padding: '13px 32px',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    letterSpacing: '2px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  PROCEED
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={{
-                    backgroundColor: '#D4AF37',
-                    color: '#050507',
-                    border: 'none',
-                    padding: '13px 40px',
-                    borderRadius: '4px',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    letterSpacing: '2px',
-                    cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                    opacity: isSubmitting ? 0.7 : 1,
-                  }}
-                >
-                  {isSubmitting ? 'TRANSMITTING...' : 'SUBMIT APPLICATION'}
-                </button>
-              )}
-            </div>
-          )}
-        </form>
+                {/* STEP 02 — CURRENT STATE */}
+                {currentStep === 2 && (
+                  <motion.div key="step2" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 02</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>Where are you now?</h2>
+                    </div>
+                    {formData.intention === 'CREATIVE MUSIC' ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <div style={{ fontSize: "11px", color: "#D4AF37", letterSpacing: "1.5px", fontWeight: "700" }}>CREATIVE MUSIC STATE</div>
+                        {[
+                          { id: 'BEGINNING', label: '① BEGINNING — အခြေခံတီးနိုင်ပေမယ့် လမ်းညွှန်မှုအမြဲလိုနေသေးတယ်။' },
+                          { id: 'DEVELOPING', label: '② DEVELOPING — သီချင်းတွေကို တစ်ယောက်တည်း တီးနိုင်ပေမယ့် တိုးတက်မှု အားနည်းနေတယ်။' },
+                          { id: 'CAPABLE', label: '③ CAPABLE — ယုံကြည်မှုရှိရှိ တီးနိုင်ပေမယ့် ဂီတသဘောတရားနဲ့ ဖန်တီးမှုပိုင်းမှာ အားနည်းချက်ရှိတယ်။' },
+                          { id: 'ADVANCED', label: '④ ADVANCED — ကျွမ်းကျင်စွာ တီးခတ်/ဖန်တီးနိုင်ပြီး ပိုမိုမြင့်မားတဲ့ ဉာဏ်ရည်ပိုင်းကို တည်ဆောက်ချင်တယ်။' }
+                        ].map((opt) => {
+                          const isSelected = formData.currentMusicState === opt.id;
+                          return (
+                            <div key={opt.id} onClick={() => updateField('currentMusicState', opt.id)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {opt.label}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                        <div style={{ fontSize: "11px", color: "#D4AF37", letterSpacing: "1.5px", fontWeight: "700" }}>GENIUS LEARNING STATE</div>
+                        {[
+                          { id: 'BEGINNING', label: '① BEGINNING — အခြားသူများရဲ့ လမ်းညွှန်မှုနဲ့ ကွန်တెంట్‌များကို အဓိက အမှီပြုနေရတယ်။' },
+                          { id: 'DEVELOPING', label: '② DEVELOPING — ကိုယ်တိုင်လေ့လာနိုင်ပေမယ့် စနစ်တကျ မဖြစ်သေးဘူး။' },
+                          { id: 'CAPABLE', label: '③ CAPABLE — တစ်သီးပုဂ္ဂလ လေ့လာနိုင်ပေမယ့် စဉ်းစားတွေးခေါ်မှုနဲ့ အသုံးချမှုကို ပိုကောင်းချင်တယ်။' },
+                          { id: 'ADVANCED', label: '④ ADVANCED — ထိရောက်စွာ လေ့လာတတ်ပြီး အဆင့်အတန်းမြင့်မားစွာ လုပ်ကိုင်လိုတယ်။' }
+                        ].map((opt) => {
+                          const isSelected = formData.currentLearningState === opt.id;
+                          return (
+                            <div key={opt.id} onClick={() => updateField('currentLearningState', opt.id)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {opt.label}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* STEP 03 — THE FRICTION */}
+                {currentStep === 3 && (
+                  <motion.div key="step3" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 03</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>What currently limits your progress?</h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "12px", margin: 0 }}>အများဆုံး ၃ ခု ရွေးချယ်ပါ။</p>
+                    </div>
+                    {formData.intention === 'CREATIVE MUSIC' ? (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "10px" }}>
+                        {[
+                          '① DIRECTION — ရှေ့ဆက်ဘာလေ့ကျင့်ရမလဲ မသိတာ။',
+                          '② PROGRESS — လေ့ကျင့်ပေမယ့် မျှော်လင့်ထားတာထက် တိုးတက်မှု နှေးကွေးနေတာ။',
+                          '③ APPLICATION — သဘောတရားတွေကို နားလည်ပေမယ့် လက်တွေ့မသုံးတတ်တာ။',
+                          '④ MUSICAL UNDERSTANDING — သီချင်းတီးနိုင်ပေမယ့် ဘာကြောင့်ကောင်းလဲ အနက်ရှိုင်း မသိတာ။',
+                          '⑤ CREATION — အခြားသူတီးတာကို ပြန်တီးနိုင်ပေမယ့် ကိုယ်ပိုင်ဖန်တီးဖို့ ခက်ခဲတာ။',
+                          '⑥ TASTE — ဂီတအရသာနဲ့ စဉ်းစားဆုံးဖြတ်နိုင်စွမ်းကို မြှင့်တင်ချင်တာ။',
+                          '⑦ FEEDBACK — ကိုယ့်ရဲ့အားနည်းချက်ကို တိကျစွာ ထောက်ပြပေးမယ့်သူ မရှိတာ။',
+                          '⑧ LEARNING — သတင်းအချက်အလက်တွေ စားသုံးပေမယ့် စွမ်းရည်အဖြစ် မပြောင်းနိုင်တာ။'
+                        ].map((item) => {
+                          const isSelected = formData.frictionPoints.includes(item);
+                          return (
+                            <div key={item} onClick={() => toggleMultiSelect('frictionPoints', item)} style={{ padding: "12px 14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {isSelected ? "✓ " : "+ "} {item}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "10px" }}>
+                        {[
+                          '① DIRECTION — ရှေ့ဆက်ဘာလေ့လာရမလဲ မသိတာ။',
+                          '② RETENTION — သင်ယူထားတာတွေကို ပြန်မေ့သွားတာ။',
+                          '③ APPLICATION — အချက်အလက်တွေကို သိပေမယ့် လက်တွေ့မသုံးတတ်တာ။',
+                          '④ THINKING — ပိုမိုရှင်းလင်းပြတ်သားစွာနဲ့ ဝေဖန်ပိုင်းခြား စဉ်းစားချင်တာ။',
+                          '⑤ RESEARCH — ယုံကြည်စိတ်ချရတဲ့ အချက်အလက်ရှာဖွေဖို့ အခက်အခဲရှိတာ။',
+                          '⑥ CREATIVITY — အကြံဉာဏ်ကောင်းတွေနဲ့ မူပိုင်ဖြေရှင်းချက်တွေ ထုတ်လုပ်ချင်တာ။',
+                          '⑦ SYSTEM — တိကျခိုင်မာတဲ့ ကိုယ်ပိုင်လေ့လာမှု စနစ်မရှိတာ။',
+                          '⑧ ADAPTATION — AI ခေတ်ကြီးထဲမှာ ပိုမိုမြန်ဆန်စွာ လိုက်လျောညီထွေဖြစ်ချင်တာ။'
+                        ].map((item) => {
+                          const isSelected = formData.frictionPoints.includes(item);
+                          return (
+                            <div key={item} onClick={() => toggleMultiSelect('frictionPoints', item)} style={{ padding: "12px 14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {isSelected ? "✓ " : "+ "} {item}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* STEP 04 — WHAT HAVE YOU BEEN DOING? */}
+                {currentStep === 4 && (
+                  <motion.div key="step4" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 04</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>How are you currently trying to improve?</h2>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+                      {[
+                        '① ကိုယ်တိုင်လေ့လာခြင်း (Self-Study)',
+                        '② YouTube / အွန်လိုင်းကွန်တెంట్‌များ',
+                        '③ အွန်လိုင်းသင်တန်းများ',
+                        '④ ကိုယ်ပိုင်ဆရာ / ကိုယ်ရေးကိုယ်တာ Coach',
+                        '⑤ စာအုပ်များ / ဆောင်းပါးများ',
+                        '⑥ AI ကိရိယာများအသုံးပြုခြင်း',
+                        '⑦ ကိုယ်ပိုင်လေ့ကျင့်မှုစနစ်',
+                        '⑧ တိကျတဲ့စနစ် မရှိသေးပါ'
+                      ].map((method) => {
+                        const isSelected = formData.currentMethod === method;
+                        return (
+                          <div key={method} onClick={() => updateField('currentMethod', method)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "11px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600", textAlign: "center" }}>
+                            {method}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 05 — THE RESULT */}
+                {currentStep === 5 && (
+                  <motion.div key="step5" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 05</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>What do you want to be able to do that you cannot do today?</h2>
+                    </div>
+                    {formData.intention === 'CREATIVE MUSIC' ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                        {[
+                          { id: 'PLAY', label: '① PLAY — ဂီတကို ထိန်းချုပ်နိုင်စွမ်းအပြည့်နဲ့ ယုံကြည်မှုရှိရှိ တီးခတ်နိုင်ခြင်း။' },
+                          { id: 'UNDERSTAND', label: '② UNDERSTAND — ရိုးရိုးပြန်တီးတာထက် ဂီတသဘောတရားကို အနက်ရှိုင်း နားလည်ခြင်း။' },
+                          { id: 'ANALYZE', label: '③ ANALYZE — ကြားရုံနဲ့ ဂီတအလုပ်လုပ်ပုံကို စဉ်းစားဆန်းစစ်နိုင်ခြင်း။' },
+                          { id: 'CREATE', label: '④ CREATE — ကိုယ်ပိုင်ဂီတအကြံဉာဏ်နဲ့ ဖန်တီးမှုများ ပြုလုပ်နိုင်ခြင်း။' },
+                          { id: 'ARRANGE', label: '⑤ ARRANGE — အကြံဉာဏ်များကို အပြီးသတ် ဂီတအဆင်အပြင်အဖြစ် ဖန်တီးခြင်း။' },
+                          { id: 'EXPRESS', label: '⑥ EXPRESS — ကိုယ့်ရဲ့ ဖန်တီးဖော်ပြလိုမှုကို ဂီတဖြင့် တိုက်ရိုက်ထုတ်ဖော်ခြင်း။' },
+                          { id: 'MASTER', label: '⑦ MASTER — ပိုမိုမြင့်မားတဲ့ ဂီတစွမ်းရည် အဆင့်အတန်းသို့ ရောက်ရှိခြင်း။' }
+                        ].map((opt) => {
+                          const isSelected = formData.desiredResult === opt.id;
+                          return (
+                            <div key={opt.id} onClick={() => updateField('desiredResult', opt.id)} style={{ padding: "12px 14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {opt.label}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                        {[
+                          { id: 'LEARN', label: '① LEARN — အသစ်အဆန်းများကို တစ်သီးပုဂ္ဂလ လေ့လာတတ်ခြင်း။' },
+                          { id: 'REMEMBER', label: '② REMEMBER — သင်ယူခဲ့သမျှကို မှတ်မိသိမ်းဆည်းပြီး လိုအပ်ချိန်ထုတ်သုံးနိုင်ခြင်း။' },
+                          { id: 'THINK', label: '③ THINK — ပိုမိုကောင်းမွန်စွာ စဉ်းစားတွေးခေါ်ပြီး မှန်ကန်သော ဆုံးဖြတ်ချက်ချနိုင်ခြင်း။' },
+                          { id: 'SOLVE', label: '④ SOLVE — မရင်းနှီးသော ပြဿနာများကို ကိုယ်တိုင်ဖြေရှင်းနိုင်ခြင်း။' },
+                          { id: 'CREATE', label: '⑤ CREATE — မူပိုင်အကြံဉာဏ်နဲ့ ဖြေရှင်းချက်အသစ်များ ဖန်တီးခြင်း။' },
+                          { id: 'ADAPT', label: '⑥ ADAPT — အပြောင်းအလဲမြန်သော ကမ္ဘာကြီးထဲတွင် လျင်မြန်စွာ လိုက်လျောညီထွေဖြစ်ခြင်း။' },
+                          { id: 'MASTER', label: '⑦ MASTER — စဉ်ဆက်မပြတ် တိုးတက်စေမယ့် ကိုယ်ပိုင်စနစ် တည်ဆောက်ခြင်း။' }
+                        ].map((opt) => {
+                          const isSelected = formData.desiredResult === opt.id;
+                          return (
+                            <div key={opt.id} onClick={() => updateField('desiredResult', opt.id)} style={{ padding: "12px 14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                              {opt.label}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+
+                {/* STEP 06 — TRANSFORMATION PRIORITY */}
+                {currentStep === 6 && (
+                  <motion.div key="step6" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 06</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>Which matters most to you?</h2>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      {[
+                        { id: 'SKILL', label: '① SKILL — ပိုမိုခိုင်မာသော စွမ်းရည် (Capability)' },
+                        { id: 'INDEPENDENCE', label: '② INDEPENDENCE — တိုးတက်မှုအတွက် အခြားသူအပေါ် မှီခိုနေရခြင်းမှ ကင်းဝေးခြင်း' },
+                        { id: 'CREATIVITY', label: '③ CREATIVITY — ရိုးရိုးစားသုံးသူဘဝမှ ဖန်တီးသူဘဝသို့ ကူးပြောင်းခြင်း' },
+                        { id: 'MASTERY', label: '④ MASTERY — လူအများစု မရောက်နိုင်သော အဆင့်အတန်းသို့ ရောက်ရှိခြင်း' },
+                        { id: 'IDENTITY', label: '⑤ IDENTITY — သင်ယူမှုမှတစ်ဆင့် ထူးခြားသော လူတစ်ဦးအဖြစ် ပြောင်းလဲခြင်း' }
+                      ].map((opt) => {
+                        const isSelected = formData.transformationPriority === opt.id;
+                        return (
+                          <div key={opt.id} onClick={() => updateField('transformationPriority', opt.id)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                            {opt.label}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 07 — COMMITMENT */}
+                {currentStep === 7 && (
+                  <motion.div key="step7" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 07</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>How serious are you about this transformation?</h2>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      {[
+                        { id: 'EXPLORING', label: '① EXPLORING — စိတ်ဝင်စားပြီး Solo Genius အကြောင်းကို လေ့လာနေဆဲပါ။' },
+                        { id: 'READY', label: '② READY — တိကျခိုင်မာတဲ့ ဖြေရှင်းချက်တစ်ခုကို တက်ကြွစွာ ရှာဖွေနေပါတယ်။' },
+                        { id: 'COMMITTED', label: '③ COMMITTED — ကိုယ့်တိုးတက်မှုအတွက် အချိန်၊ ကြိုးစားအားထုတ်မှုနဲ့ ရင်းနှီးမြှုပ်နှံဖို့ အသင့်ရှိပါတယ်။' },
+                        { id: 'ALL IN', label: '④ ALL IN — ဒါဟာ ကျွန်တော့်ရဲ့ အဓိက ဦးစားပေး အသွင်ကူးပြောင်းမှု ဖြစ်ပါတယ်။' }
+                      ].map((opt) => {
+                        const isSelected = formData.commitmentLevel === opt.id;
+                        return (
+                          <div key={opt.id} onClick={() => updateField('commitmentLevel', opt.id)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                            {opt.label}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 08 — FIT */}
+                {currentStep === 8 && (
+                  <motion.div key="step8" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 08</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>Which statement describes you best?</h2>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      {[
+                        { id: 'SIMPLE_TEACH', label: '① ဘာလုပ်ရမယ်ဆိုတာကို တစ်စုံတစ်ဦးက ရိုးရိုးရှင်းရှင်း သင်ပြပေးတာကို လိုချင်တယ်။' },
+                        { id: 'STRUCTURED_SYSTEM', label: '② ကိုယ့်ကို လမ်းပြပေးမယ့် တည်ဆောက်ထားတဲ့ စနစ်တစ်ခု လိုအပ်တယ်။' },
+                        { id: 'OPERATE_INDEPENDENTLY', label: '③ စနစ်ကို နားလည်ပြီး အနာဂတ်မှာ ကိုယ်တိုင် ရပ်တည်လုပ်ကိုင်နိုင်ချင်တယ်။' },
+                        { id: 'CHALLENGE_BEYOND', label: '④ သာမန်သင်ယူမှုထက် ကျော်လွန်ပြီး စဉ်းစားဖို့၊ ဖန်တီးဖို့နဲ့ စိန်ခေါ်ခံရဖို့ အသင့်ရှိတယ်။' }
+                      ].map((opt) => {
+                        const isSelected = formData.customerFit === opt.id;
+                        return (
+                          <div key={opt.id} onClick={() => updateField('customerFit', opt.id)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                            {opt.label}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 09 — FINAL (REASON) */}
+                {currentStep === 9 && (
+                  <motion.div key="step9" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 09</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>Why Solo Genius?</h2>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                      {[
+                        '① လေ့လာမှုပြုလုပ်ရန် လုံးဝကွဲပြားသော နည်းလမ်းကို လိုချင်လို့ပါ။',
+                        '② သတင်းအချက်အလက်သက်သက်မဟုတ်ဘဲ အနက်ရှိုင်းဆုံး နားလည်မှုကို လိုချင်လို့ပါ။',
+                        '③ ပိုမိုလွတ်လပ်ပြီး ကိုယ်ပိုင်ရပ်တည်နိုင်စွမ်းရှိသူ ဖြစ်လာချင်လို့ပါ။',
+                        '④ ကိုယ့်ရဲ့ ဖန်တီးနိုင်စွမ်းရည်ကို အမြင့်ဆုံး မြှင့်တင်ချင်လို့ပါ။',
+                        '⑤ သင်ယူမှုကို စစ်မှန်သော စွမ်းရည်အဖြစ် ပြောင်းလဲပေးမယ့် စနစ်လိုချင်လို့ပါ။',
+                        '⑥ ကိုယ်ပိုင်လမ်းကြောင်းကို ဖန်တီးနိုင်စွမ်းရှိတဲ့ လူတစ်ယောက် ဖြစ်လာချင်လို့ပါ။'
+                      ].map((reason) => {
+                        const isSelected = formData.whySoloGenius === reason;
+                        return (
+                          <div key={reason} onClick={() => updateField('whySoloGenius', reason)} style={{ padding: "14px", backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)", border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`, borderRadius: "4px", cursor: "pointer", fontSize: "12px", color: isSelected ? "#D4AF37" : "#A1A1AA", fontWeight: "600" }}>
+                            {reason}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 10 — TRANSMISSION / CREDENTIALS */}
+                {currentStep === 10 && (
+                  <motion.div key="step10" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "2px" }}>STEP 10 — TRANSMISSION & TUITION BREAKDOWN</span>
+                      <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>Private credentials & Admission Summary</h2>
+                    </div>
+
+                    {/* Pricing Summary Box */}
+                    <div style={{ backgroundColor: "rgba(212, 175, 55, 0.04)", border: "1px solid rgba(212, 175, 55, 0.2)", borderRadius: "6px", padding: "16px 20px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+                        <span style={{ fontSize: "11px", color: "#D4AF37", fontWeight: "700", letterSpacing: "1.5px" }}>PROGRAM TIER</span>
+                        <span style={{ fontSize: "11px", color: "#FFFFFF", fontWeight: "600" }}>Solo Genius Standard</span>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                        <span style={{ fontSize: "11px", color: "#D4AF37", fontWeight: "700", letterSpacing: "1.5px" }}>TUITION FEE</span>
+                        <span style={{ fontSize: "16px", color: "#D4AF37", fontWeight: "700" }}>USD 500</span>
+                      </div>
+                      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.06)", paddingTop: "10px", fontSize: "11px", color: "#A1A1AA", lineHeight: "1.5" }}>
+                        * လျှောက်လွှာ အတည်ပြုပြီးပါက ကျွန်ုပ်တို့၏ Team ဘက်မှ <strong style={{ color: "#FFFFFF" }}>၂၄ နာရီအတွင်း</strong> သင်၏ လိပ်စာ/ဆက်သွယ်ရန်သို့ တိုက်ရိုက် ဆက်သွယ်ပေးမည် ဖြစ်ပါသည်။
+                      </div>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>Full Legal Name *</label>
+                        <input type="text" required value={formData.fullName} onChange={(e) => updateField('fullName', e.target.value)} placeholder="ဥပမာ - Kyaw Zin Win" style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Preferred Alias</label>
+                        <input type="text" value={formData.preferredName} onChange={(e) => updateField('preferredName', e.target.value)} placeholder="ဥပမာ - Alex" style={inputStyle} />
+                      </div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>Secure Email *</label>
+                        <input type="email" required value={formData.email} onChange={(e) => updateField('email', e.target.value)} placeholder="name@domain.com" style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Direct Phone / Telegram *</label>
+                        <input type="text" required value={formData.phone} onChange={(e) => updateField('phone', e.target.value)} placeholder="@handle သို့မဟုတ် +95..." style={inputStyle} />
+                      </div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>Location / City *</label>
+                        <input type="text" required value={formData.city} onChange={(e) => updateField('city', e.target.value)} placeholder="ဥပမာ - Yangon, Myanmar" style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Age Tier *</label>
+                        <select required value={formData.ageRange} onChange={(e) => updateField('ageRange', e.target.value)} style={{ ...inputStyle, backgroundColor: "#0D0D0F", color: formData.ageRange ? "#F4F4F5" : "#71717A" }}>
+                          <option value="" disabled>အသက်အုပ်စု ရွေးပါ</option>
+                          <option value="Under 20">အသက် ၂၀ အောက်</option>
+                          <option value="20-25">၂၀ - ၂၅ နှစ်</option>
+                          <option value="26-35">၂၆ - ၃၅ နှစ်</option>
+                          <option value="36-45">၃၆ - ၄၅ နှစ်</option>
+                          <option value="46+">၄၆ နှစ်နှင့်အထက်</option>
+                        </select>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
+
+              {/* Navigation Controls */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "40px", borderTop: "1px solid rgba(255, 255, 255, 0.06)", paddingTop: "24px" }}>
+                {currentStep > 1 ? (
+                  <button type="button" onClick={handleBack} style={{ backgroundColor: "transparent", color: "#A1A1AA", border: "1px solid rgba(255, 255, 255, 0.15)", padding: "11px 24px", borderRadius: "2px", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", cursor: "pointer", transition: "all 0.2s ease" }}>
+                    BACK
+                  </button>
+                ) : <div />}
+
+                {currentStep < totalSteps ? (
+                  <button type="submit" style={{ backgroundColor: "#FFFFFF", color: "#09090B", border: "none", padding: "12px 30px", borderRadius: "2px", fontSize: "11px", fontWeight: "700", letterSpacing: "1.5px", cursor: "pointer", transition: "opacity 0.2s ease" }}>
+                    NEXT STEP
+                  </button>
+                ) : (
+                  <button type="submit" disabled={isSubmitting} style={{ backgroundColor: "#D4AF37", color: "#09090B", border: "none", padding: "12px 36px", borderRadius: "2px", fontSize: "11px", fontWeight: "700", letterSpacing: "1.5px", cursor: isSubmitting ? "not-allowed" : "pointer", opacity: isSubmitting ? 0.7 : 1, transition: "all 0.2s ease" }}>
+                    {isSubmitting ? "TRANSMITTING PROFILE..." : "SUBMIT APPLICATION"}
+                  </button>
+                )}
+              </div>
+            </form>
+          </>
+        )}
 
         {/* Submission Success State */}
         {isSubmitted && (
-          <div style={{ textAlign: 'center', padding: '50px 0' }}>
-            <div
-              style={{
-                width: '54px',
-                height: '54px',
-                borderRadius: '50%',
-                backgroundColor: 'rgba(212, 175, 55, 0.08)',
-                border: '1px solid rgba(212, 175, 55, 0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 28px auto',
-                color: '#D4AF37',
-                fontSize: '20px',
-              }}
-            >
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} style={{ textAlign: "center", padding: "40px 0" }}>
+            <div style={{ width: "48px", height: "48px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", border: "1px solid rgba(212, 175, 55, 0.4)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px auto", color: "#D4AF37", fontSize: "20px" }}>
               ✓
             </div>
-            <span
-              style={{
-                color: '#D4AF37',
-                fontSize: '10px',
-                fontWeight: '600',
-                letterSpacing: '3.5px',
-                textTransform: 'uppercase',
-              }}
-            >
-              PROTOCOL ENCRYPTED & DISPATCHED
+            <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "600", letterSpacing: "3px", textTransform: "uppercase" }}>
+              ADMISSION PROTOCOL ACTIVE
             </span>
-            <h2
-              style={{
-                fontSize: '30px',
-                fontWeight: '700',
-                color: '#FFFFFF',
-                margin: '12px 0 16px 0',
-                letterSpacing: '-0.5px',
-              }}
-            >
-              APPLICATION LOGGED
+            <h2 style={{ fontSize: "28px", fontWeight: "700", color: "#FFFFFF", margin: "10px 0 16px 0", letterSpacing: "-0.5px" }}>
+              Application Received
             </h2>
-            <p
-              style={{
-                color: '#94A3B8',
-                fontSize: '14px',
-                lineHeight: '1.7',
-                maxWidth: '480px',
-                margin: '0 auto 36px auto',
-              }}
-            >
-              Your diagnostic transmission has been securely logged. Solo Genius evaluates dossiers individually based on exclusivity and fit.
+            <p style={{ color: "#A1A1AA", fontSize: "14px", lineHeight: "1.6", maxWidth: "480px", margin: "0 auto 30px auto" }}>
+              သင့်ရဲ့ လျှောက်လွှာကို အောင်မြင်စွာ လက်ခံရရှိပါပြီ။ Solo Genius Team ဘက်မှ သင်၏ အချက်အလက်များကို စိစစ်ပြီး <strong style={{ color: "#FFFFFF" }}>၂၄ နာရီအတွင်း</strong> တိုက်ရိုက် ပြန်လည်ဆက်သွယ်ပေးပါမည်။
             </p>
-            <div
-              style={{
-                display: 'inline-block',
-                backgroundColor: 'rgba(10, 10, 12, 0.9)',
-                border: '1px solid rgba(212, 175, 55, 0.2)',
-                borderRadius: '6px',
-                padding: '20px 32px',
-                marginBottom: '36px',
-                textAlign: 'left',
-                minWidth: '320px',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '40px', marginBottom: '10px', fontSize: '11px' }}>
-                <span style={{ color: '#71717A' }}>DOSSIER STATUS</span>
-                <span style={{ color: '#D4AF37', fontWeight: '600', letterSpacing: '1.5px' }}>QUEUED FOR REVIEW</span>
+            
+            <div style={{ display: "inline-block", backgroundColor: "rgba(13, 13, 15, 0.9)", border: "1px solid rgba(212, 175, 55, 0.25)", borderRadius: "4px", padding: "16px 28px", marginBottom: "32px", textAlign: "left", width: "100%", maxWidth: "400px", boxSizing: "border-box" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: "40px", marginBottom: "8px", fontSize: "11px" }}>
+                <span style={{ color: "#71717A" }}>APPLICATION STATUS</span>
+                <span style={{ color: "#D4AF37", fontWeight: "600", letterSpacing: "1px" }}>UNDER REVIEW</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '40px', fontSize: '11px' }}>
-                <span style={{ color: '#71717A' }}>REFERENCE CODE</span>
-                <span style={{ color: '#FFFFFF', fontWeight: '600', letterSpacing: '1.5px' }}>{appReference}</span>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: "40px", marginBottom: "8px", fontSize: "11px" }}>
+                <span style={{ color: "#71717A" }}>PROGRAM TIER</span>
+                <span style={{ color: "#FFFFFF", fontWeight: "600" }}>Solo Genius Standard (USD 500)</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: "40px", fontSize: "11px" }}>
+                <span style={{ color: "#71717A" }}>REFERENCE</span>
+                <span style={{ color: "#FFFFFF", fontWeight: "600", letterSpacing: "1px" }}>{appReference}</span>
               </div>
             </div>
+
             <div>
-              <a
-                href="/"
-                style={{
-                  display: 'inline-block',
-                  backgroundColor: 'transparent',
-                  color: '#D4AF37',
-                  border: '1px solid rgba(212, 175, 55, 0.4)',
-                  padding: '13px 32px',
-                  borderRadius: '4px',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '2px',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease',
-                }}
-              >
+              <a href="/" style={{ display: "inline-block", backgroundColor: "transparent", color: "#D4AF37", border: "1px solid rgba(212, 175, 55, 0.5)", padding: "12px 28px", borderRadius: "2px", fontSize: "11px", fontWeight: "600", letterSpacing: "1.5px", textDecoration: "none", transition: "all 0.2s ease" }}>
                 RETURN TO SOLO GENIUS
               </a>
             </div>
-          </div>
+          </motion.div>
         )}
       </main>
     </div>
@@ -1189,23 +623,24 @@ export default function ApplyPage() {
 }
 
 const labelStyle: React.CSSProperties = {
-  display: 'block',
-  color: '#D4AF37',
-  fontSize: '10px',
-  fontWeight: '600',
-  letterSpacing: '2px',
-  marginBottom: '8px',
-  textTransform: 'uppercase',
+  display: "block",
+  color: "#D4AF37",
+  fontSize: "10px",
+  fontWeight: "600",
+  letterSpacing: "1.5px",
+  marginBottom: "8px",
+  textTransform: "uppercase"
 };
 
 const inputStyle: React.CSSProperties = {
-  width: '100%',
-  backgroundColor: 'rgba(10, 10, 12, 0.8)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  borderRadius: '4px',
-  padding: '14px 16px',
-  color: '#FFFFFF',
-  fontSize: '13px',
-  outline: 'none',
-  boxSizing: 'border-box',
+  width: "100%",
+  backgroundColor: "rgba(13, 13, 15, 0.8)",
+  border: "1px solid rgba(255, 255, 255, 0.1)",
+  borderRadius: "4px",
+  padding: "12px 14px",
+  color: "#FFFFFF",
+  fontSize: "13px",
+  outline: "none",
+  boxSizing: "border-box",
+  transition: "border-color 0.2s ease"
 };
