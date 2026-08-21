@@ -3,628 +3,907 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// ==========================================
-// DATA STRUCTURE & CONFIGURATION (WITH GOLD & BLACK LUXURY VIBE)
-// ==========================================
+export default function ApplyPage() {
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 6;
 
-interface QuestionOption {
-  id: string;
-  title: string;
-  desc?: string;
-}
-
-interface QuestionStep {
-  id: number;
-  key: string;
-  eyebrow: string;
-  question: string;
-  instruction?: string;
-  type: 'single' | 'multi' | 'custom_text' | 'identity_verify';
-  maxSelections?: number;
-  placeholder?: string;
-  options: {
-    universal?: QuestionOption[];
-    music?: QuestionOption[];
-    genius?: QuestionOption[];
-  };
-}
-
-const FORM_STEPS: QuestionStep[] = [
-  {
-    id: 1,
-    key: 'intention',
-    eyebrow: 'STEP 01 — INTENTION',
-    question: 'What are you here to develop?',
-    instruction: 'Choose the transformation that matters most to you.',
-    type: 'single',
-    options: {
-      universal: [
-        { id: 'CREATIVE MUSIC', title: 'CREATIVE MUSIC', desc: 'Develop your musical ability and turn your instrument into a tool for expression, understanding and creation.' },
-        { id: 'GENIUS LEARNING', title: 'GENIUS LEARNING', desc: 'Develop how you learn, think, create and solve problems independently.' }
-      ]
-    }
-  },
-  {
-    id: 2,
-    key: 'currentState',
-    eyebrow: 'STEP 02 — CURRENT STATE',
-    question: 'Where are you now?',
-    type: 'single',
-    options: {
-      music: [
-        { id: 'BEGINNING', title: '01 — BEGINNING', desc: 'I can play basic things but still depend heavily on guidance.' },
-        { id: 'DEVELOPING', title: '02 — DEVELOPING', desc: 'I can play songs independently but my ability feels limited.' },
-        { id: 'CAPABLE', title: '03 — CAPABLE', desc: 'I can play confidently but struggle with deeper musical understanding or creation.' },
-        { id: 'ADVANCED', title: '04 — ADVANCED', desc: 'I can perform or create, but I want to develop a much higher level of musical intelligence.' }
-      ],
-      genius: [
-        { id: 'BEGINNING', title: '01 — BEGINNING', desc: 'I mostly depend on others or existing content to learn.' },
-        { id: 'DEVELOPING', title: '02 — DEVELOPING', desc: 'I can learn independently but my system isn\'t consistent.' },
-        { id: 'CAPABLE', title: '03 — CAPABLE', desc: 'I can learn independently but want stronger thinking and application.' },
-        { id: 'ADVANCED', title: '04 — ADVANCED', desc: 'I already learn effectively and want to operate at a much higher level.' }
-      ]
-    }
-  },
-  {
-    id: 3,
-    key: 'friction',
-    eyebrow: 'STEP 03 — THE FRICTION',
-    question: 'What currently limits your progress?',
-    instruction: 'Choose up to 3.',
-    type: 'multi',
-    maxSelections: 3,
-    options: {
-      music: [
-        { id: 'DIRECTION', title: '01 — DIRECTION', desc: 'I don\'t know what I should practice next.' },
-        { id: 'PROGRESS', title: '02 — PROGRESS', desc: 'I practice, but my progress is slower than expected.' },
-        { id: 'APPLICATION', title: '03 — APPLICATION', desc: 'I understand concepts but struggle to use them.' },
-        { id: 'MUSICAL UNDERSTANDING', title: '04 — MUSICAL UNDERSTANDING', desc: 'I can play music but don\'t deeply understand why it works.' },
-        { id: 'CREATION', title: '05 — CREATION', desc: 'I can reproduce music but struggle to create my own.' },
-        { id: 'TASTE', title: '06 — TASTE', desc: 'I want to develop stronger musical taste and judgment.' },
-        { id: 'FEEDBACK', title: '07 — FEEDBACK', desc: 'I don\'t have a reliable way to identify my weaknesses.' },
-        { id: 'LEARNING', title: '08 — LEARNING', desc: 'I consume a lot of information but don\'t turn enough of it into ability.' }
-      ],
-      genius: [
-        { id: 'DIRECTION', title: '01 — DIRECTION', desc: 'I don\'t know what I should learn next.' },
-        { id: 'RETENTION', title: '02 — RETENTION', desc: 'I learn things but forget them.' },
-        { id: 'APPLICATION', title: '03 — APPLICATION', desc: 'I understand information but struggle to use it.' },
-        { id: 'THINKING', title: '04 — THINKING', desc: 'I want to reason more clearly and critically.' },
-        { id: 'RESEARCH', title: '05 — RESEARCH', desc: 'I struggle to find and evaluate reliable information.' },
-        { id: 'CREATIVITY', title: '06 — CREATIVITY', desc: 'I want to generate better ideas and original solutions.' },
-        { id: 'SYSTEM', title: '07 — SYSTEM', desc: 'I don\'t have a reliable personal learning system.' },
-        { id: 'ADAPTATION', title: '08 — ADAPTATION', desc: 'I want to become more capable of adapting in an AI-driven world.' }
-      ]
-    }
-  },
-  {
-    id: 4,
-    key: 'customFrictionDetail',
-    eyebrow: 'STEP 04 — REALITY DIAGNOSIS',
-    question: 'Describe your core bottleneck in your own words.',
-    instruction: 'Be precise. What specifically breaks down when you try to improve?',
-    type: 'custom_text',
-    placeholder: 'Write your precise bottleneck here (e.g. I practice daily, but I am just copying patterns without deep structural understanding...)',
-    options: { universal: [] }
-  },
-  {
-    id: 5,
-    key: 'methodsTried',
-    eyebrow: 'STEP 05 — CURRENT METHOD',
-    question: 'How are you currently trying to improve?',
-    instruction: 'Select all that apply.',
-    type: 'multi',
-    options: {
-      universal: [
-        { id: 'SELF-STUDY', title: 'SELF-STUDY' },
-        { id: 'YOUTUBE / ONLINE CONTENT', title: 'YOUTUBE / ONLINE CONTENT' },
-        { id: 'ONLINE COURSES', title: 'ONLINE COURSES' },
-        { id: 'PRIVATE TEACHER / COACH', title: 'PRIVATE TEACHER / COACH' },
-        { id: 'BOOKS / ARTICLES', title: 'BOOKS / ARTICLES' },
-        { id: 'AI TOOLS', title: 'AI TOOLS' },
-        { id: 'PERSONAL PRACTICE SYSTEM', title: 'PERSONAL PRACTICE SYSTEM' },
-        { id: 'I DON\'T HAVE A CONSISTENT SYSTEM YET', title: 'I DON\'T HAVE A CONSISTENT SYSTEM YET' }
-      ]
-    }
-  },
-  {
-    id: 6,
-    key: 'desiredResult',
-    eyebrow: 'STEP 06 — DESIRED CAPABILITY',
-    question: 'What do you want to be able to do that you cannot do today?',
-    type: 'single',
-    options: {
-      music: [
-        { id: 'PLAY', title: 'PLAY', desc: 'Play music with greater control and confidence.' },
-        { id: 'UNDERSTAND', title: 'UNDERSTAND', desc: 'Understand music deeply rather than simply reproduce it.' },
-        { id: 'ANALYZE', title: 'ANALYZE', desc: 'Hear, analyze and understand why music works.' },
-        { id: 'CREATE', title: 'CREATE', desc: 'Create my own musical ideas and compositions.' },
-        { id: 'ARRANGE', title: 'ARRANGE', desc: 'Transform ideas into complete musical arrangements.' },
-        { id: 'EXPRESS', title: 'EXPRESS', desc: 'Use music as my own form of creative expression.' },
-        { id: 'MASTER', title: 'MASTER', desc: 'Develop a significantly higher level of musical ability.' }
-      ],
-      genius: [
-        { id: 'LEARN', title: 'LEARN', desc: 'Learn new subjects independently.' },
-        { id: 'REMEMBER', title: 'REMEMBER', desc: 'Retain and retrieve what I learn.' },
-        { id: 'THINK', title: 'THINK', desc: 'Think more clearly and make better judgments.' },
-        { id: 'SOLVE', title: 'SOLVE', desc: 'Solve unfamiliar problems independently.' },
-        { id: 'CREATE', title: 'CREATE', desc: 'Generate original ideas and solutions.' },
-        { id: 'ADAPT', title: 'ADAPT', desc: 'Learn and adapt faster in a changing world.' },
-        { id: 'MASTER', title: 'MASTER', desc: 'Build a personal system for continuous mastery.' }
-      ]
-    }
-  },
-  {
-    id: 7,
-    key: 'transformationPriority',
-    eyebrow: 'STEP 07 — TRANSFORMATION PRIORITY',
-    question: 'Which matters most to you?',
-    type: 'single',
-    options: {
-      universal: [
-        { id: 'SKILL', title: 'SKILL', desc: 'I want stronger capability.' },
-        { id: 'INDEPENDENCE', title: 'INDEPENDENCE', desc: 'I want to stop depending on others for my progress.' },
-        { id: 'CREATIVITY', title: 'CREATIVITY', desc: 'I want to create rather than simply consume.' },
-        { id: 'MASTERY', title: 'MASTERY', desc: 'I want to reach a level most people never reach.' },
-        { id: 'IDENTITY', title: 'IDENTITY', desc: 'I want to become a different kind of person through what I learn.' }
-      ]
-    }
-  },
-  {
-    id: 8,
-    key: 'commitmentLevel',
-    eyebrow: 'STEP 08 — COMMITMENT',
-    question: 'How serious are you about this transformation?',
-    type: 'single',
-    options: {
-      universal: [
-        { id: 'EXPLORING', title: 'EXPLORING', desc: 'I\'m interested and want to understand Solo Genius.' },
-        { id: 'READY', title: 'READY', desc: 'I\'m actively looking for a serious solution.' },
-        { id: 'COMMITTED', title: 'COMMITTED', desc: 'I\'m ready to invest time, effort and resources into my development.' },
-        { id: 'ALL IN', title: 'ALL IN', desc: 'This is an important transformation I am prepared to prioritize.' }
-      ]
-    }
-  },
-  {
-    id: 9,
-    key: 'customerFit',
-    eyebrow: 'STEP 09 — FIT',
-    question: 'Which statement describes you best?',
-    type: 'single',
-    options: {
-      universal: [
-        { id: 'FIT_1', title: '01', desc: 'I want someone to simply teach me what to do.' },
-        { id: 'FIT_2', title: '02', desc: 'I want a structured system that guides me.' },
-        { id: 'FIT_3', title: '03', desc: 'I want to understand the system and eventually operate independently.' },
-        { id: 'FIT_4', title: '04', desc: 'I want to be challenged to think, create and develop beyond conventional learning.' }
-      ]
-    }
-  },
-  {
-    id: 10,
-    key: 'whySoloGenius',
-    eyebrow: 'STEP 10 — WHY SOLO GENIUS',
-    question: 'What are you looking for?',
-    instruction: 'Select one or more.',
-    type: 'multi',
-    options: {
-      universal: [
-        { id: 'WHY_1', title: 'I want a different way to learn.' },
-        { id: 'WHY_2', title: 'I want deeper understanding, not just information.' },
-        { id: 'WHY_3', title: 'I want to become more independent.' },
-        { id: 'WHY_4', title: 'I want to develop my creative ability.' },
-        { id: 'WHY_5', title: 'I want a system that turns learning into real capability.' },
-        { id: 'WHY_6', title: 'I want to become the person capable of creating my own path.' }
-      ]
-    }
-  },
-  {
-    id: 11,
-    key: 'applicantIdentity',
-    eyebrow: 'STEP 11 — PRIVATE REGISTRATION',
-    question: 'How should Solo Genius contact you if accepted?',
-    instruction: 'Provide your credentials for private review.',
-    type: 'identity_verify',
-    options: { universal: [] }
-  }
-];
-
-export default function SoloGeniusApplication() {
-  const [stepState, setStepState] = useState<'welcome' | 'form' | 'complete'>('welcome');
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-
+  // Form State Architecture (Solo Genius Elite Standards)
   const [formData, setFormData] = useState({
-    intention: '',
-    currentState: '',
-    friction: [] as string[],
-    customFrictionDetail: '',
-    methodsTried: [] as string[],
-    desiredResult: '',
-    transformationPriority: '',
-    commitmentLevel: '',
-    customerFit: '',
-    whySoloGenius: [] as string[],
-    applicantName: '',
-    applicantEmail: ''
+    // Step 1: About You
+    fullName: '',
+    preferredName: '',
+    email: '',
+    phone: '',
+    city: '',
+    ageRange: '',
+
+    // Step 2: Where You Are
+    experienceLevel: '',
+    currentFocus: '',
+    biggestChallenge: '',
+    previousAttempts: '',
+
+    // Step 3: Where You Want To Go
+    desiredAreas: [] as string[],
+    desiredCapabilities: '',
+    transformationWhy: '',
+    twelveMonthVision: '',
+
+    // Step 4: How You Learn
+    learningEnvironments: [] as string[],
+    weeklyCommitment: '',
+    progressObstacles: '',
+
+    // Step 5: Your Experience & Standards
+    valuedTraits: [] as string[],
+    exceptionalExperienceExpectation: '',
+    institutionExpectations: '',
+
+    // Step 6: Final Details
+    discoverySource: '',
+    programInterest: '',
+    additionalNotes: ''
   });
 
-  const totalSteps = FORM_STEPS.length;
-  const currentStep = FORM_STEPS[currentStepIndex];
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [appReference, setAppReference] = useState('');
 
-  const getOptions = (step: QuestionStep) => {
-    if (step.options.universal) return step.options.universal;
-    return formData.intention === 'GENIUS LEARNING' ? step.options.genius : step.options.music;
+  const updateField = (field: string, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSelect = (key: string, value: string, type: string, max?: number) => {
-    if (type === 'single') {
-      setFormData(prev => ({ ...prev, [key]: value }));
-    } else if (type === 'multi') {
-      setFormData(prev => {
-        const list = (prev[key as keyof typeof prev] as string[]) || [];
-        if (list.includes(value)) {
-          return { ...prev, [key]: list.filter(item => item !== value) };
-        } else {
-          if (max && list.length >= max) return prev;
-          return { ...prev, [key]: [...list, value] };
-        }
-      });
-    }
-  };
-
-  const isStepValid = () => {
-    const val = formData[currentStep.key as keyof typeof formData];
-    if (currentStep.type === 'identity_verify') {
-      return Boolean(formData.applicantName.trim() && formData.applicantEmail.includes('@'));
-    }
-    if (Array.isArray(val)) return val.length > 0;
-    return Boolean(val && String(val).trim().length > 0);
+  const toggleMultiSelect = (
+    field: 'desiredAreas' | 'learningEnvironments' | 'valuedTraits',
+    item: string
+  ) => {
+    setFormData((prev) => {
+      const list = prev[field];
+      if (list.includes(item)) {
+        return { ...prev, [field]: list.filter((i) => i !== item) };
+      } else {
+        return { ...prev, [field]: [...list, item] };
+      }
+    });
   };
 
   const handleNext = () => {
-    if (!isStepValid()) return;
-    if (currentStepIndex < totalSteps - 1) {
-      setCurrentStepIndex(prev => prev + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      setStepState('complete');
+    if (currentStep < totalSteps) {
+      setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleBack = () => {
-    if (currentStepIndex > 0) {
-      setCurrentStepIndex(prev => prev - 1);
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      setStepState('welcome');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const randomId = Math.floor(100000 + Math.random() * 900000);
+    const refCode = `SG-APP-${randomId}`;
+    setAppReference(refCode);
+
+    try {
+      const res = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, appReference: refCode }),
+      });
+      const result = await res.json();
+      if (!res.ok || !result.success) {
+        console.error('Failed to transmit data to backend');
+      }
+    } catch (err) {
+      console.error('Network error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   return (
     <div style={{
-      backgroundColor: '#070709',
-      color: '#F4F4F5',
-      minHeight: '100vh',
-      fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
+      backgroundColor: "#070709",
+      color: "#F4F4F5",
+      minHeight: "100vh",
+      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      boxSizing: "border-box",
+      overflowX: "hidden",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between"
     }}>
+      {/* Minimal Luxury Header */}
       <header style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '32px 48px',
-        maxWidth: '1200px',
-        width: '100%',
-        margin: '0 auto',
-        boxSizing: 'border-box',
-        borderBottom: '1px solid rgba(212, 175, 55, 0.1)'
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "32px 48px",
+        borderBottom: "1px solid rgba(212, 175, 55, 0.12)",
+        maxWidth: "1200px",
+        width: "100%",
+        margin: "0 auto",
+        boxSizing: "border-box"
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontSize: '11px', fontWeight: '700', color: '#D4AF37', letterSpacing: '3px', textTransform: 'uppercase' }}>
-            SOLO GENIUS
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{
+            width: "28px",
+            height: "28px",
+            borderRadius: "50%",
+            backgroundColor: "rgba(212, 175, 55, 0.1)",
+            border: "1px solid rgba(212, 175, 55, 0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#D4AF37",
+            fontWeight: "700",
+            fontSize: "12px"
+          }}>
+            SG
+          </div>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#FFFFFF", letterSpacing: "3px", textTransform: "uppercase" }}>
+            Solo Genius
           </span>
-          <span style={{ color: '#52525B', fontSize: '11px' }}>/</span>
-          <span style={{ fontSize: '10px', fontWeight: '500', color: '#A1A1AA', letterSpacing: '2px', textTransform: 'uppercase' }}>
-            PRIVATE APPLICATION
+          <span style={{ color: "#52525B", fontSize: "11px" }}>/</span>
+          <span style={{ fontSize: "10px", fontWeight: "600", color: "#D4AF37", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+            Private Selection
           </span>
         </div>
-        {stepState === 'form' && (
-          <div style={{ fontSize: '11px', color: '#D4AF37', fontWeight: '600', letterSpacing: '2px' }}>
-            {currentStepIndex + 1 < 10 ? `0${currentStepIndex + 1}` : currentStepIndex + 1} — {totalSteps < 10 ? `0${totalSteps}` : totalSteps}
-          </div>
-        )}
+        <a
+          href="/"
+          style={{
+            color: "#A1A1AA",
+            fontSize: "11px",
+            textDecoration: "none",
+            letterSpacing: "1.5px",
+            fontWeight: "500",
+            transition: "color 0.2s ease"
+          }}
+        >
+          BACK TO SOLO GENIUS
+        </a>
       </header>
 
-      <main style={{
-        maxWidth: '720px',
-        width: '100%',
-        margin: '0 auto',
-        padding: '50px 24px 100px 24px',
-        boxSizing: 'border-box',
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-      }}>
-        {stepState === 'welcome' && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ textAlign: 'left', maxWidth: '640px' }}
-          >
-            <div style={{ color: '#D4AF37', textTransform: 'uppercase', fontSize: '10px', letterSpacing: '3px', fontWeight: '600', marginBottom: '16px' }}>
-              SOLO GENIUS — EXCLUSIVE SELECTION
-            </div>
-            <h1 style={{ fontSize: 'clamp(38px, 6vw, 56px)', fontWeight: '700', letterSpacing: '-1.5px', color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: '1.1' }}>
-              Become more capable.
-            </h1>
-            <p style={{ color: '#A1A1AA', fontSize: '15px', lineHeight: '1.6', margin: '0 0 40px 0', maxWidth: '520px', fontWeight: '400' }}>
-              A private application for individuals willing to invest deep effort into developing their absolute autonomy, thinking, and creative capability.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-              <button
-                onClick={() => setStepState('form')}
-                style={{
-                  backgroundColor: '#D4AF37',
-                  color: '#070709',
-                  border: 'none',
-                  padding: '16px 32px',
-                  borderRadius: '2px',
-                  fontSize: '11px',
-                  fontWeight: '700',
-                  letterSpacing: '2px',
-                  cursor: 'pointer',
-                  boxShadow: '0 0 20px rgba(212, 175, 55, 0.2)'
-                }}
+      {/* Main Container */}
+      <main style={{ maxWidth: "780px", margin: "0 auto", padding: "60px 24px 120px 24px", boxSizing: "border-box", flex: 1 }}>
+        {!isSubmitted && (
+          <>
+            {currentStep === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ marginBottom: "40px", textAlign: "left" }}
               >
-                BEGIN APPLICATION
-              </button>
-              <span style={{ color: '#71717A', fontSize: '12px', letterSpacing: '0.5px' }}>
-                Requires intentional reflection (4–6 mins)
-              </span>
-            </div>
-          </motion.div>
-        )}
-
-        {stepState === 'form' && (
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStepIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
-            >
-              <div>
-                <div style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px', marginBottom: '10px', textTransform: 'uppercase' }}>
-                  {currentStep.eyebrow}
+                <div style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700", marginBottom: "12px" }}>
+                  SOLO GENIUS PRIVATE EDUCATION
                 </div>
-                <h2 style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: '600', color: '#FFFFFF', margin: '0 0 8px 0', letterSpacing: '-0.75px', lineHeight: '1.2' }}>
-                  {currentStep.question}
-                </h2>
-                {currentStep.instruction && (
-                  <p style={{ color: '#8E8E93', fontSize: '13px', margin: 0, letterSpacing: '0.5px' }}>
-                    {currentStep.instruction}
-                  </p>
+                <h1 style={{ fontSize: "clamp(32px, 5vw, 44px)", fontWeight: "700", letterSpacing: "-1px", color: "#FFFFFF", margin: "0 0 16px 0", lineHeight: "1.15" }}>
+                  Begin Your Creative Development
+                </h1>
+                <p style={{ color: "#A1A1AA", fontSize: "15px", lineHeight: "1.6", margin: "0 0 24px 0", maxWidth: "580px" }}>
+                  Tell us where you are, where you want to go, and what kind of environment helps you command absolute mastery.
+                </p>
+                <div style={{
+                  display: "inline-block",
+                  padding: "6px 14px",
+                  backgroundColor: "rgba(212, 175, 55, 0.04)",
+                  border: "1px solid rgba(212, 175, 55, 0.2)",
+                  borderRadius: "2px",
+                  fontSize: "10px",
+                  color: "#D4AF37",
+                  letterSpacing: "2px",
+                  fontWeight: "600",
+                  textTransform: "uppercase"
+                }}>
+                  PRIVATE APPLICATION — APPROX. 4-6 MINUTES
+                </div>
+              </motion.div>
+            )}
+
+            {/* Subtle Gold Progress Indicator */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "40px" }}>
+              {Array.from({ length: totalSteps }).map((_, index) => {
+                const stepNum = index + 1;
+                const isActive = currentStep === stepNum;
+                const isPassed = currentStep > stepNum;
+                return (
+                  <div key={index} style={{ display: "flex", alignItems: "center", flex: 1 }}>
+                    <div style={{
+                      height: "2px",
+                      width: "100%",
+                      backgroundColor: isPassed || isActive ? "#D4AF37" : "rgba(255, 255, 255, 0.1)",
+                      transition: "background-color 0.4s ease"
+                    }} />
+                  </div>
+                );
+              })}
+              <div style={{ fontSize: "11px", color: "#D4AF37", fontWeight: "700", letterSpacing: "2px", minWidth: "40px", textAlign: "right" }}>
+                0{currentStep}/0{totalSteps}
+              </div>
+            </div>
+
+            {/* Form Steps */}
+            <form onSubmit={currentStep === totalSteps ? handleSubmit : (e) => { e.preventDefault(); handleNext(); }}>
+              <AnimatePresence mode="wait">
+                
+                {/* STEP 1: ABOUT YOU */}
+                {currentStep === 1 && (
+                  <motion.div
+                    key="step1"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 01</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        About You & Identity
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Help us understand who we are welcoming into the Solo Genius private ecosystem.
+                      </p>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>Full Name *</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.fullName}
+                          onChange={(e) => updateField('fullName', e.target.value)}
+                          placeholder="Your legal name"
+                          style={inputStyle}
+                        />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Preferred Name / Alias</label>
+                        <input
+                          type="text"
+                          value={formData.preferredName}
+                          onChange={(e) => updateField('preferredName', e.target.value)}
+                          placeholder="How you prefer to be addressed"
+                          style={inputStyle}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>Secure Email Address *</label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => updateField('email', e.target.value)}
+                          placeholder="name@domain.com"
+                          style={inputStyle}
+                        />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Phone / Telegram Handle *</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => updateField('phone', e.target.value)}
+                          placeholder="+95... or @telegram"
+                          style={inputStyle}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>City / Country *</label>
+                        <input
+                          type="text"
+                          required
+                          value={formData.city}
+                          onChange={(e) => updateField('city', e.target.value)}
+                          placeholder="Your current location"
+                          style={inputStyle}
+                        />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Age Range</label>
+                        <select
+                          value={formData.ageRange}
+                          onChange={(e) => updateField('ageRange', e.target.value)}
+                          style={{
+                            ...inputStyle,
+                            backgroundColor: "#0D0D0F",
+                            color: formData.ageRange ? "#F4F4F5" : "#71717A"
+                          }}
+                        >
+                          <option value="" disabled>Select age range</option>
+                          <option value="Under 20">Under 20</option>
+                          <option value="20-25">20-25</option>
+                          <option value="26-35">26-35</option>
+                          <option value="36-45">36-45</option>
+                          <option value="46+">46+</option>
+                        </select>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 2: WHERE YOU ARE */}
+                {currentStep === 2 && (
+                  <motion.div
+                    key="step2"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 02</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        Where You Are (Baseline Reality)
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Brutal honesty is required for accurate operational diagnosis.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>Current Experience Level *</label>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
+                        {['BEGINNER', 'SOME EXPERIENCE', 'INTERMEDIATE', 'ADVANCED', 'PROFESSIONAL'].map((level) => {
+                          const isSelected = formData.experienceLevel === level;
+                          return (
+                            <div
+                              key={level}
+                              onClick={() => updateField('experienceLevel', level)}
+                              style={{
+                                padding: "14px 12px",
+                                backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)",
+                                border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`,
+                                borderRadius: "2px",
+                                textAlign: "center",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                fontWeight: "600",
+                                letterSpacing: "1px",
+                                color: isSelected ? "#FFFFFF" : "#D4D4D8",
+                                transition: "all 0.2s ease"
+                              }}
+                            >
+                              {level}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What are you actively learning, creating, or working on? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.currentFocus}
+                        onChange={(e) => updateField('currentFocus', e.target.value)}
+                        placeholder="Describe your active projects or daily focus..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What is the biggest challenge or friction you are currently trying to solve? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.biggestChallenge}
+                        onChange={(e) => updateField('biggestChallenge', e.target.value)}
+                        placeholder="The primary bottleneck in your growth..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What methods, courses, or approaches have you already tested?</label>
+                      <textarea
+                        rows={2}
+                        value={formData.previousAttempts}
+                        onChange={(e) => updateField('previousAttempts', e.target.value)}
+                        placeholder="Previous strategies or self-study systems..."
+                        style={textareaStyle}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 3: WHERE YOU WANT TO GO */}
+                {currentStep === 3 && (
+                  <motion.div
+                    key="step3"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 03</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        Where You Want To Go (Trajectory)
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Define your destination and the absolute capabilities you intend to engineer.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What domains do you wish to master? (Select all that apply)</label>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "10px" }}>
+                        {['MUSIC & HARMONY', 'CREATIVITY', 'THINKING', 'BUSINESS', 'MARKETING', 'CONTENT CREATION', 'FINANCE', 'LEARNING SYSTEMS'].map((area) => {
+                          const isSelected = formData.desiredAreas.includes(area);
+                          return (
+                            <div
+                              key={area}
+                              onClick={() => toggleMultiSelect('desiredAreas', area)}
+                              style={{
+                                padding: "12px",
+                                backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)",
+                                border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`,
+                                borderRadius: "2px",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                fontWeight: "600",
+                                letterSpacing: "1px",
+                                color: isSelected ? "#FFFFFF" : "#D4D4D8",
+                                transition: "all 0.2s ease"
+                              }}
+                            >
+                              {isSelected ? "✓ " : "+ "} {area}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What must you be able to do that you cannot do today? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.desiredCapabilities}
+                        onChange={(e) => updateField('desiredCapabilities', e.target.value)}
+                        placeholder="Artistic, technical, or intellectual capabilities..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>Why does this transformation matter to your core identity? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.transformationWhy}
+                        onChange={(e) => updateField('transformationWhy', e.target.value)}
+                        placeholder="The underlying drive and personal conviction..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>If your development goes exceptionally well, what changes 12 months from now?</label>
+                      <textarea
+                        rows={2}
+                        value={formData.twelveMonthVision}
+                        onChange={(e) => updateField('twelveMonthVision', e.target.value)}
+                        placeholder="Your 12-month mastery milestone..."
+                        style={textareaStyle}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 4: HOW YOU LEARN */}
+                {currentStep === 4 && (
+                  <motion.div
+                    key="step4"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 04</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        How You Learn (Assimilation Engine)
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Determine your optimal conditions for high-end intellectual and practical assimilation.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What environment maximizes your performance? (Select all that apply)</label>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "10px" }}>
+                        {['STRUCTURED CURRICULUM', 'PRACTICAL PROJECTS', 'DIRECT FEEDBACK', 'MENTORSHIP', 'INDEPENDENT STUDY', 'A COMBINATION'].map((env) => {
+                          const isSelected = formData.learningEnvironments.includes(env);
+                          return (
+                            <div
+                              key={env}
+                              onClick={() => toggleMultiSelect('learningEnvironments', env)}
+                              style={{
+                                padding: "12px",
+                                backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)",
+                                border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`,
+                                borderRadius: "2px",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                fontWeight: "600",
+                                letterSpacing: "1px",
+                                color: isSelected ? "#FFFFFF" : "#D4D4D8",
+                                transition: "all 0.2s ease"
+                              }}
+                            >
+                              {isSelected ? "✓ " : "+ "} {env}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>Realist weekly commitment to your absolute development *</label>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: "10px" }}>
+                        {['UNDER 2 HOURS', '2-5 HOURS', '5-10 HOURS', '10+ HOURS'].map((time) => {
+                          const isSelected = formData.weeklyCommitment === time;
+                          return (
+                            <div
+                              key={time}
+                              onClick={() => updateField('weeklyCommitment', time)}
+                              style={{
+                                padding: "12px",
+                                backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)",
+                                border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`,
+                                borderRadius: "2px",
+                                textAlign: "center",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                fontWeight: "600",
+                                letterSpacing: "1px",
+                                color: isSelected ? "#FFFFFF" : "#D4D4D8",
+                                transition: "all 0.2s ease"
+                              }}
+                            >
+                              {time}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What typically prevents you from maintaining consistent progress?</label>
+                      <textarea
+                        rows={3}
+                        value={formData.progressObstacles}
+                        onChange={(e) => updateField('progressObstacles', e.target.value)}
+                        placeholder="Distractions, lack of high-end structure, time constraints..."
+                        style={textareaStyle}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 5: YOUR EXPERIENCE & STANDARDS */}
+                {currentStep === 5 && (
+                  <motion.div
+                    key="step5"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 05</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        Your Standards & Expectations
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Solo Genius operates on absolute rigor, privacy, and luxury execution.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What do you value most in a private learning environment? (Select all that apply)</label>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: "10px" }}>
+                        {['PRIVACY', 'PERSONAL FEEDBACK', 'STRUCTURE', 'FLEXIBILITY', 'HIGH-QUALITY RESOURCES', 'DIRECT MENTORSHIP', 'COMMUNITY', 'PROGRESS TRACKING', 'PERSONALIZATION'].map((trait) => {
+                          const isSelected = formData.valuedTraits.includes(trait);
+                          return (
+                            <div
+                              key={trait}
+                              onClick={() => toggleMultiSelect('valuedTraits', trait)}
+                              style={{
+                                padding: "12px",
+                                backgroundColor: isSelected ? "rgba(212, 175, 55, 0.08)" : "rgba(255, 255, 255, 0.02)",
+                                border: `1px solid ${isSelected ? "#D4AF37" : "rgba(255, 255, 255, 0.08)"}`,
+                                borderRadius: "2px",
+                                cursor: "pointer",
+                                fontSize: "11px",
+                                fontWeight: "600",
+                                letterSpacing: "1px",
+                                color: isSelected ? "#FFFFFF" : "#D4D4D8",
+                                transition: "all 0.2s ease"
+                              }}
+                            >
+                              {isSelected ? "✓ " : "+ "} {trait}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What would make an educational experience feel exceptional to you? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.exceptionalExperienceExpectation}
+                        onChange={(e) => updateField('exceptionalExperienceExpectation', e.target.value)}
+                        placeholder="Depth of instruction, intellectual resonance, quality of design..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>What do you expect from an institution you choose to invest your time and attention in? *</label>
+                      <textarea
+                        required
+                        rows={3}
+                        value={formData.institutionExpectations}
+                        onChange={(e) => updateField('institutionExpectations', e.target.value)}
+                        placeholder="Standards, integrity, uncompromising commitment to quality..."
+                        style={textareaStyle}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* STEP 6: FINAL DETAILS */}
+                {currentStep === 6 && (
+                  <motion.div
+                    key="step6"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+                  >
+                    <div>
+                      <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px" }}>PHASE 06</span>
+                      <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#FFFFFF", margin: "6px 0 8px 0", letterSpacing: "-0.5px" }}>
+                        Final Details & Executive Review
+                      </h2>
+                      <p style={{ color: "#A1A1AA", fontSize: "13px", lineHeight: "1.5", margin: 0 }}>
+                        Concluding administrative details before transmitting your profile for manual evaluation.
+                      </p>
+                    </div>
+
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                      <div>
+                        <label style={labelStyle}>How did you discover Solo Genius? *</label>
+                        <select
+                          required
+                          value={formData.discoverySource}
+                          onChange={(e) => updateField('discoverySource', e.target.value)}
+                          style={{
+                            ...inputStyle,
+                            backgroundColor: "#0D0D0F",
+                            color: formData.discoverySource ? "#F4F4F5" : "#71717A"
+                          }}
+                        >
+                          <option value="" disabled>Select channel</option>
+                          <option value="Search">Search</option>
+                          <option value="Social Media">Social Media</option>
+                          <option value="Referral">Referral</option>
+                          <option value="Friend">Friend</option>
+                          <option value="Content">Content</option>
+                          <option value="Website">Website</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={labelStyle}>Primary Program Interest *</label>
+                        <select
+                          required
+                          value={formData.programInterest}
+                          onChange={(e) => updateField('programInterest', e.target.value)}
+                          style={{
+                            ...inputStyle,
+                            backgroundColor: "#0D0D0F",
+                            color: formData.programInterest ? "#F4F4F5" : "#71717A"
+                          }}
+                        >
+                          <option value="" disabled>Select primary focus</option>
+                          <option value="Elite Music & Harmony">Elite Music & Harmony</option>
+                          <option value="Creative Architecture">Creative Architecture</option>
+                          <option value="Digital Systems & Business">Digital Systems & Business</option>
+                          <option value="Complete Ecosystem Access">Complete Ecosystem Access</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={labelStyle}>Is there anything else you would like executive review to know?</label>
+                      <textarea
+                        rows={3}
+                        value={formData.additionalNotes}
+                        onChange={(e) => updateField('additionalNotes', e.target.value)}
+                        placeholder="Optional final comments or context..."
+                        style={textareaStyle}
+                      />
+                    </div>
+
+                    {/* Review Summary Box */}
+                    <div style={{
+                      backgroundColor: "rgba(13, 13, 15, 0.9)",
+                      border: "1px solid rgba(212, 175, 55, 0.3)",
+                      borderRadius: "2px",
+                      padding: "24px",
+                      marginTop: "10px"
+                    }}>
+                      <h3 style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2.5px", textTransform: "uppercase", margin: "0 0 16px 0" }}>
+                        Application Profile Summary
+                      </h3>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", fontSize: "12px", color: "#A1A1AA" }}>
+                        <div>Applicant: <strong style={{ color: "#FFFFFF" }}>{formData.fullName || "-"}</strong></div>
+                        <div>Contact: <strong style={{ color: "#FFFFFF" }}>{formData.email || "-"}</strong></div>
+                        <div>Location: <strong style={{ color: "#FFFFFF" }}>{formData.city || "-"}</strong></div>
+                        <div>Level: <strong style={{ color: "#FFFFFF" }}>{formData.experienceLevel || "-"}</strong></div>
+                        <div>Program: <strong style={{ color: "#FFFFFF" }}>{formData.programInterest || "-"}</strong></div>
+                        <div>Commitment: <strong style={{ color: "#FFFFFF" }}>{formData.weeklyCommitment || "-"}</strong></div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
+
+              {/* Navigation Controls */}
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: "40px",
+                borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                paddingTop: "24px"
+              }}>
+                {currentStep > 1 ? (
+                  <button
+                    type="button"
+                    onClick={handleBack}
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "#A1A1AA",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      padding: "12px 24px",
+                      borderRadius: "2px",
+                      fontSize: "11px",
+                      fontWeight: "600",
+                      letterSpacing: "1.5px",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease"
+                    }}
+                  >
+                    BACK
+                  </button>
+                ) : <div />}
+
+                {currentStep < totalSteps ? (
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: "#D4AF37",
+                      color: "#070709",
+                      border: "none",
+                      padding: "14px 32px",
+                      borderRadius: "2px",
+                      fontSize: "11px",
+                      fontWeight: "800",
+                      letterSpacing: "2px",
+                      cursor: "pointer",
+                      boxShadow: "0 0 20px rgba(212, 175, 55, 0.25)",
+                      transition: "opacity 0.2s ease"
+                    }}
+                  >
+                    NEXT STEP
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    style={{
+                      backgroundColor: "#D4AF37",
+                      color: "#070709",
+                      border: "none",
+                      padding: "14px 36px",
+                      borderRadius: "2px",
+                      fontSize: "11px",
+                      fontWeight: "800",
+                      letterSpacing: "2px",
+                      cursor: isSubmitting ? "not-allowed" : "pointer",
+                      opacity: isSubmitting ? 0.7 : 1,
+                      boxShadow: "0 0 20px rgba(212, 175, 55, 0.25)",
+                      transition: "all 0.2s ease"
+                    }}
+                  >
+                    {isSubmitting ? "TRANSMITTING PROFILE..." : "SUBMIT PRIVATE APPLICATION"}
+                  </button>
                 )}
               </div>
-
-              {/* Options Type */}
-              {(currentStep.type === 'single' || currentStep.type === 'multi') && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {getOptions(currentStep).map((opt) => {
-                    const isSelected = currentStep.type === 'single'
-                      ? formData[currentStep.key as keyof typeof formData] === opt.id
-                      : ((formData[currentStep.key as keyof typeof formData] as string[]) || []).includes(opt.id);
-
-                    return (
-                      <div
-                        key={opt.id}
-                        onClick={() => handleSelect(currentStep.key, opt.id, currentStep.type, currentStep.maxSelections)}
-                        style={{
-                          padding: '18px 20px',
-                          backgroundColor: isSelected ? 'rgba(212, 175, 55, 0.06)' : 'rgba(255, 255, 255, 0.015)',
-                          border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)'}`,
-                          borderRadius: '3px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: opt.desc ? '4px' : '0',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontSize: '13px', fontWeight: '600', color: isSelected ? '#FFFFFF' : '#D4D4D8', letterSpacing: '0.5px' }}>
-                            {opt.title}
-                          </span>
-                          {isSelected && (
-                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#D4AF37', boxShadow: '0 0 8px #D4AF37' }} />
-                          )}
-                        </div>
-                        {opt.desc && (
-                          <span style={{ fontSize: '12px', color: isSelected ? '#C5A059' : '#8E8E93', lineHeight: '1.5' }}>
-                            {opt.desc}
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* Custom Reflection Text */}
-              {currentStep.type === 'custom_text' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <textarea
-                    rows={5}
-                    value={formData.customFrictionDetail}
-                    onChange={(e) => setFormData(prev => ({ ...prev, customFrictionDetail: e.target.value }))}
-                    placeholder={currentStep.placeholder}
-                    style={{
-                      width: '100%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                      border: '1px solid rgba(212, 175, 55, 0.3)',
-                      borderRadius: '3px',
-                      padding: '16px',
-                      color: '#FFFFFF',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                      outline: 'none',
-                      resize: 'vertical',
-                      fontFamily: 'inherit'
-                    }}
-                  />
-                  <span style={{ fontSize: '11px', color: '#D4AF37', fontStyle: 'italic', opacity: 0.8 }}>
-                    * Your personal reflection is reviewed manually by Solo Genius analysts.
-                  </span>
-                </div>
-              )}
-
-              {/* Identity Verify */}
-              {currentStep.type === 'identity_verify' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontSize: '11px', color: '#D4AF37', letterSpacing: '1px', textTransform: 'uppercase' }}>Full Name / Alias</label>
-                    <input
-                      type="text"
-                      value={formData.applicantName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, applicantName: e.target.value }))}
-                      placeholder="e.g. Alexander Vance"
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                        border: '1px solid rgba(212, 175, 55, 0.3)',
-                        borderRadius: '3px',
-                        padding: '14px 16px',
-                        color: '#FFFFFF',
-                        fontSize: '14px',
-                        outline: 'none',
-                        fontFamily: 'inherit'
-                      }}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontSize: '11px', color: '#D4AF37', letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Email Address</label>
-                    <input
-                      type="email"
-                      value={formData.applicantEmail}
-                      onChange={(e) => setFormData(prev => ({ ...prev, applicantEmail: e.target.value }))}
-                      placeholder="e.g. vance@domain.com"
-                      style={{
-                        width: '100%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.02)',
-                        border: '1px solid rgba(212, 175, 55, 0.3)',
-                        borderRadius: '3px',
-                        padding: '14px 16px',
-                        color: '#FFFFFF',
-                        fontSize: '14px',
-                        outline: 'none',
-                        fontFamily: 'inherit'
-                      }}
-                    />
-                  </div>
-                  <span style={{ fontSize: '11px', color: '#D4AF37', fontStyle: 'italic', opacity: 0.8 }}>
-                    * Private communications and review decisions are transmitted solely through this channel.
-                  </span>
-                </div>
-              )}
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', paddingTop: '24px' }}>
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  style={{
-                    backgroundColor: 'transparent',
-                    color: '#A1A1AA',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    padding: '11px 22px',
-                    borderRadius: '2px',
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    letterSpacing: '1.5px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  BACK
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  disabled={!isStepValid()}
-                  style={{
-                    backgroundColor: isStepValid() ? '#D4AF37' : 'rgba(255, 255, 255, 0.08)',
-                    color: isStepValid() ? '#070709' : 'rgba(255, 255, 255, 0.3)',
-                    border: 'none',
-                    padding: '12px 28px',
-                    borderRadius: '2px',
-                    fontSize: '11px',
-                    fontWeight: '700',
-                    letterSpacing: '1.5px',
-                    cursor: isStepValid() ? 'pointer' : 'not-allowed',
-                    boxShadow: isStepValid() ? '0 0 15px rgba(212, 175, 55, 0.2)' : 'none'
-                  }}
-                >
-                  {currentStepIndex === totalSteps - 1 ? 'SUBMIT APPLICATION' : 'CONTINUE'}
-                </button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </form>
+          </>
         )}
 
-        {stepState === 'complete' && (
+        {/* Submission Success State */}
+        {isSubmitted && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.99 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            style={{ textAlign: 'left', maxWidth: '560px' }}
+            transition={{ duration: 0.5 }}
+            style={{ textAlign: "left", padding: "40px 0", maxWidth: "600px", margin: "0 auto" }}
           >
-            <div style={{ color: '#D4AF37', fontSize: '10px', fontWeight: '600', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '16px' }}>
-              APPLICATION STATUS
+            <div style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "3px", textTransform: "uppercase", marginBottom: "16px" }}>
+              ADMISSION PROTOCOL ACTIVE — UNDER MANUAL REVIEW
             </div>
-            <h1 style={{ fontSize: '32px', fontWeight: '700', color: '#FFFFFF', margin: '0 0 12px 0', letterSpacing: '-0.5px' }}>
-              Your application is complete.
+            <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#FFFFFF", margin: "0 0 16px 0", letterSpacing: "-1px" }}>
+              Application Received.
             </h1>
-            <p style={{ color: '#A1A1AA', fontSize: '14px', lineHeight: '1.6', margin: '0 0 32px 0' }}>
-              Thank you, {formData.applicantName || 'Applicant'}. Your profile and personal diagnostics have been securely logged.
+            <p style={{ color: "#A1A1AA", fontSize: "15px", lineHeight: "1.7", margin: "0 0 36px 0" }}>
+              Thank you, <strong style={{ color: "#FFFFFF" }}>{formData.fullName || 'Applicant'}</strong>. Your diagnostics, friction points, and commitments have been dispatched securely and will be evaluated against elite execution standards.
             </p>
 
             <div style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.02)',
-              border: '1px solid rgba(212, 175, 55, 0.2)',
-              borderRadius: '3px',
-              padding: '24px',
-              marginBottom: '36px'
+              backgroundColor: "rgba(212, 175, 55, 0.03)",
+              border: "1px solid rgba(212, 175, 55, 0.3)",
+              borderRadius: "2px",
+              padding: "28px",
+              marginBottom: "40px"
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '12px' }}>
-                <span style={{ color: '#71717A', letterSpacing: '1px' }}>STATUS</span>
-                <span style={{ color: '#D4AF37', fontWeight: '600', letterSpacing: '1px' }}>UNDER MANUAL REVIEW</span>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "12px" }}>
+                <span style={{ color: "#71717A", letterSpacing: "1.5px", fontWeight: "600" }}>APPLICATION STATUS</span>
+                <span style={{ color: "#D4AF37", fontWeight: "700", letterSpacing: "1.5px" }}>PENDING EXECUTIVE REVIEW</span>
               </div>
-              <p style={{ color: '#8E8E93', fontSize: '12px', margin: 0, lineHeight: '1.5' }}>
-                Solo Genius reviews applications based on fit, genuine friction depth, commitment level, and transformation potential. Expect a direct decision via email.
-              </p>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
+                <span style={{ color: "#71717A", letterSpacing: "1.5px", fontWeight: "600" }}>REFERENCE CODE</span>
+                <span style={{ color: "#FFFFFF", fontWeight: "700", letterSpacing: "1px" }}>{appReference}</span>
+              </div>
             </div>
 
             <div>
               <a
                 href="/"
                 style={{
-                  display: 'inline-block',
-                  backgroundColor: 'transparent',
-                  color: '#D4AF37',
-                  border: '1px solid rgba(212, 175, 55, 0.4)',
-                  padding: '12px 28px',
-                  borderRadius: '2px',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '1.5px',
-                  textDecoration: 'none'
+                  display: "inline-block",
+                  backgroundColor: "transparent",
+                  color: "#D4AF37",
+                  border: "1px solid rgba(212, 175, 55, 0.4)",
+                  padding: "14px 32px",
+                  borderRadius: "2px",
+                  fontSize: "11px",
+                  fontWeight: "700",
+                  letterSpacing: "2px",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease"
                 }}
               >
                 RETURN TO SOLO GENIUS
@@ -634,24 +913,65 @@ export default function SoloGeniusApplication() {
         )}
       </main>
 
+      {/* Luxury Footer */}
       <footer style={{
-        padding: '24px 48px',
-        maxWidth: '1200px',
-        width: '100%',
-        margin: '0 auto',
-        boxSizing: 'border-box',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderTop: '1px solid rgba(212, 175, 55, 0.1)',
-        color: '#52525B',
-        fontSize: '10px',
-        letterSpacing: '1.5px',
-        textTransform: 'uppercase'
+        padding: "32px 48px",
+        maxWidth: "1200px",
+        width: "100%",
+        margin: "0 auto",
+        boxSizing: "border-box",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderTop: "1px solid rgba(212, 175, 55, 0.1)",
+        color: "#52525B",
+        fontSize: "10px",
+        letterSpacing: "2px",
+        textTransform: "uppercase"
       }}>
-        <span>Solo Genius Private System</span>
-        <span style={{ color: '#D4AF37' }}>All Rights Reserved</span>
+        <span>Solo Genius Private Ecosystem</span>
+        <span style={{ color: "#D4AF37" }}>Absolute Mastery Only</span>
       </footer>
     </div>
   );
 }
+
+// Reusable Luxury Styles
+const labelStyle: React.CSSProperties = {
+  display: "block",
+  color: "#D4AF37",
+  fontSize: "10px",
+  fontWeight: "700",
+  letterSpacing: "2px",
+  marginBottom: "8px",
+  textTransform: "uppercase"
+};
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  backgroundColor: "rgba(13, 13, 15, 0.8)",
+  border: "1px solid rgba(212, 175, 55, 0.2)",
+  borderRadius: "2px",
+  padding: "14px 16px",
+  color: "#FFFFFF",
+  fontSize: "14px",
+  outline: "none",
+  boxSizing: "border-box",
+  transition: "border-color 0.2s ease"
+};
+
+const textareaStyle: React.CSSProperties = {
+  width: "100%",
+  backgroundColor: "rgba(13, 13, 15, 0.8)",
+  border: "1px solid rgba(212, 175, 55, 0.2)",
+  borderRadius: "2px",
+  padding: "16px",
+  color: "#FFFFFF",
+  fontSize: "14px",
+  outline: "none",
+  boxSizing: "border-box",
+  resize: "vertical",
+  fontFamily: "Inter, sans-serif",
+  lineHeight: "1.6",
+  transition: "border-color 0.2s ease"
+};
