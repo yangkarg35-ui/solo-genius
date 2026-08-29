@@ -167,7 +167,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Cinematic Hero Section with Video Background */}
+      {/* Cinematic Hero Section with owner.jpg */}
       <section style={{
         minHeight: "88vh",
         display: "flex",
@@ -180,25 +180,19 @@ export default function HomePage() {
         overflow: "hidden",
         boxSizing: "border-box"
       }}>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 1,
-            filter: "brightness(0.85) contrast(1.05) saturate(0.9)"
-          }}
-        >
-          <source src="/owner.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url('/owner.jpg')",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          zIndex: 1,
+          filter: "brightness(0.85) contrast(1.05) saturate(0.9)"
+        }} />
 
         <div style={{
           position: "absolute",
