@@ -100,7 +100,7 @@ export default function HomePage() {
 
   return (
     <div style={{
-      backgroundColor: "#0d0e11", // Loro Piana style deep muted charcoal
+      backgroundColor: "#0d0e11",
       color: "#e5e5e7",
       minHeight: "100vh",
       fontFamily: "var(--font-serif), 'Didot', 'Bodoni MT', 'Times New Roman', serif",
@@ -109,7 +109,7 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar - Inspired by Quiet Luxury Brands */}
+      {/* Luxury Navigation Bar */}
       <nav style={{
         display: "flex",
         alignItems: "center",
@@ -167,7 +167,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Cinematic Hero Section - Shang Xia & Brunello Cucinelli Warmth */}
+      {/* Cinematic Hero Section with Video Background */}
       <section style={{
         minHeight: "88vh",
         display: "flex",
@@ -180,19 +180,25 @@ export default function HomePage() {
         overflow: "hidden",
         boxSizing: "border-box"
       }}>
-        <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage: "url('/owner.jpg')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          zIndex: 1,
-          filter: "brightness(0.85) contrast(1.05) saturate(0.9)"
-        }} />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 1,
+            filter: "brightness(0.85) contrast(1.05) saturate(0.9)"
+          }}
+        >
+          <source src="/owner.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
 
         <div style={{
           position: "absolute",
@@ -251,7 +257,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Manifesto Section - Crafted with Silent & Mysterious Elegance */}
+      {/* Manifesto Section */}
       <section id="manifesto" style={{ maxWidth: "1280px", margin: "0 auto", padding: "120px 24px", boxSizing: "border-box" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
