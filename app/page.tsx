@@ -100,61 +100,66 @@ export default function HomePage() {
 
   return (
     <div style={{
-      backgroundColor: "#030712",
-      color: "#ffffff",
+      backgroundColor: "#0d0e11", // Loro Piana style deep muted charcoal
+      color: "#e5e5e7",
       minHeight: "100vh",
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      fontFamily: "var(--font-serif), 'Didot', 'Bodoni MT', 'Times New Roman', serif",
       scrollBehavior: "smooth",
       overflowX: "hidden",
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar */}
+      {/* Luxury Navigation Bar - Inspired by Quiet Luxury Brands */}
       <nav style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
-        gap: "12px",
-        padding: "16px 20px",
+        gap: "16px",
+        padding: "24px 48px",
         width: "100%",
-        backgroundColor: "rgba(3, 7, 18, 0.95)",
-        borderBottom: "1px solid rgba(212, 175, 55, 0.15)",
-        boxSizing: "border-box"
+        backgroundColor: "rgba(13, 14, 17, 0.92)",
+        borderBottom: "1px solid rgba(197, 160, 89, 0.12)",
+        backdropFilter: "blur(12px)",
+        boxSizing: "border-box",
+        position: "sticky",
+        top: 0,
+        zIndex: 100
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <img 
             src="/logo.png" 
             alt="Solo Genius Logo" 
-            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(212, 175, 55, 0.6)" }}
+            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
           />
-          <span style={{ fontSize: "11px", fontWeight: "700", color: "#ffffff", letterSpacing: "2.5px", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "11px", fontWeight: "500", color: "#f3f3f3", letterSpacing: "3.5px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
             Solo Genius
           </span>
         </div>
 
-        <div style={{ display: "flex", gap: "14px", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", color: "#888888", alignItems: "center", flexWrap: "wrap" }}>
-          <a href="/" style={{ color: "#D4AF37", textDecoration: "none" }}>HOME</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
-          <a href="/verify" style={{ color: "inherit", textDecoration: "none" }}>VERIFY</a>
+        <div style={{ display: "flex", gap: "24px", fontSize: "10px", fontWeight: "400", letterSpacing: "2.5px", color: "#8e8e93", alignItems: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
+          <a href="/" style={{ color: "#C5A059", textDecoration: "none" }}>HOME</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>EXPLORE</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>VERIFY</a>
         </div>
 
         <div>
           <a 
             href="/apply"
             style={{
-              background: "linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 100%)",
-              border: "1px solid rgba(212, 175, 55, 0.5)",
-              padding: "7px 14px",
-              borderRadius: "2px",
+              background: "transparent",
+              border: "1px solid rgba(197, 160, 89, 0.4)",
+              padding: "10px 20px",
+              borderRadius: "0px",
               fontSize: "9.5px",
-              fontWeight: "700",
-              letterSpacing: "1.5px",
-              color: "#D4AF37",
+              fontWeight: "500",
+              letterSpacing: "2px",
+              color: "#C5A059",
               textDecoration: "none",
               display: "inline-block",
-              transition: "all 0.3s ease"
+              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              fontFamily: "sans-serif"
             }}
           >
             APPLY FOR ENROLLMENT
@@ -162,15 +167,15 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Cinematic Hero Section */}
+      {/* Cinematic Hero Section - Shang Xia & Brunello Cucinelli Warmth */}
       <section style={{
-        minHeight: "90vh",
+        minHeight: "88vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "60px 20px",
+        padding: "80px 24px",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box"
@@ -186,7 +191,7 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: 1,
-          filter: "brightness(1.1) contrast(1.1) saturate(1.05)"
+          filter: "brightness(0.85) contrast(1.05) saturate(0.9)"
         }} />
 
         <div style={{
@@ -195,48 +200,50 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          background: "linear-gradient(180deg, rgba(3,7,18,0.35) 0%, rgba(3,7,18,0.88) 100%)",
+          background: "linear-gradient(180deg, rgba(13,14,17,0.4) 0%, rgba(13,14,17,0.95) 100%)",
           zIndex: 1
         }} />
 
-        <div style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "16px", width: "100%" }}>
-          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
-            The Architecture of Mastery behind creative musicians
+        <div style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
+            Private Exclusive Space · 0.000833% Segment
           </span>
-          <h1 style={{ fontSize: "clamp(28px, 6.5vw, 48px)", fontWeight: "800", letterSpacing: "-0.5px", color: "#ffffff", margin: 0, lineHeight: "1.2" }}>
+          <h1 style={{ fontSize: "clamp(32px, 5.5vw, 56px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#f9f9fb", margin: 0, lineHeight: "1.15" }}>
             Become The Creator<br />
-            <span style={{ color: "#D4AF37" }}>You Were Designed To Be</span>
+            <span style={{ color: "#C5A059", fontStyle: "italic" }}>You Were Designed To Be</span>
           </h1>
-          <p style={{ color: "#d1d5db", fontSize: "14px", lineHeight: "1.6", letterSpacing: "0.5px", margin: "8px 0 24px 0", padding: "0 10px" }}>
-            We believe originality is more valuable than imitation.
+          <p style={{ color: "#a1a1a6", fontSize: "15px", lineHeight: "1.8", letterSpacing: "0.8px", margin: "12px 0 32px 0", padding: "0 10px", fontFamily: "sans-serif", maxWidth: "650px", marginLeft: "auto", marginRight: "auto" }}>
+            We believe originality is more valuable than imitation. Uncompromising depth for those who know the brand.
           </p>
-          <div style={{ display: "flex", gap: "14px", justifyContent: "center", flexWrap: "wrap", width: "100%" }}>
+          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", width: "100%" }}>
             <a href="/explore" style={{
-              backgroundColor: "#ffffff",
-              color: "#030712",
-              padding: "12px 28px",
-              borderRadius: "2px",
-              fontSize: "11px",
-              fontWeight: "700",
-              letterSpacing: "1.5px",
+              backgroundColor: "#f5f5f7",
+              color: "#0d0e11",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
               textDecoration: "none",
               textAlign: "center",
-              boxShadow: "0 4px 20px rgba(255,255,255,0.15)"
+              fontFamily: "sans-serif",
+              transition: "opacity 0.3s"
             }}>
               EXPLORE SYSTEMS
             </a>
             <a href="/apply" style={{
-              background: "linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.08) 100%)",
-              color: "#D4AF37",
-              border: "1px solid rgba(212, 175, 55, 0.6)",
-              padding: "12px 28px",
-              borderRadius: "2px",
-              fontSize: "11px",
-              fontWeight: "700",
-              letterSpacing: "1.5px",
+              background: "transparent",
+              color: "#C5A059",
+              border: "1px solid rgba(197, 160, 89, 0.5)",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
               textDecoration: "none",
               textAlign: "center",
-              display: "inline-block"
+              display: "inline-block",
+              fontFamily: "sans-serif"
             }}>
               APPLY FOR ENROLLMENT
             </a>
@@ -244,41 +251,41 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Manifesto Section */}
-      <section id="manifesto" style={{ maxWidth: "1200px", margin: "0 auto", padding: "90px 20px", boxSizing: "border-box" }}>
-        <div style={{ textAlign: "center", marginBottom: "50px" }}>
-          <span style={{ color: "#D4AF37", textTransform: "uppercase", fontSize: "10px", letterSpacing: "3px", fontWeight: "700" }}>
+      {/* Manifesto Section - Crafted with Silent & Mysterious Elegance */}
+      <section id="manifesto" style={{ maxWidth: "1280px", margin: "0 auto", padding: "120px 24px", boxSizing: "border-box" }}>
+        <div style={{ textAlign: "center", marginBottom: "70px" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
             Core Philosophy
           </span>
-          <h2 style={{ fontSize: "clamp(26px, 4.5vw, 40px)", fontWeight: "800", letterSpacing: "-0.5px", margin: "10px 0 15px 0", color: "#ffffff" }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "400", letterSpacing: "-0.5px", margin: "12px 0 16px 0", color: "#f9f9fb" }}>
             Our Manifesto
           </h2>
-          <p style={{ color: "#9ca3af", fontSize: "14px", maxWidth: "650px", margin: "0 auto", lineHeight: "1.6", padding: "0 10px" }}>
+          <p style={{ color: "#8e8e93", fontSize: "14px", maxWidth: "600px", margin: "0 auto", lineHeight: "1.7", padding: "0 10px", fontFamily: "sans-serif" }}>
             We exist to build creators who think deeply, create intentionally, and pursue excellence without compromise.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {manifestoItems.map((item, idx) => (
             <div key={idx} style={{ 
-              backgroundColor: "rgba(11, 15, 25, 0.75)", 
-              border: "1px solid rgba(212, 175, 55, 0.2)", 
-              borderRadius: "4px", 
-              padding: "24px",
+              backgroundColor: "rgba(20, 21, 26, 0.6)", 
+              border: "1px solid rgba(197, 160, 89, 0.12)", 
+              borderRadius: "0px", 
+              padding: "32px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
               boxSizing: "border-box",
-              backdropFilter: "blur(8px)"
+              transition: "border-color 0.4s ease"
             }}>
               <div>
-                <span style={{ color: "#D4AF37", fontSize: "10px", fontWeight: "700", letterSpacing: "2px" }}>
+                <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "500", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
                   {item.num} — PRINCIPLE
                 </span>
-                <h3 style={{ fontSize: "17px", fontWeight: "700", color: "#ffffff", margin: "10px 0 10px 0", letterSpacing: "-0.3px" }}>
+                <h3 style={{ fontSize: "18px", fontWeight: "400", color: "#f9f9fb", margin: "14px 0 12px 0", letterSpacing: "-0.2px" }}>
                   {item.title}
                 </h3>
-                <p style={{ color: "#9ca3af", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+                <p style={{ color: "#8e8e93", fontSize: "13.5px", lineHeight: "1.7", margin: 0, fontFamily: "sans-serif" }}>
                   {item.desc}
                 </p>
               </div>
@@ -289,23 +296,24 @@ export default function HomePage() {
 
       {/* Luxury Footer */}
       <footer style={{ 
-        padding: "40px 20px", 
-        borderTop: "1px solid rgba(255, 255, 255, 0.06)", 
+        padding: "50px 32px", 
+        borderTop: "1px solid rgba(255, 255, 255, 0.05)", 
         display: "flex", 
         justifyContent: "space-between", 
         alignItems: "center", 
         flexWrap: "wrap", 
-        gap: "15px",
-        color: "#6b7280", 
+        gap: "20px",
+        color: "#636366", 
         fontSize: "10px", 
-        letterSpacing: "1.5px",
+        letterSpacing: "2px",
         boxSizing: "border-box",
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "sans-serif"
       }}>
         <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
-        <div style={{ display: "flex", gap: "20px" }}>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>EXPLORE</a>
+        <div style={{ display: "flex", gap: "24px" }}>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>ABOUT</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>EXPLORE</a>
         </div>
       </footer>
     </div>
