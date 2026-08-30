@@ -136,38 +136,39 @@ export default function HomePage() {
             <span style={{ fontSize: "11px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
               SG
             </span>
-            <span style={{ fontSize: "9.5px", fontWeight: "500", color: "#f3f3f3", letterSpacing: "2.5px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
-              Solo Genius
-            </span>
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "24px", fontSize: "10px", fontWeight: "400", letterSpacing: "2.5px", color: "#8e8e93", alignItems: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
-          <a href="/" style={{ color: "#C5A059", textDecoration: "none" }}>HOME</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>ABOUT</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>EXPLORE</a>
-          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>VERIFY</a>
+        <div style={{ display: "flex", gap: "20px", fontSize: "10px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", alignItems: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
+          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+          <a href="/role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
+          <a href="/journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
+          <a href="/ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
+          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="/impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
         </div>
 
         <div>
           <a 
             href="/apply"
             style={{
-              background: "transparent",
+              background: "#C5A059",
               border: "1px solid rgba(197, 160, 89, 0.4)",
               padding: "10px 20px",
               borderRadius: "0px",
               fontSize: "9.5px",
-              fontWeight: "500",
+              fontWeight: "600",
               letterSpacing: "2px",
-              color: "#C5A059",
+              color: "#0d0e11",
               textDecoration: "none",
               display: "inline-block",
               transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
               fontFamily: "sans-serif"
             }}
           >
-            APPLY FOR ENROLLMENT
+            Apply Now
           </a>
         </div>
       </nav>
@@ -180,7 +181,7 @@ export default function HomePage() {
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "80px 24px",
+        padding: "80px 24px 40px 24px",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box"
@@ -209,22 +210,19 @@ export default function HomePage() {
           zIndex: 1
         }} />
 
-        <div style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%" }}>
-          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
-            Private Exclusive Space · 0.000833% Segment
-          </span>
-          <h1 style={{ fontSize: "clamp(32px, 5.5vw, 56px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#f9f9fb", margin: 0, lineHeight: "1.15" }}>
+        <div style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%", alignItems: "center" }}>
+          <h1 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#f9f9fb", margin: 0, lineHeight: "1.15", textAlign: "left", width: "100%", maxWidth: "750px" }}>
             This is Not Education.<br />
             <span style={{ color: "#C5A059", fontStyle: "italic" }}>This is Elevation.</span>
           </h1>
-          <p style={{ color: "#a1a1a6", fontSize: "15px", lineHeight: "1.8", letterSpacing: "0.8px", margin: "12px 0 32px 0", padding: "0 10px", fontFamily: "sans-serif", maxWidth: "650px", marginLeft: "auto", marginRight: "auto" }}>
-            We believe originality is more valuable than imitation. Uncompromising depth for those who know the brand.
+          <p style={{ color: "#a1a1a6", fontSize: "16px", lineHeight: "1.6", letterSpacing: "0.5px", margin: "12px 0 24px 0", fontFamily: "sans-serif", maxWidth: "750px", textAlign: "left", width: "100%" }}>
+            Solo Genius is an exclusive ecosystem for high achievers who are building the future.
           </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", width: "100%" }}>
+          <div style={{ display: "flex", gap: "16px", justifyContent: "flex-start", width: "100%", maxWidth: "750px", flexWrap: "wrap" }}>
             <a href="/explore" style={{
-              backgroundColor: "#f5f5f7",
+              backgroundColor: "#C5A059",
               color: "#0d0e11",
-              padding: "14px 32px",
+              padding: "14px 28px",
               borderRadius: "0px",
               fontSize: "10px",
               fontWeight: "600",
@@ -234,24 +232,42 @@ export default function HomePage() {
               fontFamily: "sans-serif",
               transition: "opacity 0.3s"
             }}>
-              EXPLORE SYSTEMS
+              Explore the Environment
             </a>
-            <a href="/apply" style={{
-              background: "transparent",
-              color: "#C5A059",
-              border: "1px solid rgba(197, 160, 89, 0.5)",
-              padding: "14px 32px",
-              borderRadius: "0px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              textAlign: "center",
-              display: "inline-block",
-              fontFamily: "sans-serif"
-            }}>
-              APPLY FOR ENROLLMENT
-            </a>
+          </div>
+          <span style={{ color: "#8e8e93", textTransform: "uppercase", fontSize: "10px", letterSpacing: "2px", fontWeight: "400", fontFamily: "sans-serif", textAlign: "left", width: "100%", maxWidth: "750px", marginTop: "4px" }}>
+            By Invitation or Application Only
+          </span>
+        </div>
+
+        {/* Stats Footer inside Hero */}
+        <div style={{
+          zIndex: 2,
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "20px",
+          width: "100%",
+          maxWidth: "900px",
+          marginTop: "70px",
+          borderTop: "1px solid rgba(197, 160, 89, 0.2)",
+          paddingTop: "30px",
+          textAlign: "center"
+        }}>
+          <div>
+            <div style={{ fontSize: "22px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>TOP 5%</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Members Only</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "22px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>12+</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Domains</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "22px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>100+</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Role Models</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "22px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>∞</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Possibilities</div>
           </div>
         </div>
       </section>
