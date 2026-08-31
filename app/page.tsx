@@ -140,11 +140,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "32px", fontSize: "11px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden md:flex">
+        <div style={{ display: "flex", gap: "28px", fontSize: "10px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden md:flex">
           <a href="#explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
-          <a href="#definition" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Definition</a>
-          <a href="#about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About</a>
-          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>System</a>
+          <a href="#definition" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
+          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
           <a href="#manifesto" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Manifesto</a>
         </div>
 
@@ -168,7 +167,7 @@ export default function HomePage() {
               fontFamily: "sans-serif"
             }}
           >
-            APPLY FOR ENROLLMENT <ArrowRight size={12} />
+            Apply Now
           </a>
         </div>
 
@@ -200,23 +199,20 @@ export default function HomePage() {
           fontFamily: "sans-serif"
         }}>
           <a href="#explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>EXPLORE</a>
-          <a href="#definition" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>DEFINITION</a>
-          <a href="#about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ABOUT</a>
-          <a href="#system" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>SYSTEM</a>
+          <a href="#definition" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ABOUT SG</a>
+          <a href="#system" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ECOSYSTEM</a>
           <a href="#manifesto" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>MANIFESTO</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "24px", border: "1px solid rgba(197, 160, 89, 0.4)", padding: "12px 32px", fontSize: "11px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>APPLY FOR ENROLLMENT →</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "24px", border: "1px solid rgba(197, 160, 89, 0.4)", padding: "12px 32px", fontSize: "11px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>APPLY NOW →</a>
         </div>
       )}
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION MATCHING REFERENCE IMAGE */}
       <section id="explore" style={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        padding: "120px 24px 80px 24px",
+        justifyContent: "space-between",
+        padding: "160px 24px 40px 24px",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box"
@@ -232,7 +228,7 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: 1,
-          filter: "brightness(0.75) contrast(1.1) saturate(0.9)"
+          filter: "brightness(0.7) contrast(1.1) saturate(0.9)"
         }} />
 
         <div style={{
@@ -241,62 +237,79 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          background: "linear-gradient(180deg, rgba(13,14,17,0.4) 0%, rgba(13,14,17,0.95) 100%)",
+          background: "linear-gradient(180deg, rgba(13,14,17,0.3) 0%, rgba(13,14,17,0.85) 80%, #0d0e11 100%)",
           zIndex: 1
         }} />
 
+        {/* Hero Content */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}
+          style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%", margin: "auto 0" }}
         >
-          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
-            Private Exclusive Space
-          </span>
-          <h1 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: "400", letterSpacing: "-1px", color: "#f9f9fb", margin: 0, lineHeight: "1.1" }}>
-            BECOME MORE THAN<br />
-            <span style={{ color: "#C5A059", fontStyle: "italic" }}>A MUSICIAN.</span>
+          <h1 style={{ fontSize: "clamp(40px, 6.5vw, 72px)", fontWeight: "400", letterSpacing: "-1px", color: "#f9f9fb", margin: 0, lineHeight: "1.1" }}>
+            This is Not<br />
+            Education.<br />
+            <span style={{ color: "#C5A059", fontStyle: "italic" }}>This is Elevation.</span>
           </h1>
-          <p style={{ color: "#a1a1a6", fontSize: "15px", lineHeight: "1.8", letterSpacing: "0.5px", margin: "0 auto", maxWidth: "600px", padding: "0 10px", fontFamily: "sans-serif" }}>
-            A private learning environment for people who want to think deeper, create better, and build their own identity.
+          
+          <p style={{ color: "#a1a1a6", fontSize: "16px", lineHeight: "1.7", letterSpacing: "0.5px", margin: "10px 0 24px 0", maxWidth: "550px", fontFamily: "sans-serif" }}>
+            Solo Genius is an exclusive ecosystem for high achievers who are building the future.
           </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", width: "100%", marginTop: "12px" }}>
-            <a href="/apply" style={{
-              backgroundColor: "#f5f5f7",
-              color: "#0d0e11",
-              padding: "14px 32px",
-              borderRadius: "0px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              textAlign: "center",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "sans-serif"
-            }}>
-              APPLY FOR ENROLLMENT <ArrowRight size={12} />
-            </a>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start", fontFamily: "sans-serif" }}>
             <a href="#definition" style={{
-              background: "transparent",
-              color: "#C5A059",
-              border: "1px solid rgba(197, 160, 89, 0.4)",
-              padding: "14px 32px",
+              backgroundColor: "#C5A059",
+              color: "#0d0e11",
+              padding: "14px 28px",
               borderRadius: "0px",
               fontSize: "10px",
               fontWeight: "600",
               letterSpacing: "2px",
               textDecoration: "none",
-              textAlign: "center",
               display: "inline-block",
-              fontFamily: "sans-serif"
+              transition: "opacity 0.3s"
             }}>
-              Explore Definition
+              Explore the Environment
             </a>
+            <span style={{ color: "#8e8e93", fontSize: "10px", letterSpacing: "1.5px" }}>
+              By Invitation or Application Only
+            </span>
           </div>
         </motion.div>
+
+        {/* Bottom Stats Footer Matching Reference Image */}
+        <div style={{
+          zIndex: 2,
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "24px",
+          width: "100%",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          paddingTop: "40px",
+          borderTop: "1px solid rgba(197, 160, 89, 0.15)",
+          textAlign: "center",
+          fontFamily: "sans-serif"
+        }}>
+          <div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>TOP 5%</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Members Only</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>12+</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Domains</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>100+</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Role Models</div>
+          </div>
+          <div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>∞</div>
+            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Possibilities</div>
+          </div>
+        </div>
       </section>
 
       {/* CORE DEFINITION SECTION (SG IS AN ENVIRONMENT) */}
@@ -368,40 +381,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TRANSFORMATION SECTION */}
-      <section id="about" style={{ backgroundColor: "#14151a", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)", borderBottom: "1px solid rgba(197,160,89,0.08)" }}>
-        <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
-            TRANSFORMATION
-          </span>
-          <h2 style={{ fontSize: "clamp(32px, 4.5vw, 48px)", fontWeight: "400", letterSpacing: "-1px", margin: "24px 0 50px 0", color: "#f9f9fb" }}>
-            FROM LEARNING TO ELEVATION.
-          </h2>
-
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", margin: "50px 0" }}>
-            {["MUSIC", "CREATIVITY", "THINKING", "TASTE", "BUSINESS", "SELF-MASTERY"].map((step, idx, arr) => (
-              <div key={idx} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", fontFamily: "sans-serif" }}>
-                <span style={{ fontSize: "13px", fontWeight: "500", letterSpacing: "3px", color: idx === arr.length - 1 ? "#C5A059" : "#8e8e93" }}>
-                  {step}
-                </span>
-                {idx < arr.length - 1 && (
-                  <span style={{ color: "#C5A059", fontSize: "12px", opacity: 0.6 }}>↓</span>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <p style={{ color: "#a1a1a6", fontSize: "15px", maxWidth: "600px", margin: "40px auto 0 auto", lineHeight: "1.8", fontFamily: "sans-serif" }}>
-            Solo Genius doesn't separate skills into isolated subjects. We connect them into one system designed around the person you are becoming.
-          </p>
-        </div>
-      </section>
-
       {/* SOLO GENIUS SYSTEM */}
-      <section id="system" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box" }}>
+      <section id="system" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
-            THE SYSTEM
+            THE ECOSYSTEM
           </span>
           <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "400", letterSpacing: "-0.5px", margin: "16px 0 0 0", color: "#f9f9fb" }}>
             ONE ENVIRONMENT. MULTIPLE DIMENSIONS.
@@ -456,13 +440,6 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-
-        <div style={{ borderLeft: "1px solid rgba(197,160,89,0.4)", paddingLeft: "24px", fontFamily: "sans-serif" }}>
-          <p style={{ color: "#a1a1a6", fontSize: "14px", lineHeight: "1.7", margin: 0 }}>
-            If you are only looking for standard instructions, there are simpler places to go.<br />
-            If you are looking for an environment to build absolute capability, you're in the right place.
-          </p>
-        </div>
       </section>
 
       {/* INVITATION / CTA */}
@@ -489,7 +466,7 @@ export default function HomePage() {
               alignItems: "center",
               gap: "8px"
             }}>
-              APPLY FOR ENROLLMENT <ArrowRight size={12} />
+              Apply Now <ArrowRight size={12} />
             </a>
           </div>
         </div>
@@ -510,7 +487,7 @@ export default function HomePage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", maxWidth: "300px" }}>
           <span style={{ fontSize: "11px", fontWeight: "600", letterSpacing: "3px", color: "#C5A059" }}>SOLO GENIUS</span>
           <p style={{ color: "#8e8e93", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
-            A private environment for creative thinkers. Private Exclusive.
+            An environment for creative thinkers. Private Exclusive.
           </p>
         </div>
 
@@ -518,19 +495,18 @@ export default function HomePage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>NAVIGATION</span>
             <a href="#explore" style={{ color: "#8e8e93", textDecoration: "none" }}>Explore</a>
-            <a href="#definition" style={{ color: "#8e8e93", textDecoration: "none" }}>Definition</a>
-            <a href="#about" style={{ color: "#8e8e93", textDecoration: "none" }}>About</a>
+            <a href="#definition" style={{ color: "#8e8e93", textDecoration: "none" }}>About SG</a>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>ACCESS</span>
-            <a href="#system" style={{ color: "#8e8e93", textDecoration: "none" }}>System</a>
+            <a href="#system" style={{ color: "#8e8e93", textDecoration: "none" }}>Ecosystem</a>
             <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply</a>
           </div>
         </div>
 
         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "40px", borderTop: "1px solid rgba(197,160,89,0.06)", color: "#636366", fontSize: "10px", letterSpacing: "1.5px" }}>
-          <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
-          <p style={{ margin: 0 }}>PRIVATE EXCLUSIVE</p>
+          <p style={{ margin: 0 }}>© 2026 SOLO GENIUS. ALL RIGHTS RESERVED.</p>
+          <p style={{ margin: 0 }}>BY INVITATION ONLY</p>
         </div>
       </footer>
     </div>
