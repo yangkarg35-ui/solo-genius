@@ -108,7 +108,7 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* NAVIGATION BAR (FULL EXACT MATCH) */}
+      {/* NAVIGATION BAR (FULLY CONNECTED TO ALL PAGES) */}
       <nav style={{
         position: "fixed",
         top: 0,
@@ -139,16 +139,37 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
           <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
           <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
-          <a href="#ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
-          <a href="#role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
-          <a href="#journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
-          <a href="#ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
-          <a href="#inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
-          <a href="#impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
+          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+          <a href="/role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
+          <a href="/journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
+          <a href="/ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
+          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="/impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
           <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Verify</a>
         </div>
 
-        <div className="hidden xl:flex">
+        <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <a 
+            href="/enter"
+            style={{
+              backgroundColor: "transparent",
+              border: "1px solid rgba(197, 160, 89, 0.4)",
+              padding: "10px 18px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
+              color: "#C5A059",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              transition: "all 0.3s ease",
+              fontFamily: "sans-serif"
+            }}
+          >
+            Enter
+          </a>
           <a 
             href="/apply"
             style={{
@@ -202,18 +223,19 @@ export default function HomePage() {
         }}>
           <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
           <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
-          <a href="#ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
-          <a href="#role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
-          <a href="#journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
-          <a href="#ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
-          <a href="#inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
-          <a href="#impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
           <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
+          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
           <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "12px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
-      {/* HERO SECTION MATCHING REFERENCE IMAGE */}
+      {/* HERO SECTION */}
       <section id="explore" style={{
         minHeight: "100vh",
         display: "flex",
@@ -266,27 +288,43 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start", fontFamily: "sans-serif" }}>
-            <a href="/explore" style={{
-              backgroundColor: "#C5A059",
-              color: "#0d0e11",
-              padding: "14px 28px",
-              borderRadius: "0px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              display: "inline-block",
-              transition: "opacity 0.3s"
-            }}>
-              Explore the Environment
-            </a>
-            <span style={{ color: "#8e8e93", fontSize: "10px", letterSpacing: "1.5px" }}>
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+              <a href="/explore" style={{
+                backgroundColor: "#C5A059",
+                color: "#0d0e11",
+                padding: "14px 28px",
+                borderRadius: "0px",
+                fontSize: "10px",
+                fontWeight: "600",
+                letterSpacing: "2px",
+                textDecoration: "none",
+                display: "inline-block",
+                transition: "opacity 0.3s"
+              }}>
+                Explore the Environment
+              </a>
+              <a href="/enter" style={{
+                backgroundColor: "transparent",
+                border: "1px solid rgba(197, 160, 89, 0.4)",
+                color: "#C5A059",
+                padding: "14px 28px",
+                borderRadius: "0px",
+                fontSize: "10px",
+                fontWeight: "600",
+                letterSpacing: "2px",
+                textDecoration: "none",
+                display: "inline-block"
+              }}>
+                Enter Environment
+              </a>
+            </div>
+            <span style={{ color: "#8e8e93", fontSize: "10px", letterSpacing: "1.5px", marginTop: "4px" }}>
               By Invitation or Application Only
             </span>
           </div>
         </motion.div>
 
-        {/* Bottom Stats Footer Matching Reference Image */}
+        {/* Bottom Stats Footer */}
         <div style={{
           zIndex: 2,
           display: "grid",
@@ -319,7 +357,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CORE DEFINITION SECTION (SG IS AN ENVIRONMENT) */}
+      {/* CORE DEFINITION SECTION */}
       <section id="definition" style={{ maxWidth: "1000px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", textAlign: "center" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -388,7 +426,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SOLO GENIUS SYSTEM / ECOSYSTEM */}
+      {/* SOLO GENIUS SYSTEM / ECOSYSTEM (LINKED TO /ecosystem) */}
       <section id="ecosystem" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
@@ -401,7 +439,7 @@ export default function HomePage() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
           {systemPillars.map((pillar, idx) => (
-            <div key={idx} style={{ 
+            <a key={idx} href="/ecosystem" style={{ 
               backgroundColor: "rgba(20, 21, 26, 0.6)", 
               border: "1px solid rgba(197, 160, 89, 0.12)", 
               borderRadius: "0px", 
@@ -409,7 +447,9 @@ export default function HomePage() {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              boxSizing: "border-box"
+              boxSizing: "border-box",
+              textDecoration: "none",
+              transition: "border-color 0.3s"
             }}>
               <div>
                 <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
@@ -422,7 +462,7 @@ export default function HomePage() {
                   {pillar.desc}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>
@@ -434,7 +474,7 @@ export default function HomePage() {
             FOR THE FEW
           </span>
           <h2 style={{ fontSize: "clamp(32px, 4.5vw, 48px)", fontWeight: "400", letterSpacing: "-1px", margin: "16px 0 0 0", color: "#f9f9fb" }}>
-            NOT FOR EVERYONE. AND THAT'S THE POINT.
+            NOT FOR EVERYONE. AND THAT&apos;S THE POINT.
           </h2>
         </div>
 
@@ -475,6 +515,22 @@ export default function HomePage() {
             }}>
               Apply Now <ArrowRight size={12} />
             </a>
+            <a href="/enter" style={{
+              backgroundColor: "transparent",
+              border: "1px solid rgba(197, 160, 89, 0.4)",
+              color: "#C5A059",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px"
+            }}>
+              Enter Environment <ArrowRight size={12} />
+            </a>
           </div>
         </div>
       </section>
@@ -507,7 +563,8 @@ export default function HomePage() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>ACCESS</span>
-            <a href="#ecosystem" style={{ color: "#8e8e93", textDecoration: "none" }}>Ecosystem</a>
+            <a href="/ecosystem" style={{ color: "#8e8e93", textDecoration: "none" }}>Ecosystem</a>
+            <a href="/enter" style={{ color: "#8e8e93", textDecoration: "none" }}>Enter</a>
             <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply Now</a>
           </div>
         </div>
