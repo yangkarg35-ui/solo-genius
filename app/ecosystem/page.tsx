@@ -152,7 +152,7 @@ export default function EcosystemPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "50px", zIndex: 2 }}
+          style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "30px", zIndex: 2 }}
         >
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             03 ECOSYSTEM
@@ -165,7 +165,7 @@ export default function EcosystemPage() {
           </p>
         </motion.div>
 
-        {/* Central Ecosystem Diagram Container matching reference image */}
+        {/* Central Ecosystem Diagram Container with Surrounding Nodes */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -173,16 +173,16 @@ export default function EcosystemPage() {
           style={{
             position: "relative",
             width: "100%",
-            maxWidth: "650px",
-            height: "450px",
+            maxWidth: "750px",
+            height: "550px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             border: "1px solid rgba(197, 160, 89, 0.2)",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(20,21,26,0.8) 0%, rgba(13,14,17,0.95) 100%)",
+            background: "radial-gradient(circle, rgba(20,21,26,0.9) 0%, rgba(13,14,17,0.98) 100%)",
             zIndex: 2,
-            margin: "0 auto"
+            margin: "20px auto"
           }}
         >
           {/* Center Core: YOU / SG YOU */}
@@ -196,17 +196,50 @@ export default function EcosystemPage() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 0 30px rgba(197, 160, 89, 0.2)",
-            zIndex: 3
+            boxShadow: "0 0 30px rgba(197, 160, 89, 0.25)",
+            zIndex: 5
           }}>
             <span style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", fontFamily: "sans-serif" }}>YOU</span>
             <span style={{ fontSize: "20px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", fontFamily: "sans-serif" }}>SG</span>
             <span style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", fontFamily: "sans-serif" }}>YOU</span>
           </div>
+
+          {/* Surrounding Nodes positioned in a circle */}
+          {ecosystemNodes.map((node, idx) => {
+            const angle = (idx / ecosystemNodes.length) * 2 * Math.PI;
+            const radius = 240; // distance from center
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+
+            return (
+              <div
+                key={idx}
+                style={{
+                  position: "absolute",
+                  transform: `translate(${x}px, ${y}px)`,
+                  width: "130px",
+                  textAlign: "center",
+                  padding: "10px",
+                  backgroundColor: "rgba(13, 14, 17, 0.9)",
+                  border: "1px solid rgba(197, 160, 89, 0.3)",
+                  borderRadius: "8px",
+                  zIndex: 4,
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.5)"
+                }}
+              >
+                <span style={{ fontSize: "9px", fontWeight: "600", color: "#C5A059", letterSpacing: "1px", display: "block", fontFamily: "sans-serif", marginBottom: "4px" }}>
+                  0{idx + 1}
+                </span>
+                <span style={{ fontSize: "10.5px", fontWeight: "500", color: "#f9f9fb", lineHeight: "1.2", display: "block", fontFamily: "sans-serif" }}>
+                  {node.title}
+                </span>
+              </div>
+            );
+          })}
         </motion.div>
 
         {/* Pillars / Nodes Grid Breakdown */}
-        <div style={{ maxWidth: "1200px", width: "100%", margin: "100px auto 0 auto", zIndex: 2 }}>
+        <div style={{ maxWidth: "1200px", width: "100%", margin: "80px auto 0 auto", zIndex: 2 }}>
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
             <span style={{ color: "#C5A059", fontSize: "10px", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
               ECOSYSTEM DIMENSIONS

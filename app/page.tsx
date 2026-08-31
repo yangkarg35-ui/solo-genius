@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Menu, X, Lock } from 'lucide-react';
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -108,7 +108,7 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* NAVIGATION BAR (FULLY CONNECTED TO ALL PAGES) */}
+      {/* NAVIGATION BAR */}
       <nav style={{
         position: "fixed",
         top: 0,
@@ -195,10 +195,10 @@ export default function HomePage() {
 
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-          style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer" }}
+          style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer", padding: "4px" }}
           className="xl:hidden"
         >
-          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
 
@@ -214,24 +214,25 @@ export default function HomePage() {
           zIndex: 999,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
-          gap: "20px",
-          padding: "24px",
+          gap: "18px",
+          padding: "100px 24px 40px 24px",
           fontFamily: "sans-serif",
-          overflowY: "auto"
+          overflowY: "auto",
+          boxSizing: "border-box"
         }}>
-          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
-          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
-          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
-          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
-          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
-          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
-          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
-          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
-          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
-          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "12px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
+          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
+          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
+          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "10px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
@@ -426,7 +427,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SOLO GENIUS SYSTEM / ECOSYSTEM (LINKED TO /ecosystem) */}
+      {/* SOLO GENIUS SYSTEM / ECOSYSTEM (Locked & Linked to /apply) */}
       <section id="ecosystem" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
@@ -439,18 +440,41 @@ export default function HomePage() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
           {systemPillars.map((pillar, idx) => (
-            <a key={idx} href="/ecosystem" style={{ 
-              backgroundColor: "rgba(20, 21, 26, 0.6)", 
-              border: "1px solid rgba(197, 160, 89, 0.12)", 
-              borderRadius: "0px", 
-              padding: "40px 32px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              boxSizing: "border-box",
-              textDecoration: "none",
-              transition: "border-color 0.3s"
-            }}>
+            <a 
+              key={idx} 
+              href="/apply" 
+              style={{ 
+                backgroundColor: "rgba(20, 21, 26, 0.6)", 
+                border: "1px solid rgba(197, 160, 89, 0.12)", 
+                borderRadius: "0px", 
+                padding: "40px 32px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                boxSizing: "border-box",
+                textDecoration: "none",
+                position: "relative",
+                overflow: "hidden",
+                transition: "border-color 0.3s"
+              }}
+            >
+              {/* LOCKED ICON BADGE */}
+              <div style={{
+                position: "absolute",
+                top: "16px",
+                right: "16px",
+                backgroundColor: "rgba(13, 14, 17, 0.8)",
+                border: "1px solid rgba(197, 160, 89, 0.4)",
+                padding: "6px 10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                zIndex: 10
+              }}>
+                <Lock size={12} color="#C5A059" />
+                <span style={{ fontSize: "9px", letterSpacing: "1.5px", color: "#C5A059", fontWeight: "600", fontFamily: "sans-serif" }}>LOCKED</span>
+              </div>
+
               <div>
                 <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
                   {pillar.num} — PILLAR
