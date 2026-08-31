@@ -1,83 +1,100 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Menu, X } from 'lucide-react';
 
 export default function HomePage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [screenshot, setScreenshot] = useState<string | null>(null);
-  const [isConfirmed, setIsConfirmed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  
-  // Application Form State
-  const [fullName, setFullName] = useState('');
-  const [age, setAge] = useState('');
-  const [city, setCity] = useState('');
-  const [phone, setPhone] = useState('');
-  const [goal, setGoal] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setScreenshot(imageUrl);
+  const manifestoItems = [
+    {
+      num: "01",
+      title: "Mastery",
+      desc: "We believe mastery cannot be rushed. Uncompromising depth over superficial speed."
+    },
+    {
+      num: "02",
+      title: "Originality",
+      desc: "We believe originality is more valuable than imitation. Creating absolute artistic autonomy."
+    },
+    {
+      num: "03",
+      title: "Understanding",
+      desc: "We believe deep understanding outlasts memorization. Grasping the core universal laws."
+    },
+    {
+      num: "04",
+      title: "Systems",
+      desc: "We believe great creators are built through systems, not shortcuts. Precision architecture."
+    },
+    {
+      num: "05",
+      title: "Quality",
+      desc: "We believe quality is remembered long after speed is forgotten. The elite standard."
+    },
+    {
+      num: "06",
+      title: "Discipline",
+      desc: "We believe creativity is a discipline, not an accident. Rigorous daily mechanical execution."
+    },
+    {
+      num: "07",
+      title: "Transformation",
+      desc: "We believe learning should transform the way you think, not just what you know."
+    },
+    {
+      num: "08",
+      title: "Identity",
+      desc: "We believe music is not the destination—it is the medium to discover your creative identity."
     }
-  };
-
-  const handleConfirmApplication = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append('fullName', fullName);
-    formData.append('age', age);
-    formData.append('city', city);
-    formData.append('phone', phone);
-    formData.append('goal', goal);
-    if (screenshot) {
-      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      if (fileInput?.files?.[0]) {
-        formData.append('screenshot', fileInput.files[0]);
-      }
-    }
-
-    try {
-      const res = await fetch('/api/verify-payment', {
-        method: 'POST',
-        body: formData,
-      });
-      if (res.ok) {
-        setIsConfirmed(true);
-      } else {
-        alert('Something went wrong. Please check your submission.');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Network error.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  ];
 
   const systemPillars = [
     {
       num: "01",
-      title: "Transformation Architect",
-      desc: "Not a school or course platform. An exclusive private environment for capable people to compound their identity, judgment, and leverage."
+      title: "MUSIC",
+      desc: "Build musical ability and creative expression through uncompromising technical mastery."
     },
     {
       num: "02",
-      title: "Bottleneck Diagnosis",
-      desc: "We don't ask what you need to learn. We diagnose what is preventing your next level and deploy exact intelligence, AI, and systems."
+      title: "CREATIVITY",
+      desc: "Learn how to generate original ideas instead of copying existing ones."
     },
     {
       num: "03",
-      title: "Identity & Autonomy",
-      desc: "Absolute artistic and intellectual sovereignty. Designed strictly for the 0.000833% market segment who refuse ordinary standards."
+      title: "THINKING",
+      desc: "Develop clearer thinking, decision-making, and structural problem-solving."
     },
     {
       num: "04",
-      title: "Master Ecosystem Bundle",
-      desc: "Replacing fragmented pieces with an integrated operating system. Connect, build, ship, and compound your real-world output."
+      title: "BUSINESS",
+      desc: "Understand how creative ideas transition into absolute market value."
+    },
+    {
+      num: "05",
+      title: "CONTENT",
+      desc: "Learn how to communicate and distribute your intellectual property."
+    },
+    {
+      num: "06",
+      title: "FINANCE",
+      desc: "Build the underlying capability to understand, generate, and manage capital."
+    },
+    {
+      num: "07",
+      title: "LEARNING SYSTEM",
+      desc: "Build a personal architecture for continuous acquisition and self-mastery."
     }
+  ];
+
+  const audienceItems = [
+    "want to build their own identity",
+    "value depth over superficial noise",
+    "want to create instead of copy",
+    "want skills that connect beyond one profession",
+    "care about taste, thinking, and long-term growth",
+    "are willing to do the rigorous daily work"
   ];
 
   return (
@@ -91,77 +108,115 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* Luxury Navigation Bar */}
+      {/* NAVIGATION */}
       <nav style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: "16px",
         padding: "24px 48px",
-        width: "100%",
-        backgroundColor: "rgba(13, 14, 17, 0.95)",
-        borderBottom: "1px solid rgba(197, 160, 89, 0.15)",
+        backgroundColor: "rgba(13, 14, 17, 0.92)",
         backdropFilter: "blur(12px)",
-        boxSizing: "border-box",
-        position: "sticky",
-        top: 0,
-        zIndex: 100
+        borderBottom: "1px solid rgba(197, 160, 89, 0.12)",
+        zIndex: 1000,
+        boxSizing: "border-box"
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <img 
-            src="/logo.png" 
-            alt="Solo Genius Logo" 
+          <img
+            src="/logo.png"
+            alt="Solo Genius Logo"
             style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
           />
           <div style={{ display: "flex", flexDirection: "column", lineHeight: "1.1" }}>
             <span style={{ fontSize: "11px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
-              SOLO GENIUS
+              SG
             </span>
-            <span style={{ fontSize: "8px", color: "#8e8e93", letterSpacing: "2px", fontFamily: "sans-serif" }}>
-              TRANSFORMATION OS
+            <span style={{ fontSize: "9.5px", fontWeight: "500", color: "#f3f3f3", letterSpacing: "2.5px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
+              Solo Genius
             </span>
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "24px", fontSize: "10px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", alignItems: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
-          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>System V2</a>
-          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Doctrine</a>
-          <a href="#ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+        <div style={{ display: "flex", gap: "32px", fontSize: "11px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden md:flex">
+          <a href="#explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
+          <a href="#definition" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Definition</a>
+          <a href="#about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About</a>
+          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>System</a>
+          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Manifesto</a>
         </div>
 
-        <div>
-          <button 
-            onClick={() => setIsModalOpen(true)}
+        <div className="hidden md:flex">
+          <a 
+            href="/apply"
             style={{
-              background: "#C5A059",
+              background: "transparent",
               border: "1px solid rgba(197, 160, 89, 0.4)",
               padding: "10px 24px",
               borderRadius: "0px",
-              fontSize: "9.5px",
-              fontWeight: "600",
+              fontSize: "10px",
+              fontWeight: "500",
               letterSpacing: "2px",
-              color: "#0d0e11",
-              cursor: "pointer",
-              display: "inline-block",
-              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              color: "#C5A059",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              transition: "all 0.3s ease",
               fontFamily: "sans-serif"
             }}
           >
-            Apply for Access
-          </button>
+            APPLY FOR ENROLLMENT <ArrowRight size={12} />
+          </a>
         </div>
+
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+          style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer" }}
+          className="md:hidden"
+        >
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </nav>
 
-      {/* Cinematic Hero Section */}
-      <section style={{
-        minHeight: "88vh",
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          backgroundColor: "#0d0e11",
+          zIndex: 999,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "24px",
+          padding: "24px",
+          fontFamily: "sans-serif"
+        }}>
+          <a href="#explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>EXPLORE</a>
+          <a href="#definition" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>DEFINITION</a>
+          <a href="#about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ABOUT</a>
+          <a href="#system" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>SYSTEM</a>
+          <a href="#manifesto" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>MANIFESTO</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "24px", border: "1px solid rgba(197, 160, 89, 0.4)", padding: "12px 32px", fontSize: "11px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>APPLY FOR ENROLLMENT →</a>
+        </div>
+      )}
+
+      {/* HERO SECTION */}
+      <section id="explore" style={{
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
-        padding: "80px 24px 40px 24px",
+        padding: "120px 24px 80px 24px",
         position: "relative",
         overflow: "hidden",
         boxSizing: "border-box"
@@ -177,7 +232,7 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: 1,
-          filter: "brightness(0.75) contrast(1.1) saturate(0.8)"
+          filter: "brightness(0.75) contrast(1.1) saturate(0.9)"
         }} />
 
         <div style={{
@@ -186,114 +241,125 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          background: "linear-gradient(180deg, rgba(13,14,17,0.5) 0%, rgba(13,14,17,0.97) 100%)",
+          background: "linear-gradient(180deg, rgba(13,14,17,0.4) 0%, rgba(13,14,17,0.95) 100%)",
           zIndex: 1
         }} />
 
-        <div style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%", alignItems: "center" }}>
-          <span style={{ color: "#C5A059", fontSize: "10px", letterSpacing: "4px", textTransform: "uppercase", fontFamily: "sans-serif", fontWeight: "600" }}>
-            Not A School. A Private Transformation Operating System.
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ maxWidth: "850px", zIndex: 2, display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}
+        >
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
+            Private Exclusive Space
           </span>
-          <h1 style={{ fontSize: "clamp(34px, 5.5vw, 64px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#f9f9fb", margin: 0, lineHeight: "1.15", textAlign: "center", width: "100%", maxWidth: "850px" }}>
-            For Capable Minds Who Refuse <br />
-            <span style={{ color: "#C5A059", fontStyle: "italic" }}>To Become Ordinary.</span>
+          <h1 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: "400", letterSpacing: "-1px", color: "#f9f9fb", margin: 0, lineHeight: "1.1" }}>
+            BECOME MORE THAN<br />
+            <span style={{ color: "#C5A059", fontStyle: "italic" }}>A MUSICIAN.</span>
           </h1>
-          <p style={{ color: "#a1a1a6", fontSize: "15px", lineHeight: "1.7", letterSpacing: "0.5px", margin: "12px 0 24px 0", fontFamily: "sans-serif", maxWidth: "700px", textAlign: "center" }}>
-            We do not teach basic information. We select exceptional potential, diagnose your critical bottlenecks, and orchestrate environment, AI intelligence, and network leverage for measurable transformation.
+          <p style={{ color: "#a1a1a6", fontSize: "15px", lineHeight: "1.8", letterSpacing: "0.5px", margin: "0 auto", maxWidth: "600px", padding: "0 10px", fontFamily: "sans-serif" }}>
+            A private learning environment for people who want to think deeper, create better, and build their own identity.
           </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", width: "100%", flexWrap: "wrap" }}>
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              style={{
-                backgroundColor: "#C5A059",
-                color: "#0d0e11",
-                padding: "14px 32px",
-                borderRadius: "0px",
-                fontSize: "10px",
-                fontWeight: "600",
-                letterSpacing: "2px",
-                border: "none",
-                cursor: "pointer",
-                textAlign: "center",
-                fontFamily: "sans-serif",
-                transition: "opacity 0.3s"
-              }}
-            >
-              Initiate Application
-            </button>
+          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", width: "100%", marginTop: "12px" }}>
+            <a href="/apply" style={{
+              backgroundColor: "#f5f5f7",
+              color: "#0d0e11",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
+              textDecoration: "none",
+              textAlign: "center",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              fontFamily: "sans-serif"
+            }}>
+              APPLY FOR ENROLLMENT <ArrowRight size={12} />
+            </a>
+            <a href="#definition" style={{
+              background: "transparent",
+              color: "#C5A059",
+              border: "1px solid rgba(197, 160, 89, 0.4)",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
+              textDecoration: "none",
+              textAlign: "center",
+              display: "inline-block",
+              fontFamily: "sans-serif"
+            }}>
+              Explore Definition
+            </a>
           </div>
-          <span style={{ color: "#8e8e93", textTransform: "uppercase", fontSize: "9.5px", letterSpacing: "2.5px", fontWeight: "400", fontFamily: "sans-serif", marginTop: "8px" }}>
-            Strictly Selected — Fit & Agency Required
-          </span>
-        </div>
-
-        {/* Stats Footer inside Hero */}
-        <div style={{
-          zIndex: 2,
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "20px",
-          width: "100%",
-          maxWidth: "900px",
-          marginTop: "70px",
-          borderTop: "1px solid rgba(197, 160, 89, 0.2)",
-          paddingTop: "30px",
-          textAlign: "center"
-        }}>
-          <div>
-            <div style={{ fontSize: "20px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>0.000833%</div>
-            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Exclusive Segment</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "20px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>SYSTEM V2</div>
-            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Transformation OS</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "20px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>NO SCHOOL</div>
-            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Pure Environment</div>
-          </div>
-          <div>
-            <div style={{ fontSize: "20px", fontWeight: "600", color: "#f9f9fb", letterSpacing: "1px" }}>LEVERAGE</div>
-            <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "1.5px", marginTop: "6px", fontFamily: "sans-serif" }}>Network & AI Core</div>
-          </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* System Architecture Section */}
-      <section id="system" style={{ maxWidth: "1280px", margin: "0 auto", padding: "120px 24px", boxSizing: "border-box" }}>
-        <div style={{ textAlign: "center", marginBottom: "70px" }}>
-          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "500", fontFamily: "sans-serif" }}>
-            System Architecture V2.0
+      {/* CORE DEFINITION SECTION (SG IS AN ENVIRONMENT) */}
+      <section id="definition" style={{ maxWidth: "1000px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", textAlign: "center" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ display: "flex", flexDirection: "column", gap: "28px" }}
+        >
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
+            THE DEFINITION
           </span>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "400", letterSpacing: "-0.5px", margin: "12px 0 16px 0", color: "#f9f9fb" }}>
-            How Solo Genius Operates
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "clamp(22px, 3.5vw, 36px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#a1a1a6", lineHeight: "1.4" }}>
+            <p style={{ margin: 0 }}>SG is not a school.</p>
+            <p style={{ margin: 0 }}>SG is not a course platform.</p>
+            <p style={{ margin: 0 }}>SG is not a content library.</p>
+            <p style={{ margin: 0, color: "#f9f9fb", fontWeight: "500", fontSize: "clamp(28px, 4.5vw, 44px)" }}>
+              SG is an environment.
+            </p>
+          </div>
+
+          <div style={{ maxWidth: "700px", margin: "20px auto 0 auto", borderTop: "1px solid rgba(197, 160, 89, 0.2)", paddingTop: "32px" }}>
+            <p style={{ color: "#e5e5e7", fontSize: "16px", lineHeight: "1.8", letterSpacing: "0.5px", margin: 0, fontFamily: "sans-serif" }}>
+              An environment designed for capable people who want to become more original, more capable, more independent and more leveraged in the age of AI.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* MANIFESTO SECTION */}
+      <section id="manifesto" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+        <div style={{ textAlign: "center", marginBottom: "70px" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
+            PHILOSOPHY & MANIFESTO
+          </span>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "400", letterSpacing: "-0.5px", margin: "16px 0 0 0", color: "#f9f9fb" }}>
+            OUR CORE PRINCIPLES
           </h2>
-          <p style={{ color: "#8e8e93", fontSize: "14px", maxWidth: "650px", margin: "0 auto", lineHeight: "1.7", fontFamily: "sans-serif" }}>
-            We shift from traditional teaching models to a rigorous orchestration of individual transformation, high-level intelligence, and strict quality control.
-          </p>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
-          {systemPillars.map((item, idx) => (
+          {manifestoItems.map((item, idx) => (
             <div key={idx} style={{ 
-              backgroundColor: "rgba(20, 21, 26, 0.7)", 
-              border: "1px solid rgba(197, 160, 89, 0.15)", 
+              backgroundColor: "rgba(20, 21, 26, 0.6)", 
+              border: "1px solid rgba(197, 160, 89, 0.12)", 
               borderRadius: "0px", 
-              padding: "36px",
+              padding: "32px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              boxSizing: "border-box",
-              transition: "border-color 0.4s ease"
+              boxSizing: "border-box"
             }}>
               <div>
-                <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
-                  CORE — {item.num}
+                <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "500", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
+                  {item.num} — PRINCIPLE
                 </span>
-                <h3 style={{ fontSize: "19px", fontWeight: "400", color: "#f9f9fb", margin: "16px 0 12px 0", letterSpacing: "-0.2px" }}>
+                <h3 style={{ fontSize: "18px", fontWeight: "400", color: "#f9f9fb", margin: "14px 0 12px 0", letterSpacing: "-0.2px" }}>
                   {item.title}
                 </h3>
-                <p style={{ color: "#8e8e93", fontSize: "14px", lineHeight: "1.7", margin: 0, fontFamily: "sans-serif" }}>
+                <p style={{ color: "#8e8e93", fontSize: "13.5px", lineHeight: "1.7", margin: 0, fontFamily: "sans-serif" }}>
                   {item.desc}
                 </p>
               </div>
@@ -302,154 +368,169 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Application Modal */}
-      {isModalOpen && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "rgba(13, 14, 17, 0.85)",
-          backdropFilter: "blur(16px)",
-          zIndex: 1000,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "24px",
-          boxSizing: "border-box"
-        }}>
-          <div style={{
-            backgroundColor: "#14151a",
-            border: "1px solid rgba(197, 160, 89, 0.3)",
-            padding: "40px",
-            maxWidth: "500px",
-            width: "100%",
-            boxSizing: "border-box",
-            position: "relative"
-          }}>
-            <button 
-              onClick={() => setIsModalOpen(false)}
-              style={{
-                position: "absolute",
-                top: "20px",
-                right: "20px",
-                background: "none",
-                border: "none",
-                color: "#8e8e93",
-                fontSize: "16px",
-                cursor: "pointer"
-              }}
-            >
-              ✕
-            </button>
+      {/* TRANSFORMATION SECTION */}
+      <section id="about" style={{ backgroundColor: "#14151a", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)", borderBottom: "1px solid rgba(197,160,89,0.08)" }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
+            TRANSFORMATION
+          </span>
+          <h2 style={{ fontSize: "clamp(32px, 4.5vw, 48px)", fontWeight: "400", letterSpacing: "-1px", margin: "24px 0 50px 0", color: "#f9f9fb" }}>
+            FROM LEARNING TO ELEVATION.
+          </h2>
 
-            {!isConfirmed ? (
-              <form onSubmit={handleConfirmApplication} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontSize: "20px", color: "#f9f9fb", margin: "0 0 8px 0", fontWeight: "400", letterSpacing: "-0.5px" }}>
-                  Member Selection & Application
-                </h3>
-                <p style={{ color: "#8e8e93", fontSize: "12px", margin: "0 0 16px 0", fontFamily: "sans-serif", lineHeight: "1.5" }}>
-                  Provide your baseline credentials. We evaluate based on Agency, Capability, and Character.
-                </p>
-
-                <input 
-                  type="text" 
-                  placeholder="Full Name / Alias" 
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required
-                  style={{ background: "#0d0e11", border: "1px solid rgba(197, 160, 89, 0.2)", padding: "12px", color: "#f9f9fb", fontSize: "13px", outline: "none", fontFamily: "sans-serif" }}
-                />
-                <input 
-                  type="text" 
-                  placeholder="Age" 
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  required
-                  style={{ background: "#0d0e11", border: "1px solid rgba(197, 160, 89, 0.2)", padding: "12px", color: "#f9f9fb", fontSize: "13px", outline: "none", fontFamily: "sans-serif" }}
-                />
-                <input 
-                  type="text" 
-                  placeholder="City / Location" 
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  required
-                  style={{ background: "#0d0e11", border: "1px solid rgba(197, 160, 89, 0.2)", padding: "12px", color: "#f9f9fb", fontSize: "13px", outline: "none", fontFamily: "sans-serif" }}
-                />
-                <input 
-                  type="text" 
-                  placeholder="Phone / Telegram Handle" 
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  required
-                  style={{ background: "#0d0e11", border: "1px solid rgba(197, 160, 89, 0.2)", padding: "12px", color: "#f9f9fb", fontSize: "13px", outline: "none", fontFamily: "sans-serif" }}
-                />
-                <textarea 
-                  placeholder="What is your primary bottleneck or what are you building next?" 
-                  value={goal}
-                  onChange={(e) => setGoal(e.target.value)}
-                  required
-                  rows={3}
-                  style={{ background: "#0d0e11", border: "1px solid rgba(197, 160, 89, 0.2)", padding: "12px", color: "#f9f9fb", fontSize: "13px", outline: "none", fontFamily: "sans-serif", resize: "none" }}
-                />
-
-                <button 
-                  type="submit"
-                  disabled={isLoading}
-                  style={{
-                    backgroundColor: "#C5A059",
-                    color: "#0d0e11",
-                    padding: "14px",
-                    border: "none",
-                    fontWeight: "600",
-                    fontSize: "11px",
-                    letterSpacing: "2px",
-                    cursor: "pointer",
-                    marginTop: "8px",
-                    fontFamily: "sans-serif"
-                  }}
-                >
-                  {isLoading ? "Processing Assessment..." : "Submit Application"}
-                </button>
-              </form>
-            ) : (
-              <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <h3 style={{ fontSize: "22px", color: "#C5A059", marginBottom: "12px" }}>Application Received</h3>
-                <p style={{ color: "#8e8e93", fontSize: "13px", fontFamily: "sans-serif", lineHeight: "1.6" }}>
-                  Your profile has entered the SG Baseline Scan queue. Our review system will verify your alignment.
-                </p>
-                <button 
-                  onClick={() => { setIsModalOpen(false); setIsConfirmed(false); }}
-                  style={{ marginTop: "24px", background: "transparent", border: "1px solid #C5A059", color: "#C5A059", padding: "10px 24px", fontSize: "10px", letterSpacing: "2px", cursor: "pointer", fontFamily: "sans-serif" }}
-                >
-                  Close Window
-                </button>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", margin: "50px 0" }}>
+            {["MUSIC", "CREATIVITY", "THINKING", "TASTE", "BUSINESS", "SELF-MASTERY"].map((step, idx, arr) => (
+              <div key={idx} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", fontFamily: "sans-serif" }}>
+                <span style={{ fontSize: "13px", fontWeight: "500", letterSpacing: "3px", color: idx === arr.length - 1 ? "#C5A059" : "#8e8e93" }}>
+                  {step}
+                </span>
+                {idx < arr.length - 1 && (
+                  <span style={{ color: "#C5A059", fontSize: "12px", opacity: 0.6 }}>↓</span>
+                )}
               </div>
-            )}
+            ))}
+          </div>
+
+          <p style={{ color: "#a1a1a6", fontSize: "15px", maxWidth: "600px", margin: "40px auto 0 auto", lineHeight: "1.8", fontFamily: "sans-serif" }}>
+            Solo Genius doesn't separate skills into isolated subjects. We connect them into one system designed around the person you are becoming.
+          </p>
+        </div>
+      </section>
+
+      {/* SOLO GENIUS SYSTEM */}
+      <section id="system" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box" }}>
+        <div style={{ textAlign: "center", marginBottom: "70px" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
+            THE SYSTEM
+          </span>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: "400", letterSpacing: "-0.5px", margin: "16px 0 0 0", color: "#f9f9fb" }}>
+            ONE ENVIRONMENT. MULTIPLE DIMENSIONS.
+          </h2>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
+          {systemPillars.map((pillar, idx) => (
+            <div key={idx} style={{ 
+              backgroundColor: "rgba(20, 21, 26, 0.6)", 
+              border: "1px solid rgba(197, 160, 89, 0.12)", 
+              borderRadius: "0px", 
+              padding: "40px 32px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              boxSizing: "border-box"
+            }}>
+              <div>
+                <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
+                  {pillar.num} — PILLAR
+                </span>
+                <h3 style={{ fontSize: "18px", fontWeight: "500", color: "#f9f9fb", margin: "16px 0 12px 0", letterSpacing: "-0.2px" }}>
+                  {pillar.title}
+                </h3>
+                <p style={{ color: "#8e8e93", fontSize: "14px", lineHeight: "1.7", margin: 0, fontFamily: "sans-serif" }}>
+                  {pillar.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* WHO IT'S FOR */}
+      <section style={{ maxWidth: "900px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+        <div style={{ textAlign: "center", marginBottom: "60px" }}>
+          <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
+            FOR THE FEW
+          </span>
+          <h2 style={{ fontSize: "clamp(32px, 4.5vw, 48px)", fontWeight: "400", letterSpacing: "-1px", margin: "16px 0 0 0", color: "#f9f9fb" }}>
+            NOT FOR EVERYONE. AND THAT'S THE POINT.
+          </h2>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "60px", fontFamily: "sans-serif" }}>
+          <p style={{ color: "#a1a1a6", fontSize: "15px", marginBottom: "10px" }}>Solo Genius is for people who:</p>
+          {audienceItems.map((item, idx) => (
+            <div key={idx} style={{ display: "flex", alignItems: "center", gap: "16px", color: "#e5e5e7", fontSize: "15px", letterSpacing: "0.5px" }}>
+              <span style={{ width: "4px", height: "4px", backgroundColor: "#C5A059", borderRadius: "50%" }}></span>
+              {item}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ borderLeft: "1px solid rgba(197,160,89,0.4)", paddingLeft: "24px", fontFamily: "sans-serif" }}>
+          <p style={{ color: "#a1a1a6", fontSize: "14px", lineHeight: "1.7", margin: 0 }}>
+            If you are only looking for standard instructions, there are simpler places to go.<br />
+            If you are looking for an environment to build absolute capability, you're in the right place.
+          </p>
+        </div>
+      </section>
+
+      {/* INVITATION / CTA */}
+      <section style={{ backgroundColor: "#14151a", padding: "160px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: "400", letterSpacing: "-1px", margin: "0 0 20px 0", color: "#f9f9fb", lineHeight: "1.15" }}>
+            YOUR NEXT VERSION<br />
+            <span style={{ color: "#C5A059", fontStyle: "italic" }}>STARTS WITH YOUR ENVIRONMENT.</span>
+          </h2>
+          <p style={{ color: "#a1a1a6", fontSize: "15px", maxWidth: "550px", margin: "0 auto 40px auto", lineHeight: "1.8", fontFamily: "sans-serif" }}>
+            Explore the Solo Genius environment and decide whether it belongs in your journey.
+          </p>
+          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
+            <a href="/apply" style={{
+              backgroundColor: "#f5f5f7",
+              color: "#0d0e11",
+              padding: "14px 32px",
+              borderRadius: "0px",
+              fontSize: "10px",
+              fontWeight: "600",
+              letterSpacing: "2px",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px"
+            }}>
+              APPLY FOR ENROLLMENT <ArrowRight size={12} />
+            </a>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Luxury Footer */}
+      {/* FOOTER */}
       <footer style={{ 
-        padding: "50px 32px", 
-        borderTop: "1px solid rgba(197, 160, 89, 0.15)", 
+        padding: "80px 48px", 
+        borderTop: "1px solid rgba(197, 160, 89, 0.12)", 
         display: "flex", 
         justifyContent: "space-between", 
-        alignItems: "center", 
+        alignItems: "flex-start", 
         flexWrap: "wrap", 
-        gap: "20px",
-        color: "#8e8e93", 
-        fontSize: "10px", 
-        letterSpacing: "2px",
+        gap: "40px",
         boxSizing: "border-box",
         fontFamily: "sans-serif"
       }}>
-        <p style={{ margin: 0 }}>© 2026 SOLO GENIUS. PRIVATE TRANSFORMATION OPERATING SYSTEM. ALL RIGHTS RESERVED.</p>
-        <div style={{ display: "flex", gap: "24px" }}>
-          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>SYSTEM</a>
-          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>DOCTRINE</a>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", maxWidth: "300px" }}>
+          <span style={{ fontSize: "11px", fontWeight: "600", letterSpacing: "3px", color: "#C5A059" }}>SOLO GENIUS</span>
+          <p style={{ color: "#8e8e93", fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+            A private environment for creative thinkers. Private Exclusive.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", gap: "60px", flexWrap: "wrap", fontSize: "11px", letterSpacing: "2px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <span style={{ color: "#C5A059", fontWeight: "600" }}>NAVIGATION</span>
+            <a href="#explore" style={{ color: "#8e8e93", textDecoration: "none" }}>Explore</a>
+            <a href="#definition" style={{ color: "#8e8e93", textDecoration: "none" }}>Definition</a>
+            <a href="#about" style={{ color: "#8e8e93", textDecoration: "none" }}>About</a>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <span style={{ color: "#C5A059", fontWeight: "600" }}>ACCESS</span>
+            <a href="#system" style={{ color: "#8e8e93", textDecoration: "none" }}>System</a>
+            <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply</a>
+          </div>
+        </div>
+
+        <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "40px", borderTop: "1px solid rgba(197,160,89,0.06)", color: "#636366", fontSize: "10px", letterSpacing: "1.5px" }}>
+          <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
+          <p style={{ margin: 0 }}>PRIVATE EXCLUSIVE</p>
         </div>
       </footer>
     </div>
