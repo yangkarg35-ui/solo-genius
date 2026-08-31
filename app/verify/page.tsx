@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, CheckCircle2, AlertTriangle, ExternalLink, Search } from 'lucide-react';
+import { Menu, X, CheckCircle2, AlertTriangle, ExternalLink } from 'lucide-react';
 
 // Credential Registry Map linking IDs to specific images and certificate details
 const credentialRegistry: Record<string, { title: string; image: string; holder: string; date: string }> = {
@@ -62,7 +62,7 @@ export default function VerifyPage() {
       position: "relative",
       boxSizing: "border-box"
     }}>
-      {/* Background Image Layer (Matching Home Standard) */}
+      {/* Background Image Layer */}
       <div style={{
         position: "fixed",
         top: 0,
@@ -98,7 +98,7 @@ export default function VerifyPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "20px 36px",
+        padding: "16px 20px",
         backgroundColor: "rgba(13, 14, 17, 0.95)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(197, 160, 89, 0.12)",
@@ -109,44 +109,39 @@ export default function VerifyPage() {
           <img
             src="/logo.png"
             alt="Solo Genius Logo"
-            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
+            style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
           />
           <span style={{ fontSize: "11px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
-            SG
+            SOLO GENIUS
           </span>
         </div>
 
-        {/* Desktop Nav Items */}
-        <div style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
-          <a href="/" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Home</a>
-          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
-          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
-          <a href="/role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
-          <a href="/journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
-          <a href="/ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
-          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
-          <a href="/impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
+        {/* Desktop Nav Items (Hidden on mobile & tablets, shown on xl screens) */}
+        <div style={{ display: "none" }} className="xl:flex items-center gap-5 text-[10px] tracking-[1.5px] text-[#8e8e93] font-sans">
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>Home</a>
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none" }}>Explore</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" style={{ color: "inherit", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" style={{ color: "inherit", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" style={{ color: "inherit", textDecoration: "none" }}>AI & Engine</a>
+          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" style={{ color: "inherit", textDecoration: "none" }}>Impact</a>
           <a href="/verify" style={{ color: "#C5A059", textDecoration: "none" }}>Verify</a>
         </div>
 
-        <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+        <div style={{ display: "none" }} className="xl:flex items-center gap-3">
           <a 
             href="/apply"
             style={{
               backgroundColor: "#C5A059",
               border: "1px solid #C5A059",
-              padding: "10px 22px",
-              borderRadius: "0px",
+              padding: "8px 18px",
               fontSize: "10px",
               fontWeight: "600",
               letterSpacing: "2px",
               color: "#0d0e11",
               textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              transition: "all 0.3s ease",
               fontFamily: "sans-serif"
             }}
           >
@@ -154,12 +149,14 @@ export default function VerifyPage() {
           </a>
         </div>
 
+        {/* Mobile Hamburger Button (Always visible on mobile/tablet) */}
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-          style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer", padding: "4px" }}
+          style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer", padding: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}
           className="xl:hidden"
+          aria-label="Toggle Menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
       </nav>
 
@@ -171,29 +168,30 @@ export default function VerifyPage() {
           left: 0,
           width: "100%",
           height: "100vh",
-          backgroundColor: "#0d0e11",
+          backgroundColor: "rgba(13, 14, 17, 0.98)",
+          backdropFilter: "blur(16px)",
           zIndex: 999,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
+          justifyContent: "center",
           alignItems: "center",
-          gap: "18px",
-          padding: "100px 24px 40px 24px",
+          gap: "16px",
+          padding: "80px 24px 40px 24px",
           fontFamily: "sans-serif",
           overflowY: "auto",
           boxSizing: "border-box"
         }}>
-          <a href="/" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Home</a>
-          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
-          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
-          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
-          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
-          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
-          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
-          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
-          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
-          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Verify</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "10px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
+          <a href="/" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Home</a>
+          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
+          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Verify</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "12px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
@@ -204,7 +202,7 @@ export default function VerifyPage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "160px 24px 100px 24px",
+        padding: "120px 20px 80px 20px",
         zIndex: 1,
         boxSizing: "border-box"
       }}>
@@ -218,14 +216,14 @@ export default function VerifyPage() {
             backgroundColor: "rgba(20, 21, 26, 0.85)",
             border: "1px solid rgba(197, 160, 89, 0.25)",
             borderRadius: "0px",
-            padding: "50px 40px",
+            padding: "36px 24px",
             boxShadow: "0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(197, 160, 89, 0.05)",
             boxSizing: "border-box",
             backdropFilter: "blur(16px)"
           }}
         >
           {/* Header */}
-          <div style={{ textAlign: "center", marginBottom: "36px" }}>
+          <div style={{ textAlign: "center", marginBottom: "28px" }}>
             <span style={{
               color: "#C5A059",
               fontSize: "10px",
@@ -233,13 +231,13 @@ export default function VerifyPage() {
               letterSpacing: "4px",
               textTransform: "uppercase",
               display: "block",
-              marginBottom: "12px",
+              marginBottom: "10px",
               fontFamily: "sans-serif"
             }}>
               Authentication Portal
             </span>
             <h1 style={{
-              fontSize: "clamp(22px, 3.5vw, 28px)",
+              fontSize: "clamp(20px, 4vw, 26px)",
               fontWeight: "400",
               letterSpacing: "1px",
               color: "#f9f9fb",
@@ -250,7 +248,7 @@ export default function VerifyPage() {
           </div>
 
           {/* Input Form */}
-          <form onSubmit={handleVerify} style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px", fontFamily: "sans-serif" }}>
+          <form onSubmit={handleVerify} style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "28px", fontFamily: "sans-serif" }}>
             <div style={{ position: "relative" }}>
               <input
                 type="text"
@@ -262,10 +260,10 @@ export default function VerifyPage() {
                   backgroundColor: "rgba(13, 14, 17, 0.95)",
                   border: "1px solid rgba(197, 160, 89, 0.35)",
                   borderRadius: "0px",
-                  padding: "16px 20px",
+                  padding: "14px 18px",
                   color: "#f9f9fb",
-                  fontSize: "12px",
-                  letterSpacing: "2px",
+                  fontSize: "11px",
+                  letterSpacing: "1.5px",
                   outline: "none",
                   boxSizing: "border-box",
                   fontFamily: "sans-serif"
@@ -280,7 +278,7 @@ export default function VerifyPage() {
                 backgroundColor: "#C5A059",
                 border: "none",
                 borderRadius: "0px",
-                padding: "16px",
+                padding: "14px",
                 color: "#0d0e11",
                 fontSize: "10px",
                 fontWeight: "600",
@@ -299,7 +297,7 @@ export default function VerifyPage() {
           {notFound && (
             <div style={{ 
               textAlign: "center", 
-              padding: "18px", 
+              padding: "16px", 
               backgroundColor: "rgba(239, 68, 68, 0.1)", 
               border: "1px solid rgba(239, 68, 68, 0.3)", 
               color: "#f87171", 
@@ -313,7 +311,7 @@ export default function VerifyPage() {
               gap: "8px"
             }}>
               <AlertTriangle size={14} />
-              Credential ID not found in registry. Try: SG-2026-0001, SG-2026-0002, SG-2026-0009
+              Credential ID not found. Try: SG-2026-0001, SG-2026-0002, SG-2026-0009
             </div>
           )}
 
@@ -327,10 +325,10 @@ export default function VerifyPage() {
                 transition={{ duration: 0.5 }}
                 style={{
                   borderTop: "1px solid rgba(197, 160, 89, 0.2)",
-                  paddingTop: "30px"
+                  paddingTop: "24px"
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px", fontFamily: "sans-serif" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px", fontFamily: "sans-serif" }}>
                   <CheckCircle2 size={16} color="#34d399" />
                   <span style={{ color: "#34d399", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase" }}>
                     Verified Authentic Record
@@ -338,21 +336,21 @@ export default function VerifyPage() {
                 </div>
 
                 <h3 style={{
-                  fontSize: "18px",
+                  fontSize: "16px",
                   fontWeight: "400",
                   color: "#f9f9fb",
                   letterSpacing: "0.2px",
-                  margin: "0 0 12px 0",
+                  margin: "0 0 10px 0",
                   lineHeight: "1.4"
                 }}>
                   {verifiedData.title} · {verifiedData.date}
                 </h3>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "24px", fontFamily: "sans-serif" }}>
-                  <p style={{ color: "#8e8e93", fontSize: "12px", letterSpacing: "1px", margin: 0 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "20px", fontFamily: "sans-serif" }}>
+                  <p style={{ color: "#8e8e93", fontSize: "11px", letterSpacing: "1px", margin: 0 }}>
                     Credential ID: <span style={{ color: "#f9f9fb", fontWeight: "600" }}>{searchId}</span>
                   </p>
-                  <p style={{ color: "#8e8e93", fontSize: "11px", letterSpacing: "1px", margin: 0, textTransform: "uppercase" }}>
+                  <p style={{ color: "#8e8e93", fontSize: "10px", letterSpacing: "1px", margin: 0, textTransform: "uppercase" }}>
                     Issued By: Solo Genius Official Student & Credential Registry
                   </p>
                 </div>
@@ -365,13 +363,13 @@ export default function VerifyPage() {
                   border: "1px solid rgba(197, 160, 89, 0.3)",
                   backgroundColor: "#0d0e11",
                   boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
-                  marginBottom: "20px",
+                  marginBottom: "16px",
                   boxSizing: "border-box"
                 }}>
                   <div style={{
                     backgroundColor: "rgba(197, 160, 89, 0.1)",
-                    padding: "10px 16px",
-                    fontSize: "10px",
+                    padding: "8px 14px",
+                    fontSize: "9px",
                     fontWeight: "600",
                     letterSpacing: "2px",
                     color: "#C5A059",
@@ -380,13 +378,13 @@ export default function VerifyPage() {
                   }}>
                     OFFICIAL DIPLOMA PREVIEW ({searchId})
                   </div>
-                  <div style={{ padding: "12px", textAlign: "center" }}>
+                  <div style={{ padding: "10px", textAlign: "center" }}>
                     <img
                       src={verifiedData.image}
                       alt={`Certificate for ${searchId}`}
                       style={{
                         width: "100%",
-                        maxHeight: "400px",
+                        maxHeight: "350px",
                         objectFit: "contain",
                         borderRadius: "0px",
                         display: "block",
@@ -399,7 +397,7 @@ export default function VerifyPage() {
                 <div style={{ fontFamily: "sans-serif" }}>
                   <a href={verifiedData.image} target="_blank" rel="noopener noreferrer" style={{
                     color: "#C5A059",
-                    fontSize: "11px",
+                    fontSize: "10px",
                     fontWeight: "600",
                     letterSpacing: "1.5px",
                     textDecoration: "none",
@@ -418,13 +416,13 @@ export default function VerifyPage() {
 
       {/* FOOTER */}
       <footer style={{
-        padding: "40px 48px",
+        padding: "30px 24px",
         borderTop: "1px solid rgba(197, 160, 89, 0.12)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         flexWrap: "wrap",
-        gap: "20px",
+        gap: "16px",
         color: "#8e8e93",
         fontSize: "10px",
         letterSpacing: "2px",
@@ -433,8 +431,8 @@ export default function VerifyPage() {
         zIndex: 1,
         backgroundColor: "rgba(13, 14, 17, 0.95)"
       }}>
-        <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL. ALL RIGHTS RESERVED.</p>
-        <div style={{ display: "flex", gap: "24px" }}>
+        <p style={{ margin: 0 }}>© 2026 SOLO GENIUS MUSICAL SCHOOL.</p>
+        <div style={{ display: "flex", gap: "20px" }}>
           <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>About SG</a>
           <a href="/" style={{ color: "inherit", textDecoration: "none" }}>Home</a>
         </div>
