@@ -108,7 +108,7 @@ export default function HomePage() {
       width: "100%",
       boxSizing: "border-box"
     }}>
-      {/* NAVIGATION */}
+      {/* NAVIGATION BAR (FULL EXACT MATCH) */}
       <nav style={{
         position: "fixed",
         top: 0,
@@ -117,48 +117,49 @@ export default function HomePage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "24px 48px",
-        backgroundColor: "rgba(13, 14, 17, 0.92)",
+        padding: "20px 36px",
+        backgroundColor: "rgba(13, 14, 17, 0.95)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(197, 160, 89, 0.12)",
         zIndex: 1000,
         boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img
             src="/logo.png"
             alt="Solo Genius Logo"
-            style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
+            style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover", border: "1px solid rgba(197, 160, 89, 0.4)" }}
           />
-          <div style={{ display: "flex", flexDirection: "column", lineHeight: "1.1" }}>
-            <span style={{ fontSize: "11px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
-              SG
-            </span>
-            <span style={{ fontSize: "9.5px", fontWeight: "500", color: "#f3f3f3", letterSpacing: "2.5px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
-              Solo Genius
-            </span>
-          </div>
+          <span style={{ fontSize: "11px", fontWeight: "700", color: "#C5A059", letterSpacing: "3px", textTransform: "uppercase", fontFamily: "sans-serif" }}>
+            SG
+          </span>
         </div>
 
-        <div style={{ display: "flex", gap: "28px", fontSize: "10px", fontWeight: "400", letterSpacing: "2px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden md:flex">
-          <a href="#explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
-          <a href="#definition" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
-          <a href="#system" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
-          <a href="#manifesto" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Manifesto</a>
+        {/* Desktop Nav Items */}
+        <div style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
+          <a href="/explore" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
+          <a href="#ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+          <a href="#role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
+          <a href="#journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
+          <a href="#ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
+          <a href="#inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="#impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Verify</a>
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden xl:flex">
           <a 
             href="/apply"
             style={{
-              background: "transparent",
-              border: "1px solid rgba(197, 160, 89, 0.4)",
-              padding: "10px 24px",
+              backgroundColor: "#C5A059",
+              border: "1px solid #C5A059",
+              padding: "10px 22px",
               borderRadius: "0px",
               fontSize: "10px",
-              fontWeight: "500",
+              fontWeight: "600",
               letterSpacing: "2px",
-              color: "#C5A059",
+              color: "#0d0e11",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
@@ -174,9 +175,9 @@ export default function HomePage() {
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
           style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer" }}
-          className="md:hidden"
+          className="xl:hidden"
         >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
 
@@ -194,15 +195,21 @@ export default function HomePage() {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          gap: "24px",
+          gap: "20px",
           padding: "24px",
-          fontFamily: "sans-serif"
+          fontFamily: "sans-serif",
+          overflowY: "auto"
         }}>
-          <a href="#explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>EXPLORE</a>
-          <a href="#definition" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ABOUT SG</a>
-          <a href="#system" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>ECOSYSTEM</a>
-          <a href="#manifesto" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "3px", color: "#e5e5e7", textDecoration: "none" }}>MANIFESTO</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "24px", border: "1px solid rgba(197, 160, 89, 0.4)", padding: "12px 32px", fontSize: "11px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>APPLY NOW →</a>
+          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
+          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
+          <a href="#ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="#role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="#journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="#ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          <a href="#inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="#impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "12px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
@@ -259,7 +266,7 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start", fontFamily: "sans-serif" }}>
-            <a href="#definition" style={{
+            <a href="/explore" style={{
               backgroundColor: "#C5A059",
               color: "#0d0e11",
               padding: "14px 28px",
@@ -381,8 +388,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SOLO GENIUS SYSTEM */}
-      <section id="system" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+      {/* SOLO GENIUS SYSTEM / ECOSYSTEM */}
+      <section id="ecosystem" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             THE ECOSYSTEM
@@ -494,13 +501,14 @@ export default function HomePage() {
         <div style={{ display: "flex", gap: "60px", flexWrap: "wrap", fontSize: "11px", letterSpacing: "2px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>NAVIGATION</span>
-            <a href="#explore" style={{ color: "#8e8e93", textDecoration: "none" }}>Explore</a>
-            <a href="#definition" style={{ color: "#8e8e93", textDecoration: "none" }}>About SG</a>
+            <a href="/explore" style={{ color: "#8e8e93", textDecoration: "none" }}>Explore</a>
+            <a href="/about" style={{ color: "#8e8e93", textDecoration: "none" }}>About SG</a>
+            <a href="/verify" style={{ color: "#8e8e93", textDecoration: "none" }}>Verify</a>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>ACCESS</span>
-            <a href="#system" style={{ color: "#8e8e93", textDecoration: "none" }}>Ecosystem</a>
-            <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply</a>
+            <a href="#ecosystem" style={{ color: "#8e8e93", textDecoration: "none" }}>Ecosystem</a>
+            <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply Now</a>
           </div>
         </div>
 
