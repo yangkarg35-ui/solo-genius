@@ -46,7 +46,7 @@ export default function HomePage() {
     {
       num: "08",
       title: "Identity",
-      desc: "We believe music is not the destination—it is the medium to discover your creative identity."
+      desc: "We believe music is not the destination-it is the medium to discover your creative identity."
     }
   ];
 
@@ -149,7 +149,7 @@ export default function HomePage() {
         </div>
 
         <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-          <a 
+          <a
             href="/enter"
             style={{
               backgroundColor: "transparent",
@@ -170,7 +170,7 @@ export default function HomePage() {
           >
             Enter
           </a>
-          <a 
+          <a
             href="/apply"
             style={{
               backgroundColor: "#C5A059",
@@ -193,8 +193,8 @@ export default function HomePage() {
           </a>
         </div>
 
-        <button 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           style={{ background: "none", border: "none", color: "#C5A059", cursor: "pointer", padding: "4px" }}
           className="xl:hidden"
         >
@@ -258,36 +258,33 @@ export default function HomePage() {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           zIndex: 1,
-          filter: "brightness(0.7) contrast(1.1) saturate(0.9)"
+          filter: "brightness(0.85) contrast(1.15) saturate(1.05)"
         }} />
-
         <div style={{
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
-          background: "linear-gradient(180deg, rgba(13,14,17,0.3) 0%, rgba(13,14,17,0.85) 80%, #0d0e11 100%)",
+          background: "linear-gradient(180deg, rgba(13,14,17,0.2) 0%, rgba(13,14,17,0.75) 80%, #0d0e11 100%)",
           zIndex: 1
         }} />
 
         {/* Hero Content */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", width: "100%", margin: "auto 0" }}
+          style={{ maxWidth: "900px", zIndex: 2, display: "flex", flexDirection: "column", gap: "20px", margin: "auto 0", width: "100%" }}
         >
           <h1 style={{ fontSize: "clamp(40px, 6.5vw, 72px)", fontWeight: "400", letterSpacing: "-1px", color: "#f9f9fb", margin: 0, lineHeight: "1.1" }}>
             This is Not<br />
             Education.<br />
             <span style={{ color: "#C5A059", fontStyle: "italic" }}>This is Elevation.</span>
           </h1>
-          
           <p style={{ color: "#a1a1a6", fontSize: "16px", lineHeight: "1.7", letterSpacing: "0.5px", margin: "10px 0 24px 0", maxWidth: "550px", fontFamily: "sans-serif" }}>
             Solo Genius is an exclusive ecosystem for high achievers who are building the future.
           </p>
-
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "flex-start", fontFamily: "sans-serif" }}>
             <div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
               <a href="/explore" style={{
@@ -352,7 +349,7 @@ export default function HomePage() {
             <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Role Models</div>
           </div>
           <div>
-            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>∞</div>
+            <div style={{ fontSize: "clamp(20px, 2.5vw, 28px)", fontWeight: "500", color: "#f9f9fb", letterSpacing: "1px" }}>0</div>
             <div style={{ fontSize: "10px", color: "#8e8e93", letterSpacing: "2px", marginTop: "4px" }}>Possibilities</div>
           </div>
         </div>
@@ -370,7 +367,6 @@ export default function HomePage() {
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             THE DEFINITION
           </span>
-
           <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "clamp(22px, 3.5vw, 36px)", fontWeight: "400", letterSpacing: "-0.5px", color: "#a1a1a6", lineHeight: "1.4" }}>
             <p style={{ margin: 0 }}>SG is not a school.</p>
             <p style={{ margin: 0 }}>SG is not a course platform.</p>
@@ -379,7 +375,6 @@ export default function HomePage() {
               SG is an environment.
             </p>
           </div>
-
           <div style={{ maxWidth: "700px", margin: "20px auto 0 auto", borderTop: "1px solid rgba(197, 160, 89, 0.2)", paddingTop: "32px" }}>
             <p style={{ color: "#e5e5e7", fontSize: "16px", lineHeight: "1.8", letterSpacing: "0.5px", margin: 0, fontFamily: "sans-serif" }}>
               An environment designed for capable people who want to become more original, more capable, more independent and more leveraged in the age of AI.
@@ -398,13 +393,12 @@ export default function HomePage() {
             OUR CORE PRINCIPLES
           </h2>
         </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {manifestoItems.map((item, idx) => (
-            <div key={idx} style={{ 
-              backgroundColor: "rgba(20, 21, 26, 0.6)", 
-              border: "1px solid rgba(197, 160, 89, 0.12)", 
-              borderRadius: "0px", 
+            <div key={idx} style={{
+              backgroundColor: "rgba(20, 21, 26, 0.6)",
+              border: "1px solid rgba(197, 160, 89, 0.12)",
+              borderRadius: "0px",
               padding: "32px",
               display: "flex",
               flexDirection: "column",
@@ -413,7 +407,7 @@ export default function HomePage() {
             }}>
               <div>
                 <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "500", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
-                  {item.num} — PRINCIPLE
+                  {item.num} PRINCIPLE
                 </span>
                 <h3 style={{ fontSize: "18px", fontWeight: "400", color: "#f9f9fb", margin: "14px 0 12px 0", letterSpacing: "-0.2px" }}>
                   {item.title}
@@ -427,7 +421,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SOLO GENIUS SYSTEM / ECOSYSTEM (Locked & Linked to /apply) */}
+      {/* SOLO GENIUS SYSTEM / ECOSYSTEM */}
       <section id="ecosystem" style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ textAlign: "center", marginBottom: "70px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
@@ -437,16 +431,15 @@ export default function HomePage() {
             ONE ENVIRONMENT. MULTIPLE DIMENSIONS.
           </h2>
         </div>
-
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}>
           {systemPillars.map((pillar, idx) => (
-            <a 
-              key={idx} 
-              href="/apply" 
-              style={{ 
-                backgroundColor: "rgba(20, 21, 26, 0.6)", 
-                border: "1px solid rgba(197, 160, 89, 0.12)", 
-                borderRadius: "0px", 
+            <a
+              key={idx}
+              href="/apply"
+              style={{
+                backgroundColor: "rgba(20, 21, 26, 0.6)",
+                border: "1px solid rgba(197, 160, 89, 0.12)",
+                borderRadius: "0px",
                 padding: "40px 32px",
                 display: "flex",
                 flexDirection: "column",
@@ -458,7 +451,6 @@ export default function HomePage() {
                 transition: "border-color 0.3s"
               }}
             >
-              {/* LOCKED ICON BADGE */}
               <div style={{
                 position: "absolute",
                 top: "16px",
@@ -474,15 +466,14 @@ export default function HomePage() {
                 <Lock size={12} color="#C5A059" />
                 <span style={{ fontSize: "9px", letterSpacing: "1.5px", color: "#C5A059", fontWeight: "600", fontFamily: "sans-serif" }}>LOCKED</span>
               </div>
-
               <div>
                 <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
-                  {pillar.num} — PILLAR
+                  {pillar.num} - PILLAR
                 </span>
                 <h3 style={{ fontSize: "18px", fontWeight: "500", color: "#f9f9fb", margin: "16px 0 12px 0", letterSpacing: "-0.2px" }}>
                   {pillar.title}
                 </h3>
-                <p style={{ color: "#8e8e93", fontSize: "14px", lineHeight: "1.7", margin: 0, fontFamily: "sans-serif" }}>
+                <p style={{ color: "#8e8e93", fontSize: "14px", margin: 0, fontFamily: "sans-serif", lineHeight: "1.7" }}>
                   {pillar.desc}
                 </p>
               </div>
@@ -501,7 +492,6 @@ export default function HomePage() {
             NOT FOR EVERYONE. AND THAT&apos;S THE POINT.
           </h2>
         </div>
-
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "60px", fontFamily: "sans-serif" }}>
           <p style={{ color: "#a1a1a6", fontSize: "15px", marginBottom: "10px" }}>Solo Genius is for people who:</p>
           {audienceItems.map((item, idx) => (
@@ -560,13 +550,13 @@ export default function HomePage() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ 
-        padding: "80px 48px", 
-        borderTop: "1px solid rgba(197, 160, 89, 0.12)", 
-        display: "flex", 
-        justifyContent: "space-between", 
-        alignItems: "flex-start", 
-        flexWrap: "wrap", 
+      <footer style={{
+        padding: "80px 48px",
+        borderTop: "1px solid rgba(197, 160, 89, 0.12)",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        flexWrap: "wrap",
         gap: "40px",
         boxSizing: "border-box",
         fontFamily: "sans-serif"
@@ -577,7 +567,6 @@ export default function HomePage() {
             An environment for creative thinkers. Private Exclusive.
           </p>
         </div>
-
         <div style={{ display: "flex", gap: "60px", flexWrap: "wrap", fontSize: "11px", letterSpacing: "2px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <span style={{ color: "#C5A059", fontWeight: "600" }}>NAVIGATION</span>
@@ -592,7 +581,6 @@ export default function HomePage() {
             <a href="/apply" style={{ color: "#8e8e93", textDecoration: "none" }}>Apply Now</a>
           </div>
         </div>
-
         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "40px", borderTop: "1px solid rgba(197,160,89,0.06)", color: "#636366", fontSize: "10px", letterSpacing: "1.5px" }}>
           <p style={{ margin: 0 }}>© 2026 SOLO GENIUS. ALL RIGHTS RESERVED.</p>
           <p style={{ margin: 0 }}>BY INVITATION ONLY</p>
