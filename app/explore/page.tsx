@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Menu, X, Lock } from 'lucide-react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 
 export default function ExplorePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -75,6 +74,10 @@ export default function ExplorePage() {
   return (
     <div style={{
       backgroundColor: "#0d0e11",
+      backgroundImage: "linear-gradient(rgba(13, 14, 17, 0.92), rgba(13, 14, 17, 0.95)), url('/b1.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
       color: "#e5e5e7",
       minHeight: "100vh",
       fontFamily: "var(--font-serif), 'Didot', 'Bodoni MT', 'Times New Roman', serif",
@@ -112,12 +115,12 @@ export default function ExplorePage() {
 
         {/* Desktop Nav Items */}
         <div style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
-          <a href="/" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Home</a>
-          <a href="/explore" style={{ color: "#C5A059", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
-          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
-          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
-          <a href="/journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
-          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="/" style={{ color: "inherit", textDecoration: "none" }}>Home</a>
+          <a href="/explore" style={{ color: "#C5A059", textDecoration: "none" }}>Explore</a>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/journey" style={{ color: "inherit", textDecoration: "none" }}>Journey</a>
+          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none" }}>Inner Circle</a>
         </div>
 
         <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
@@ -136,7 +139,6 @@ export default function ExplorePage() {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              transition: "all 0.3s ease",
               fontFamily: "sans-serif"
             }}
           >
@@ -194,12 +196,7 @@ export default function ExplorePage() {
         textAlign: "center",
         boxSizing: "border-box"
       }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ display: "flex", flexDirection: "column", gap: "24px" }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             SOLO GENIUS — EXPLORE
           </span>
@@ -216,18 +213,12 @@ export default function ExplorePage() {
             Not everything here is meant to be consumed.<br />
             Some things are meant to be discovered.
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* INTRO SECTION */}
       <section style={{ maxWidth: "900px", margin: "0 auto", padding: "100px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)", textAlign: "center" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          style={{ display: "flex", flexDirection: "column", gap: "24px" }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             INTRO
           </span>
@@ -237,12 +228,12 @@ export default function ExplorePage() {
           <p style={{ color: "#e5e5e7", fontSize: "16px", lineHeight: "1.8", maxWidth: "700px", margin: "0 auto", fontFamily: "sans-serif" }}>
             Solo Genius is not built around collecting more information. It is built around transformation. We explore the ideas, skills, systems, and disciplines that help a person become more capable, more creative, and more independent.
           </p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "32px", marginTop: "30px", fontFamily: "sans-serif", color: "#C5A059", fontSize: "15px", fontWeight: "500" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: "32px", marginTop: "30px", fontFamily: "sans-serif", color: "#C5A059", fontSize: "15px", fontWeight: "500", flexWrap: "wrap" }}>
             <span>Learn less.</span>
             <span>Understand deeper.</span>
             <span>Create something of your own.</span>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* EXPLORE THE WORLD (PILLARS 01 - 07) */}
@@ -258,14 +249,14 @@ export default function ExplorePage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "32px" }}>
           {explorePillars.map((pillar, idx) => (
             <div key={idx} style={{
-              backgroundColor: "rgba(20, 21, 26, 0.6)",
+              backgroundColor: "rgba(20, 21, 26, 0.75)",
+              backdropFilter: "blur(8px)",
               border: "1px solid rgba(197, 160, 89, 0.12)",
               padding: "40px 32px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              boxSizing: "border-box",
-              position: "relative"
+              boxSizing: "border-box"
             }}>
               <div>
                 <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "2.5px", fontFamily: "sans-serif" }}>
@@ -297,7 +288,7 @@ export default function ExplorePage() {
       </section>
 
       {/* OPEN COURSEWARE */}
-      <section style={{ backgroundColor: "#14151a", padding: "140px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+      <section style={{ backgroundColor: "rgba(20, 21, 26, 0.8)", backdropFilter: "blur(8px)", padding: "140px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             OPEN COURSEWARE
@@ -333,15 +324,7 @@ export default function ExplorePage() {
       {/* THE LIBRARY & THE STUDIO */}
       <section style={{ maxWidth: "1280px", margin: "0 auto", padding: "140px 24px", boxSizing: "border-box", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px" }}>
-          {/* Library */}
-          <div style={{
-            backgroundColor: "rgba(20, 21, 26, 0.6)",
-            border: "1px solid rgba(197, 160, 89, 0.12)",
-            padding: "50px 40px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between"
-          }}>
+          <div style={{ backgroundColor: "rgba(20, 21, 26, 0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(197, 160, 89, 0.12)", padding: "50px 40px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <div>
               <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "3px", fontFamily: "sans-serif" }}>
                 SG — LIBRARY
@@ -356,33 +339,12 @@ export default function ExplorePage() {
                 Private Access · Available to selected members.
               </div>
             </div>
-            <a href="/apply" style={{
-              backgroundColor: "#C5A059",
-              color: "#0d0e11",
-              padding: "12px 24px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "sans-serif",
-              width: "fit-content"
-            }}>
+            <a href="/apply" style={{ backgroundColor: "#C5A059", color: "#0d0e11", padding: "12px 24px", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", fontFamily: "sans-serif", width: "fit-content" }}>
               Enter the Library <ArrowRight size={12} />
             </a>
           </div>
 
-          {/* Studio */}
-          <div style={{
-            backgroundColor: "rgba(20, 21, 26, 0.6)",
-            border: "1px solid rgba(197, 160, 89, 0.12)",
-            padding: "50px 40px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between"
-          }}>
+          <div style={{ backgroundColor: "rgba(20, 21, 26, 0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(197, 160, 89, 0.12)", padding: "50px 40px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <div>
               <span style={{ color: "#C5A059", fontSize: "10px", fontWeight: "600", letterSpacing: "3px", fontFamily: "sans-serif" }}>
                 SG — STUDIO
@@ -397,20 +359,7 @@ export default function ExplorePage() {
                 Private Access · Available to selected members and projects.
               </div>
             </div>
-            <a href="/apply" style={{
-              backgroundColor: "#C5A059",
-              color: "#0d0e11",
-              padding: "12px 24px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "sans-serif",
-              width: "fit-content"
-            }}>
+            <a href="/apply" style={{ backgroundColor: "#C5A059", color: "#0d0e11", padding: "12px 24px", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px", fontFamily: "sans-serif", width: "fit-content" }}>
               Enter the Studio <ArrowRight size={12} />
             </a>
           </div>
@@ -452,7 +401,7 @@ export default function ExplorePage() {
       </section>
 
       {/* THE SG PHILOSOPHY */}
-      <section style={{ backgroundColor: "#14151a", padding: "140px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+      <section style={{ backgroundColor: "rgba(20, 21, 26, 0.8)", backdropFilter: "blur(8px)", padding: "140px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           <span style={{ color: "#C5A059", textTransform: "uppercase", fontSize: "10px", letterSpacing: "4px", fontWeight: "600", fontFamily: "sans-serif" }}>
             THE SG PHILOSOPHY
@@ -493,7 +442,7 @@ export default function ExplorePage() {
       </section>
 
       {/* FINAL CTA */}
-      <section style={{ backgroundColor: "#14151a", padding: "160px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
+      <section style={{ backgroundColor: "rgba(20, 21, 26, 0.8)", backdropFilter: "blur(8px)", padding: "160px 24px", boxSizing: "border-box", textAlign: "center", borderTop: "1px solid rgba(197,160,89,0.08)" }}>
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: "400", letterSpacing: "-1px", margin: "0 0 20px 0", color: "#f9f9fb", lineHeight: "1.15" }}>
             Don't just consume.<br />
@@ -503,35 +452,10 @@ export default function ExplorePage() {
             Welcome to Solo Genius.
           </p>
           <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap", fontFamily: "sans-serif" }}>
-            <a href="/explore" style={{
-              backgroundColor: "#f5f5f7",
-              color: "#0d0e11",
-              padding: "14px 32px",
-              borderRadius: "0px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px"
-            }}>
+            <a href="/explore" style={{ backgroundColor: "#f5f5f7", color: "#0d0e11", padding: "14px 32px", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
               Explore the World <ArrowRight size={12} />
             </a>
-            <a href="/enter" style={{
-              backgroundColor: "transparent",
-              border: "1px solid rgba(197, 160, 89, 0.4)",
-              color: "#C5A059",
-              padding: "14px 32px",
-              borderRadius: "0px",
-              fontSize: "10px",
-              fontWeight: "600",
-              letterSpacing: "2px",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px"
-            }}>
+            <a href="/enter" style={{ backgroundColor: "transparent", border: "1px solid rgba(197, 160, 89, 0.4)", color: "#C5A059", padding: "14px 32px", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
               Enter Open Courseware <ArrowRight size={12} />
             </a>
           </div>
@@ -548,7 +472,8 @@ export default function ExplorePage() {
         flexWrap: "wrap",
         gap: "40px",
         boxSizing: "border-box",
-        fontFamily: "sans-serif"
+        fontFamily: "sans-serif",
+        backgroundColor: "rgba(13, 14, 17, 0.85)"
       }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", maxWidth: "300px" }}>
           <span style={{ fontSize: "11px", fontWeight: "600", letterSpacing: "3px", color: "#C5A059" }}>SOLO GENIUS</span>
