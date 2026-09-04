@@ -253,7 +253,7 @@ export default function HomePage() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundImage: "url('/owner.jpg')",
+          backgroundImage: "url('/b1.png')",
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
