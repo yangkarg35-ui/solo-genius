@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Menu, X, Lock, ExternalLink, ArrowLeft, ChevronDown, BookOpen, Layers } from 'lucide-react';
+import { ArrowRight, Menu, X, Lock, ExternalLink, ArrowLeft, BookOpen, Layers } from 'lucide-react';
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'home' | 'library' | 'studio'>('home');
-  const [isIndexOpen, setIsIndexOpen] = useState(false);
 
   const manifestoItems = [
     {
@@ -149,7 +148,7 @@ export default function HomePage() {
           <a href="/impact" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
           <a href="/verify" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Verify</a>
 
-          {/* LUXURY SEPARATE HUB FOR SG LIBRARY & SG STUDIO */}
+          {/* LUXURY SEPARATE HUB FOR SG LIBRARY & SG STUDIO (Desktop Only) */}
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px", paddingLeft: "16px", borderLeft: "1px solid rgba(197, 160, 89, 0.2)" }}>
             <button
               onClick={() => setActiveTab('library')}
@@ -247,7 +246,7 @@ export default function HomePage() {
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Fully Structured with SG Studio & Library Hub Inside */}
       {isMobileMenuOpen && (
         <div style={{
           position: "fixed",
@@ -261,35 +260,87 @@ export default function HomePage() {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
-          gap: "14px",
-          padding: "90px 24px 40px 24px",
+          gap: "12px",
+          padding: "85px 24px 40px 24px",
           fontFamily: "sans-serif",
           overflowY: "auto",
           boxSizing: "border-box"
         }}>
-          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "13px", letterSpacing: "2px", color: activeTab === 'home' ? '#C5A059' : '#e5e5e7', cursor: 'pointer' }}>Explore</button>
-          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
-          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
-          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
-          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
-          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
-          
-          <div style={{ width: "100px", height: "1px", backgroundColor: "rgba(197,160,89,0.2)", margin: "4px 0" }}></div>
+          {/* LUXURY MOBILE HUB SECTION FOR STUDIO & LIBRARY */}
+          <div style={{
+            width: "100%",
+            maxWidth: "320px",
+            backgroundColor: "rgba(197, 160, 89, 0.05)",
+            border: "1px solid rgba(197, 160, 89, 0.2)",
+            padding: "14px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            marginBottom: "4px"
+          }}>
+            <span style={{ fontSize: "9px", letterSpacing: "2px", color: "#C5A059", textAlign: "center", fontWeight: "600" }}>
+              SOLO GENIUS HUB
+            </span>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              <button
+                onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }}
+                style={{
+                  background: activeTab === 'library' ? 'rgba(197, 160, 89, 0.2)' : 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(197, 160, 89, 0.4)',
+                  padding: '10px 8px',
+                  borderRadius: '2px',
+                  color: '#C5A059',
+                  fontSize: '10px',
+                  fontWeight: '600',
+                  letterSpacing: '1px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <BookOpen size={14} /> SG LIBRARY
+              </button>
+              <button
+                onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }}
+                style={{
+                  background: activeTab === 'studio' ? 'rgba(197, 160, 89, 0.2)' : 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(197, 160, 89, 0.4)',
+                  padding: '10px 8px',
+                  borderRadius: '2px',
+                  color: '#C5A059',
+                  fontSize: '10px',
+                  fontWeight: '600',
+                  letterSpacing: '1px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <Layers size={14} /> SG STUDIO
+              </button>
+            </div>
+          </div>
 
-          <button onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }} style={{ background: 'rgba(197,160,89,0.1)', border: '1px solid rgba(197,160,89,0.3)', padding: '8px 16px', borderRadius: '4px', fontSize: "12px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <BookOpen size={14} /> SG Library
-          </button>
-          <button onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }} style={{ background: 'rgba(197,160,89,0.1)', border: '1px solid rgba(197,160,89,0.3)', padding: '8px 16px', borderRadius: '4px', fontSize: "12px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Layers size={14} /> SG Studio
-          </button>
+          <div style={{ width: "80px", height: "1px", backgroundColor: "rgba(197,160,89,0.15)", margin: "2px 0" }}></div>
 
-          <div style={{ width: "100px", height: "1px", backgroundColor: "rgba(197,160,89,0.2)", margin: "4px 0" }}></div>
+          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "12px", letterSpacing: "2px", color: activeTab === 'home' ? '#C5A059' : '#e5e5e7', cursor: 'pointer' }}>Explore</button>
+          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
 
-          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
-          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
-          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
-          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "6px", backgroundColor: "#C5A059", padding: "10px 28px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
+          <div style={{ width: "80px", height: "1px", backgroundColor: "rgba(197,160,89,0.15)", margin: "2px 0" }}></div>
+
+          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "12px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "4px", backgroundColor: "#C5A059", padding: "10px 28px", fontSize: "10px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
