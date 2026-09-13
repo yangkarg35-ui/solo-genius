@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Menu, X, Lock } from 'lucide-react';
+import { ArrowRight, Menu, X, Lock, ExternalLink, ArrowLeft } from 'lucide-react';
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // activeTab state: 'home' | 'library' | 'studio'
   const [activeTab, setActiveTab] = useState<'home' | 'library' | 'studio'>('home');
 
   const manifestoItems = [
@@ -126,10 +125,7 @@ export default function HomePage() {
         zIndex: 1000,
         boxSizing: "border-box"
       }}>
-        <div 
-          style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }}
-          onClick={() => setActiveTab('home')}
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }} onClick={() => setActiveTab('home')}>
           <img
             src="/logo.png"
             alt="Solo Genius Logo"
@@ -141,13 +137,53 @@ export default function HomePage() {
         </div>
 
         {/* Desktop Nav Items */}
-        <div style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
-          <button onClick={() => setActiveTab('home')} style={{ background: "none", border: "none", color: activeTab === 'home' ? "#C5A059" : "inherit", cursor: "pointer", fontSize: "inherit", letterSpacing: "inherit", fontFamily: "inherit", transition: "color 0.3s" }}>Home</button>
-          <button onClick={() => setActiveTab('library')} style={{ background: "none", border: "none", color: activeTab === 'library' ? "#C5A059" : "inherit", cursor: "pointer", fontSize: "inherit", letterSpacing: "inherit", fontFamily: "inherit", transition: "color 0.3s" }}>SG Library</button>
-          <button onClick={() => setActiveTab('studio')} style={{ background: "none", border: "none", color: activeTab === 'studio' ? "#C5A059" : "inherit", cursor: "pointer", fontSize: "inherit", letterSpacing: "inherit", fontFamily: "inherit", transition: "color 0.3s" }}>SG Studio</button>
-          <a href="#explore" onClick={() => setActiveTab('home')} style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Explore</a>
-          <a href="#definition" onClick={() => setActiveTab('home')} style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
-          <a href="#ecosystem" onClick={() => setActiveTab('home')} style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+        <div style={{ display: "flex", gap: "20px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif" }} className="hidden xl:flex items-center">
+          <button onClick={() => setActiveTab('home')} style={{ background: 'none', border: 'none', color: activeTab === 'home' ? '#C5A059' : 'inherit', cursor: 'pointer', letterSpacing: '1.5px', fontSize: '10px', fontFamily: 'sans-serif' }}>Explore</button>
+          <a href="/about" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
+          <a href="/ecosystem" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+          <a href="/role-models" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
+          <a href="/journey" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
+          <a href="/ai-engine" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
+          
+          {/* SG Library Tab Trigger */}
+          <button 
+            onClick={() => setActiveTab('library')}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: activeTab === 'library' ? '#C5A059' : '#8e8e93', 
+              cursor: 'pointer', 
+              fontWeight: activeTab === 'library' ? '600' : '400', 
+              letterSpacing: '1.5px', 
+              fontSize: '10px', 
+              fontFamily: 'sans-serif',
+              transition: 'color 0.3s'
+            }}
+          >
+            SG Library
+          </button>
+
+          {/* SG Studio Tab Trigger */}
+          <button 
+            onClick={() => setActiveTab('studio')}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: activeTab === 'studio' ? '#C5A059' : '#8e8e93', 
+              cursor: 'pointer', 
+              fontWeight: activeTab === 'studio' ? '600' : '400', 
+              letterSpacing: '1.5px', 
+              fontSize: '10px', 
+              fontFamily: 'sans-serif',
+              transition: 'color 0.3s'
+            }}
+          >
+            SG Studio
+          </button>
+
+          <a href="/inner-circle" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="/impact" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
+          <a href="/verify" style={{ color: "inherit", textDecoration: "none", transition: "color 0.3s" }}>Verify</a>
         </div>
 
         <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
@@ -218,42 +254,75 @@ export default function HomePage() {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
-          gap: "18px",
-          padding: "100px 24px 40px 24px",
+          gap: "16px",
+          padding: "90px 24px 40px 24px",
           fontFamily: "sans-serif",
           overflowY: "auto",
           boxSizing: "border-box"
         }}>
-          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: "none", border: "none", fontSize: "14px", letterSpacing: "2px", color: activeTab === 'home' ? "#C5A059" : "#e5e5e7", cursor: "pointer" }}>Home</button>
-          <button onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }} style={{ background: "none", border: "none", fontSize: "14px", letterSpacing: "2px", color: activeTab === 'library' ? "#C5A059" : "#e5e5e7", cursor: "pointer" }}>SG Library</button>
-          <button onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }} style={{ background: "none", border: "none", fontSize: "14px", letterSpacing: "2px", color: activeTab === 'studio' ? "#C5A059" : "#e5e5e7", cursor: "pointer" }}>SG Studio</button>
-          <a href="/explore" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Explore</a>
+          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: activeTab === 'home' ? '#C5A059' : '#e5e5e7', cursor: 'pointer' }}>Explore</button>
           <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
           <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          
+          <button onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer' }}>SG Library</button>
+          <button onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer' }}>SG Studio</button>
+
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
           <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
           <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "10px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "6px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
-      {/* CONDITIONAL CONTENT AREA (Home vs Library vs Studio) */}
-      {activeTab === 'library' ? (
-        <div style={{ paddingTop: "80px", width: "100%", height: "calc(100vh - 80px)", boxSizing: "border-box" }}>
+      {/* EMBEDDED IFRAME VIEWS (SG Library & SG Studio) */}
+      {activeTab === 'library' && (
+        <div style={{ paddingTop: "80px", width: "100%", height: "calc(100vh - 80px)", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
+          <div style={{ padding: "12px 24px", backgroundColor: "#14151a", borderBottom: "1px solid rgba(197, 160, 89, 0.2)", display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "sans-serif" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <button onClick={() => setActiveTab('home')} style={{ background: "none", border: "1px solid rgba(197, 160, 89, 0.3)", color: "#C5A059", padding: "6px 12px", fontSize: "10px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <ArrowLeft size={12} /> Back to Home
+              </button>
+              <span style={{ fontSize: "12px", color: "#C5A059", fontWeight: "600", letterSpacing: "1px" }}>SG LIBRARY EMBEDDED VIEW</span>
+            </div>
+            <a href="https://pdfapp-jet.vercel.app/#" target="_blank" rel="noopener noreferrer" style={{ fontSize: "10px", color: "#8e8e93", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>
+              Open in New Tab <ExternalLink size={10} />
+            </a>
+          </div>
           <iframe 
             src="https://pdfapp-jet.vercel.app/#" 
-            style={{ width: "100%", height: "100%", border: "none" }}
             title="SG Library"
+            style={{ width: "100%", height: "100%", border: "none", backgroundColor: "#0d0e11" }}
           />
         </div>
-      ) : activeTab === 'studio' ? (
-        <div style={{ paddingTop: "80px", width: "100%", height: "calc(100vh - 80px)", boxSizing: "border-box" }}>
+      )}
+
+      {activeTab === 'studio' && (
+        <div style={{ paddingTop: "80px", width: "100%", height: "calc(100vh - 80px)", display: "flex", flexDirection: "column", boxSizing: "border-box" }}>
+          <div style={{ padding: "12px 24px", backgroundColor: "#14151a", borderBottom: "1px solid rgba(197, 160, 89, 0.2)", display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "sans-serif" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <button onClick={() => setActiveTab('home')} style={{ background: "none", border: "1px solid rgba(197, 160, 89, 0.3)", color: "#C5A059", padding: "6px 12px", fontSize: "10px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <ArrowLeft size={12} /> Back to Home
+              </button>
+              <span style={{ fontSize: "12px", color: "#C5A059", fontWeight: "600", letterSpacing: "1px" }}>SG STUDIO EMBEDDED VIEW</span>
+            </div>
+            <a href="https://finance-y.vercel.app" target="_blank" rel="noopener noreferrer" style={{ fontSize: "10px", color: "#8e8e93", textDecoration: "none", display: "flex", alignItems: "center", gap: "4px" }}>
+              Open in New Tab <ExternalLink size={10} />
+            </a>
+          </div>
           <iframe 
             src="https://finance-y.vercel.app" 
-            style={{ width: "100%", height: "100%", border: "none" }}
             title="SG Studio"
+            style={{ width: "100%", height: "100%", border: "none", backgroundColor: "#0d0e11" }}
           />
         </div>
-      ) : (
+      )}
+
+      {/* HOME CONTENT (Shown when activeTab === 'home') */}
+      {activeTab === 'home' && (
         <>
           {/* HERO SECTION */}
           <section id="explore" style={{
@@ -589,9 +658,9 @@ export default function HomePage() {
             <div style={{ display: "flex", gap: "60px", flexWrap: "wrap", fontSize: "11px", letterSpacing: "2px" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <span style={{ color: "#C5A059", fontWeight: "600" }}>NAVIGATION</span>
-                <button onClick={() => setActiveTab('home')} style={{ background: "none", border: "none", color: "#8e8e93", textAlign: "left", cursor: "pointer", padding: 0, font: "inherit" }}>Home</button>
-                <button onClick={() => setActiveTab('library')} style={{ background: "none", border: "none", color: "#8e8e93", textAlign: "left", cursor: "pointer", padding: 0, font: "inherit" }}>SG Library</button>
-                <button onClick={() => setActiveTab('studio')} style={{ background: "none", border: "none", color: "#8e8e93", textAlign: "left", cursor: "pointer", padding: 0, font: "inherit" }}>SG Studio</button>
+                <button onClick={() => setActiveTab('home')} style={{ background: 'none', border: 'none', color: '#8e8e93', cursor: 'pointer', textAlign: 'left', padding: 0, fontFamily: 'sans-serif', fontSize: '11px', letterSpacing: '2px' }}>Explore</button>
+                <a href="/about" style={{ color: "#8e8e93", textDecoration: "none" }}>About SG</a>
+                <a href="/verify" style={{ color: "#8e8e93", textDecoration: "none" }}>Verify</a>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 <span style={{ color: "#C5A059", fontWeight: "600" }}>ACCESS</span>
