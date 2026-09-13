@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Menu, X, Lock, ExternalLink, ArrowLeft, ChevronDown } from 'lucide-react';
+import { ArrowRight, Menu, X, Lock, ExternalLink, ArrowLeft, ChevronDown, BookOpen, Layers } from 'lucide-react';
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -119,14 +119,14 @@ export default function HomePage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "20px 36px",
+        padding: "18px 36px",
         backgroundColor: "rgba(13, 14, 17, 0.95)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(197, 160, 89, 0.12)",
         zIndex: 1000,
         boxSizing: "border-box"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer" }} onClick={() => setActiveTab('home')}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer" }} onClick={() => setActiveTab('home')}>
           <img
             src="/logo.png"
             alt="Solo Genius Logo"
@@ -137,104 +137,71 @@ export default function HomePage() {
           </span>
         </div>
 
-        {/* Desktop Nav Items - Minimalist Hub Style */}
-        <div style={{ display: "none" }} className="xl:flex items-center" style={{ display: "flex", gap: "28px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif", alignItems: "center" }}>
-          <button onClick={() => setActiveTab('home')} style={{ background: 'none', border: 'none', color: activeTab === 'home' ? '#C5A059' : 'inherit', cursor: 'pointer', letterSpacing: '1.5px', fontSize: '10px', fontFamily: 'sans-serif' }}>Explore</button>
-          
-          <button onClick={() => setActiveTab('home')} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', letterSpacing: '1.5px', fontSize: '10px', fontFamily: 'sans-serif' }}>Ecosystem</button>
+        {/* Desktop Nav Items - Full Links & Luxury Studio/Library Hub */}
+        <div className="hidden xl:flex" style={{ display: "flex", gap: "22px", fontSize: "10px", fontWeight: "400", letterSpacing: "1.5px", color: "#8e8e93", fontFamily: "sans-serif", alignItems: "center" }}>
+          <button onClick={() => setActiveTab('home')} style={{ background: 'none', border: 'none', color: activeTab === 'home' ? '#C5A059' : '#8e8e93', cursor: 'pointer', letterSpacing: '1.5px', fontSize: '10px', fontFamily: 'sans-serif' }}>Explore</button>
+          <a href="/about" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>About SG</a>
+          <a href="/ecosystem" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Ecosystem</a>
+          <a href="/role-models" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Role Models</a>
+          <a href="/journey" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Journey</a>
+          <a href="/ai-engine" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>AI & Engine</a>
+          <a href="/inner-circle" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Inner Circle</a>
+          <a href="/impact" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Impact</a>
+          <a href="/verify" style={{ color: "#8e8e93", textDecoration: "none", transition: "color 0.3s" }}>Verify</a>
 
-          {/* SG Library Tab Trigger */}
-          <button
-            onClick={() => setActiveTab('library')}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: activeTab === 'library' ? '#C5A059' : '#8e8e93',
-              cursor: 'pointer',
-              fontWeight: activeTab === 'library' ? '600' : '400',
-              letterSpacing: '1.5px',
-              fontSize: '10px',
-              fontFamily: 'sans-serif',
-              transition: 'color 0.3s'
-            }}
-          >
-            SG Library
-          </button>
-
-          {/* SG Studio Tab Trigger */}
-          <button
-            onClick={() => setActiveTab('studio')}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: activeTab === 'studio' ? '#C5A059' : '#8e8e93',
-              cursor: 'pointer',
-              fontWeight: activeTab === 'studio' ? '600' : '400',
-              letterSpacing: '1.5px',
-              fontSize: '10px',
-              fontFamily: 'sans-serif',
-              transition: 'color 0.3s'
-            }}
-          >
-            SG Studio
-          </button>
-
-          {/* INDEX DROPDOWN */}
-          <div style={{ position: "relative" }}>
+          {/* LUXURY SEPARATE HUB FOR SG LIBRARY & SG STUDIO */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginLeft: "8px", paddingLeft: "16px", borderLeft: "1px solid rgba(197, 160, 89, 0.2)" }}>
             <button
-              onClick={() => setIsIndexOpen(!isIndexOpen)}
+              onClick={() => setActiveTab('library')}
               style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(197, 160, 89, 0.3)',
-                color: '#C5A059',
+                background: activeTab === 'library' ? 'rgba(197, 160, 89, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(197, 160, 89, 0.35)',
+                color: activeTab === 'library' ? '#C5A059' : '#e5e5e7',
                 cursor: 'pointer',
                 letterSpacing: '1.5px',
-                fontSize: '10px',
+                fontSize: '9.5px',
                 fontFamily: 'sans-serif',
                 padding: '6px 12px',
                 borderRadius: '4px',
                 display: 'flex',
-                alignItem: 'center',
-                gap: '6px'
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.3s ease'
               }}
             >
-              INDEX <ChevronDown size={12} />
+              <BookOpen size={11} color="#C5A059" /> LIBRARY
             </button>
 
-            {isIndexOpen && (
-              <div style={{
-                position: 'absolute',
-                right: 0,
-                top: '30px',
-                width: '180px',
-                backgroundColor: '#121318',
-                border: '1px solid rgba(197, 160, 89, 0.2)',
-                borderRadius: '6px',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+            <button
+              onClick={() => setActiveTab('studio')}
+              style={{
+                background: activeTab === 'studio' ? 'rgba(197, 160, 89, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+                border: '1px solid rgba(197, 160, 89, 0.35)',
+                color: activeTab === 'studio' ? '#C5A059' : '#e5e5e7',
+                cursor: 'pointer',
+                letterSpacing: '1.5px',
+                fontSize: '9.5px',
+                fontFamily: 'sans-serif',
+                padding: '6px 12px',
+                borderRadius: '4px',
                 display: 'flex',
-                flexDirection: 'column',
-                padding: '8px 0',
-                zIndex: 2000
-              }}>
-                <a href="/about" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>About SG</a>
-                <a href="/role-models" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>Role Models</a>
-                <a href="/journey" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>Journey</a>
-                <a href="/ai-engine" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>AI & Engine</a>
-                <a href="/inner-circle" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>Inner Circle</a>
-                <a href="/impact" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px' }}>Impact</a>
-                <a href="/verify" onClick={() => setIsIndexOpen(false)} style={{ padding: '8px 16px', color: '#e5e5e7', textDecoration: 'none', fontSize: '10px', letterSpacing: '1px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>Verify</a>
-              </div>
-            )}
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <Layers size={11} color="#C5A059" /> STUDIO
+            </button>
           </div>
         </div>
 
-        <div className="hidden xl:flex" style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+        <div className="hidden xl:flex" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <a
             href="/enter"
             style={{
               backgroundColor: "transparent",
               border: "1px solid rgba(197, 160, 89, 0.4)",
-              padding: "10px 18px",
+              padding: "8px 16px",
               borderRadius: "0px",
               fontSize: "10px",
               fontWeight: "600",
@@ -243,7 +210,6 @@ export default function HomePage() {
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
               transition: "all 0.3s ease",
               fontFamily: "sans-serif"
             }}
@@ -255,7 +221,7 @@ export default function HomePage() {
             style={{
               backgroundColor: "#C5A059",
               border: "1px solid #C5A059",
-              padding: "10px 22px",
+              padding: "8px 20px",
               borderRadius: "0px",
               fontSize: "10px",
               fontWeight: "600",
@@ -264,12 +230,11 @@ export default function HomePage() {
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
               transition: "all 0.3s ease",
               fontFamily: "sans-serif"
             }}
           >
-            Apply Now
+            Apply
           </a>
         </div>
 
@@ -296,25 +261,35 @@ export default function HomePage() {
           flexDirection: "column",
           justifyContent: "flex-start",
           alignItems: "center",
-          gap: "16px",
+          gap: "14px",
           padding: "90px 24px 40px 24px",
           fontFamily: "sans-serif",
           overflowY: "auto",
           boxSizing: "border-box"
         }}>
-          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: activeTab === 'home' ? '#C5A059' : '#e5e5e7', cursor: 'pointer' }}>Explore</button>
-          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
-          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
-          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
-          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
-          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
-          <button onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer' }}>SG Library</button>
-          <button onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "14px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer' }}>SG Studio</button>
-          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
-          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
-          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
-          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "14px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
-          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "6px", backgroundColor: "#C5A059", padding: "12px 32px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
+          <button onClick={() => { setActiveTab('home'); setIsMobileMenuOpen(false); }} style={{ background: 'none', border: 'none', fontSize: "13px", letterSpacing: "2px", color: activeTab === 'home' ? '#C5A059' : '#e5e5e7', cursor: 'pointer' }}>Explore</button>
+          <a href="/about" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>About SG</a>
+          <a href="/ecosystem" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Ecosystem</a>
+          <a href="/role-models" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Role Models</a>
+          <a href="/journey" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Journey</a>
+          <a href="/ai-engine" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>AI & Engine</a>
+          
+          <div style={{ width: "100px", height: "1px", backgroundColor: "rgba(197,160,89,0.2)", margin: "4px 0" }}></div>
+
+          <button onClick={() => { setActiveTab('library'); setIsMobileMenuOpen(false); }} style={{ background: 'rgba(197,160,89,0.1)', border: '1px solid rgba(197,160,89,0.3)', padding: '8px 16px', borderRadius: '4px', fontSize: "12px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <BookOpen size={14} /> SG Library
+          </button>
+          <button onClick={() => { setActiveTab('studio'); setIsMobileMenuOpen(false); }} style={{ background: 'rgba(197,160,89,0.1)', border: '1px solid rgba(197,160,89,0.3)', padding: '8px 16px', borderRadius: '4px', fontSize: "12px", letterSpacing: "2px", color: '#C5A059', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Layers size={14} /> SG Studio
+          </button>
+
+          <div style={{ width: "100px", height: "1px", backgroundColor: "rgba(197,160,89,0.2)", margin: "4px 0" }}></div>
+
+          <a href="/inner-circle" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Inner Circle</a>
+          <a href="/impact" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Impact</a>
+          <a href="/verify" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#e5e5e7", textDecoration: "none" }}>Verify</a>
+          <a href="/enter" onClick={() => setIsMobileMenuOpen(false)} style={{ fontSize: "13px", letterSpacing: "2px", color: "#C5A059", textDecoration: "none" }}>Enter Environment</a>
+          <a href="/apply" onClick={() => setIsMobileMenuOpen(false)} style={{ marginTop: "6px", backgroundColor: "#C5A059", padding: "10px 28px", fontSize: "11px", fontWeight: "600", letterSpacing: "2px", color: "#0d0e11", textDecoration: "none" }}>Apply Now</a>
         </div>
       )}
 
